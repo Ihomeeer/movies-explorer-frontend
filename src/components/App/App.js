@@ -3,12 +3,22 @@ import { Route, Switch, Redirect, useHistory} from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import './App.css';
 import Main from '../Main/Main';
+import Movies from '../Movies/Movies';
 
 function App() {
 
   return (
     <div className="App">
-      <Main />
+      <div className="page">
+        <Switch>
+          <Route exact path="/">
+            <Main />
+          </Route>
+          <Route path="/movies">
+            <Movies />
+          </Route>
+        </Switch>
+      </div>
     </div>
   );
 

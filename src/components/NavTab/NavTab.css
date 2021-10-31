@@ -1,0 +1,19 @@
+.navTab__nav-wrapper {
+  width: 182px;
+  min-height: 32px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navTab__sign-in-btn {
+  width: 76px;
+  height: 32px;
+  background: #2BE080;
+  border-radius: 3px;
+}
+
+.navTab__sign-up-link {
+  color: white;
+}

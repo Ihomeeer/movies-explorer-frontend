@@ -1,9 +1,10 @@
 import React from 'react';
+import './Techs.css';
 
 function Techs(props) {
 
   return (
-    <section className="techs">
+    <section className="section techs">
       <h2 className="section-title techs__title">Технологии</h2>
       <div className="techs__text-wrapper">
         <p className="techs__subtitle">7 технологий</p>
