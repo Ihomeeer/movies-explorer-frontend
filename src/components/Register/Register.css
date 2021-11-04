@@ -1,0 +1,124 @@
+.register {
+  width: 100%;
+  height: min-content;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.register__logo {
+  margin: 0 0 40px;
+}
+
+.register__greetings {
+  width: 396px;
+  height: 29px;
+  margin: 0 0 40px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  color: #000000;
+}
+
+.register__inputs-wrapper {
+  padding: 0;
+  margin: 0 0 49px;
+  border: none;
+}
+
+.register__input_module {
+  width: 100%;
+  min-height: 90px;
+  margin: 0 0 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.register__label {
+  width: 100%;
+  min-height: 12px;
+  margin: 0 0 10px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  color: #A0A0A0;
+}
+
+.register__input {
+  width: 100%;
+  height: 46px;
+  padding: 15px;
+  margin: 0 0 10px;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  border-radius: 8px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 16px;
+  color: #000000;
+  background-color: #F9F9F9;
+}
+
+.register__error {
+  width: 100%;
+  min-height: 12px;
+  margin: 0;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  color: #FF3055;
+}
+
+.register__button {
+  width: 100%;
+  height: 45px;
+  padding: 0;
+  margin: 0 auto 16px;
+  background: #3456F3;
+  border-radius: 3px;
+  color: #FFFF;
+}
+
+.register__signin-wrapper {
+  width: fit-content;
+  min-height: 17px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.register__text {
+  width: fit-content;
+  height: 17px;
+  margin: 0;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #A0A0A0;
+}
+
+.register__link {
+  width: fit-content;
+  height: 17px;
+  margin: 0 0 0 6px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #3456F3;
+}

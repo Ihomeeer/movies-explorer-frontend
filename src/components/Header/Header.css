@@ -5,11 +5,13 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+
+.header-dark {
   background-color: #073042;
 }
 
-.header__logo {
-  width: 38px;
-  height: 38px;
+.header-white {
+  background-color: white;
 }
 

@@ -6,11 +6,17 @@ import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
 import Footer from '../Footer/Footer';
 
-function Main(props) {
+function Main({
+  isLoggedIn,
+  isMainPage,
+}) {
 
   return (
     <div className="main">
-      <Header />
+      <Header
+        isLoggedIn = {isLoggedIn}
+        isMainPage = {isMainPage}
+      />
       <Promo />
       <About />
       <Techs />

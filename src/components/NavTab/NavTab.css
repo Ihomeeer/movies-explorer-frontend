@@ -8,12 +8,85 @@
 }
 
 .navTab__sign-in-btn {
-  width: 76px;
+  min-width: 76px;
   height: 32px;
+  margin-left: 30px;
   background: #2BE080;
   border-radius: 3px;
 }
 
-.navTab__sign-up-link {
+.navTab__link_type_sign-up {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
   color: white;
+}
+
+.navTab__nav-wrapper_type_auth {
+  width: 677px;
+  min-height: 32px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navTab__link_type_profile {
+  width: 100px;
+  height: 32px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 40px;
+  text-decoration: none;
+  box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.08);
+  background-color: #FFFFFF;
+}
+
+.navTab__profile-text {
+  margin-right: 7px;
+  margin-left: 11px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 12px;
+  color: #000000;
+}
+
+.navTab__profile-icon {
+  width: 26px;
+  height: 26px;
+  padding: 7px;
+  box-sizing: border-box;
+  margin-right: 3px;
+  border-radius: 50px;
+  background-image: url(../../images/NavTab/profile-icon.svg);
+  background-repeat: no-repeat;
+  background-size: 54%;
+  background-position: center;
+  background-color: #F9F9F9;
+}
+
+.navTab__films-wrapper {
+  min-width: 212px;
+  min-height: 18px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.navTab__link {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 18px;
+  text-align: right;
+  color: #000000;
+}
+
+.navTab__link_type_active {
+  font-weight: 500;
 }

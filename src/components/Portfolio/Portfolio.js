@@ -20,7 +20,6 @@ function Portfolio(props) {
           <a className="portfolio__element-link" href="https://github.com/Ihomeeer/react-mesto-api-full"><img className="portfolio__icon" src={listIconPath} alt="иконка для перехода"></img></a>
         </li>
       </ul>
-      <p className="portfolio__text">Учебный проект Яндекс.Практикум х BeatFilm</p>
     </section>
   );
 }

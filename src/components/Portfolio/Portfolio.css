@@ -60,15 +60,3 @@
   object-fit: contain;
   cursor: pointer;
 }
-
-.portfolio__text {
-  width: 320px;
-  min-height: 16px;
-  margin: 185px auto 0;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 13px;
-  line-height: 16px;
-  color: #A0A0A0;
-}

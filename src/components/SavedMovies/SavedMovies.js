@@ -2,14 +2,13 @@ import React from 'react';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import MoviesCard from '../MoviesCard/MoviesCard';
 import Footer from '../Footer/Footer';
 
-function Movies({
+function SavedMovies({
   isLoggedIn,
   isMainPage
 }) {
-
-  const [isSavedMovies, setIsSavedMovies] = React.useState(false);
 
   return (
     <div>
@@ -18,12 +17,10 @@ function Movies({
         isMainPage = {isMainPage}
       />
       <SearchForm />
-      <MoviesCardList
-        isSavedMovies = {isSavedMovies}
-      />
+      <MoviesCardList />
       <Footer />
     </div>
   )
 }
 
-export default Movies;
+export default SavedMovies;

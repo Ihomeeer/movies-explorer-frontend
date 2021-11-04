@@ -16,16 +16,23 @@ button {
   text-decoration: none;
   cursor: pointer;
   font-family: Inter;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 16px;
 }
 
 .section {
   padding: 0 70px;
   margin: 0 auto;
   box-sizing: border-box;
+}
+
+.section_type_narrow {
+  padding: 0 442px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.logo {
+  width: 38px;
+  height: 38px;
 }
 
 .section-title {
