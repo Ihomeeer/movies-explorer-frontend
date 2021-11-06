@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import loginLogoPath from '../../images/Header/logo.svg';
+import loginLogoPath from '../../images/NavTab/logo.svg';
 import '../Register/Register';
 
 function Register(props) {

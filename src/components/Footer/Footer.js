@@ -5,10 +5,10 @@ function Footer(props) {
 
   return (
     <>
-      <footer className="section footer">
+      <footer className="section section_type_l footer">
         <p className="footer__text">Учебный проект Яндекс.Практикум х BeatFilm</p>
         <div className="footer__wrapper">
-          <p className="footer__copyright">© 2020</p>
+          <p className="footer__copyright">© 2020 by Mikhail Kirichkov</p>
           <ul className="footer__nav-section">
             <li className="footer__nav-element">
               <a className="link footer__nav-link" href="https://practicum.yandex.ru/profile/web">
@@ -33,8 +33,3 @@ function Footer(props) {
 }
 
 export default Footer;
-
-
-
-
-

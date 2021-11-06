@@ -1,7 +1,6 @@
 import React from 'react';
 import './Header.css';
 import NavTab  from '../NavTab/NavTab';
-import headerLogoPath from '../../images/Header/logo.svg';
 
 function Header({
   isLoggedIn,
@@ -9,10 +8,7 @@ function Header({
 }) {
 
   return (
-    <header className={`section ${isMainPage ? 'header header-dark' : 'header header-white'}`}>
-      <a href="/#aboutProject">
-        <img className="logo header__logo" src={headerLogoPath} alt="лого проекта" />
-      </a>
+    <header className={`section section_type_l ${isMainPage ? 'header header-dark' : 'header header-white'}`}>
       <NavTab
         isLoggedIn = {isLoggedIn}
       />

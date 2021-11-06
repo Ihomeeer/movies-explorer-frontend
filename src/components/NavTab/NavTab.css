@@ -1,3 +1,7 @@
+.navTab {
+  width: 100%;
+}
+
 .navTab__nav-wrapper {
   width: 182px;
   min-height: 32px;
@@ -28,9 +32,10 @@
   color: white;
 }
 
-.navTab__nav-wrapper_type_auth {
-  width: 677px;
+.navTab__links {
+  width: 100%;
   min-height: 32px;
+  margin: 0 auto;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -95,3 +100,22 @@
 .navTab__link_type_active {
   font-weight: 500;
 }
+
+@media screen and (max-width: 767px) {
+  .navTab__nav-wrapper {
+    width: 132px;
+    min-height: 26px;
+  }
+
+  .navTab__sign-in-btn {
+    min-width: 54px;
+    height: 26px;
+    margin-left: 14px;
+    font-size: 10px;
+  }
+
+  .navTab__link_type_sign-up {
+    font-size: 10px;
+  }
+}
+

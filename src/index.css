@@ -14,9 +14,17 @@ button {
 }
 
 .section {
-  padding: 0 70px;
   margin: 0 auto;
   box-sizing: border-box;
+  width: 100%;
+}
+
+.section_type_l {
+  padding: 0 70px;
+}
+
+.section_type_m {
+  padding: 0 70px;
 }
 
 .section_type_narrow {
@@ -41,4 +49,37 @@ button {
   font-size: 22px;
   line-height: 27px;
   color: black;
+}
+
+@media screen and (max-width: 1279px) {
+  .section-title {
+    margin-top: 90px;
+  }
+
+  .section_type_m {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+
+  .section_type_l {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .section_type_m {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .section_type_l {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .section-title {
+    margin-top: 70px;
+    padding-bottom: 28px;
+  }
 }

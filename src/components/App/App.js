@@ -12,7 +12,7 @@ import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 function App() {
   // хук для залогинивания
-  const [loggedIn, setLoggedIn] = React.useState(true);
+  const [loggedIn, setLoggedIn] = React.useState(false);
   const [isMainPage, setIsMainPage] = React.useState(true);
 
   return (

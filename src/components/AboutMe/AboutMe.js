@@ -6,7 +6,7 @@ import photoPath from '../../images/AboutMe/photo.jpg';
 function AboutMe(props) {
 
   return (
-    <section className="section aboutMe">
+    <section className="section section_type_m aboutMe">
       <h2 className="section-title aboutMe__title">Студент</h2>
       <div className="aboutMe__info-wrapper">
         <div className="aboutMe__text-wrapper">
@@ -15,10 +15,10 @@ function AboutMe(props) {
           <p className="aboutMe__text">
             Я родился и живу в Ростове-на-Дону, закончил физический факультет Южного федерального университета.
             В данный момент защищаю кандидатскую диссертацию по специальности «Физика и технология наноструктур,
-            атомная и молекулярная физика». 
-            Я люблю пешие прогулки, а ещё увлекаюсь моделизмом. 
-            В начале 2021 года начал кодить. 
-            После того, как прошёл курс по веб-разработке, 
+            атомная и молекулярная физика».
+            Я люблю пешие прогулки, а ещё увлекаюсь моделизмом.
+            В начале 2021 года начал кодить.
+            После того, как прошёл курс по веб-разработке,
             начал заниматься поиском работы в сфере IT.
           </p>
           <div className="aboutMe__links">
