@@ -56,5 +56,16 @@
   border: 1px solid white;
   color: white;
   opacity: 0.6;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
 }
 
+@media screen and (max-width: 1279px) {
+  .promo__main-section {
+    min-height: 646px;
+    flex-direction: column;
+  }
+}

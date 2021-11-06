@@ -12,7 +12,7 @@ function Register(props) {
       <h1 className="register__greetings">Добро пожаловать!</h1>
       <fieldset className="register__inputs-wrapper">
 
-        <div className="register__input_module">
+        <div className="register__input-module">
           <label className="register__label register__label_type_name" htmlFor="name">Имя</label>
           <input
             className="register__input register__input_type_name"
@@ -28,7 +28,7 @@ function Register(props) {
           <span className="register__error register__error_type_name">тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест тест</span>
         </div>
 
-        <div className="register__input_module">
+        <div className="register__input-module">
           <label className="register__label register__label_type_email" htmlFor="email">E-mail</label>
           <input
             className="register__input register__input_type_email"
@@ -45,7 +45,7 @@ function Register(props) {
           <span className="register__error register__error_type_email">тест тест тест тест тест тест тест тест тест</span>
         </div>
 
-        <div className="register__input_module">
+        <div className="register__input-module">
           <label className="register__label register__label_type_password" htmlFor="password">Пароль</label>
           <input
             className="register__input register__input_type_password"
