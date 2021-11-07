@@ -7,7 +7,7 @@ function MoviesCardList ({
 }) {
 
   return (
-    <section className="section section_type_l movies">
+    <section className="section movies">
       <ul className="movies__list">
       <MoviesCard />
       <MoviesCard />

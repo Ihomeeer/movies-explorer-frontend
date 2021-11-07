@@ -5,7 +5,7 @@ function Footer(props) {
 
   return (
     <>
-      <footer className="section section_type_l footer">
+      <footer className="section footer">
         <p className="footer__text">Учебный проект Яндекс.Практикум х BeatFilm</p>
         <div className="footer__wrapper">
           <p className="footer__copyright">© 2020 by Mikhail Kirichkov</p>

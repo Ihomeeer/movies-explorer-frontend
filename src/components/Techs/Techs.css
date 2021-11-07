@@ -1,5 +1,6 @@
 .techs {
   min-height: min-content;
+  padding: 0 70px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -63,6 +64,11 @@
 }
 
 @media screen and (max-width: 1279px) {
+  .techs {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+
   .techs__subtitle {
     margin-top: 80px;
     margin-bottom: 22px;
@@ -84,6 +90,11 @@
 }
 
 @media screen and (max-width: 767px) {
+  .techs {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
   .techs__subtitle {
     width: 292px;
     min-height: 36px;

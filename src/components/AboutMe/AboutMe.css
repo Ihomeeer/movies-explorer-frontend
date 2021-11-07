@@ -1,5 +1,6 @@
 .aboutMe {
   min-height: min-content;
+  padding: 0 70px;
   margin: 0 auto;
 }
 
@@ -79,6 +80,11 @@
 }
 
 @media screen and (max-width: 1279px) {
+  .aboutMe {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+
   .aboutMe__photo {
     width: 255px;
     height: 307px;
@@ -116,6 +122,11 @@
 }
 
 @media screen and (max-width: 767px) {
+  .aboutMe {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
   .aboutMe__info-wrapper {
     width: 100%;
     margin-top: 60px;

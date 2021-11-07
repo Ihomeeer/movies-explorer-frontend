@@ -1,18 +1,24 @@
 .register {
-  width: 100%;
+  width: 396px;
   height: min-content;
   margin: auto;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 
-.register__logo {
+.register__logo-link {
+  width: 38px;
+  height: 38px;
   margin: 0 0 40px;
 }
 
 .register__greetings {
-  width: 396px;
+  width: 100%;
   height: 29px;
   margin: 0 0 40px;
   font-family: Inter;
@@ -121,4 +127,50 @@
   font-size: 14px;
   line-height: 17px;
   color: #3456F3;
+}
+
+@media screen and (max-width: 767px) {
+  .register {
+    width: 100%;
+  }
+
+  .register__logo-link {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+  }
+
+  .register__greetings {
+    height: 29px;
+    margin-bottom: 50px;
+    text-align: center;
+  }
+
+  .register__inputs-wrapper {
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-bottom: 137px;
+  }
+
+  .register__button {
+    width: 260px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .register__signin-wrapper {
+    min-height: 15px;
+  }
+
+  .register__text {
+    height: 15px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .register__link {
+    height: 15px;
+    font-size: 12px;
+    line-height: 15px;
+  }
 }

@@ -1,6 +1,5 @@
 import React from 'react';
-import { Route, Switch, Redirect, useHistory} from 'react-router-dom';
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
@@ -12,8 +11,8 @@ import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 function App() {
   // хук для залогинивания
-  const [loggedIn, setLoggedIn] = React.useState(false);
-  const [isMainPage, setIsMainPage] = React.useState(true);
+  const [loggedIn, setLoggedIn] = React.useState(true);
+  const [isMainPage, setIsMainPage] = React.useState(false);
 
   return (
     <div className="App">

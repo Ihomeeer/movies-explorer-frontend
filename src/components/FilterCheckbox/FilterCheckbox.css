@@ -1,7 +1,7 @@
 .filter {
   width: 100%;
   min-height: 20px;
-  margin: 33px auto 0;
+  margin: 33px auto 48px;
 }
 
 .filter__switch {
@@ -14,7 +14,6 @@
 }
 
 .filter__checkbox {
-
   width: 36px;
   height: 20px;
   margin: 0;
@@ -59,4 +58,24 @@
 
 .filter__text:hover {
   opacity: .7;
+}
+
+@media screen and (max-width: 1279px) {
+  .filter {
+    margin-top: 30px;
+    margin-bottom: 47px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .filter {
+    margin-top: 41px;
+    margin-bottom: 51px;
+  }
+
+  .filter__switch {
+    width: min-content;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }

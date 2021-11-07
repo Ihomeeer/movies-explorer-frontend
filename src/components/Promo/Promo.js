@@ -5,7 +5,7 @@ import promoIllustrationRoute from '../../images/Promo/illustration.png'
 function Promo(props) {
 
   return (
-    <section className="section section_type_m promo">
+    <section className="section promo">
       <div className="promo__main-section">
         <div className="promo__text-wrapper">
           <h1 className="promo__title">Учебный проект студента факультета Веб-разработки</h1>

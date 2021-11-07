@@ -7,8 +7,10 @@ import './Register.css';
 function Register(props) {
 
   return (
-    <section className="section_type_narrow register">
-      <img className="logo register__logo" alt="лого проекта" src={registerLogoPath}></img>
+    <section className="register">
+      <a className="register__logo-link" href="/#aboutProject">
+        <img className="logo register__logo" src={registerLogoPath} alt="лого проекта" />
+      </a>
       <h1 className="register__greetings">Добро пожаловать!</h1>
       <fieldset className="register__inputs-wrapper">
 

@@ -6,7 +6,7 @@ import photoPath from '../../images/AboutMe/photo.jpg';
 function AboutMe(props) {
 
   return (
-    <section className="section section_type_m aboutMe">
+    <section className="section aboutMe">
       <h2 className="section-title aboutMe__title">Студент</h2>
       <div className="aboutMe__info-wrapper">
         <div className="aboutMe__text-wrapper">

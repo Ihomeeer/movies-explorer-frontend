@@ -1,0 +1,27 @@
+.movie-not-found {
+  width: 100%;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.movie-not-found__text {
+  width: 80%;
+  margin: auto;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 24px;
+  color: #A0A0A0;
+  text-align: center;
+}
+
+@media screen and (max-width: 767px) {
+  .movie-not-found__text {
+    font-size: 12px;
+    line-height: 12px;
+  }
+}

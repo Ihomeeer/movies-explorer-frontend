@@ -5,8 +5,8 @@ import './SearchForm.css';
 function SearchForm (props) {
 
   return (
-    <section className="section section_type_l searchForm">
-      <form className="searchForm__form" novalidate>
+    <section className="section searchForm">
+      <form className="searchForm__form" noValidate>
         <input className="searchForm__input" placeholder="Фильм"></input>
         <button className="searchForm__search-button" aria-label="Найти"></button>
       </form>

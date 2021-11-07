@@ -1,5 +1,5 @@
 .promo {
-  /* width: 100%; */
+  padding: 0 70px;
   min-height: 575px;
   margin-top: -1px;
   display: flex;
@@ -51,7 +51,7 @@
 .promo__learn-more-button {
   width: 129px;
   height: 36px;
-  margin: 146px auto 75px 0;
+  margin: 84px auto 75px 0;
   background-color: transparent;
   border: 1px solid white;
   border-radius: 3px;
@@ -66,8 +66,10 @@
 
 @media screen and (max-width: 1279px) {
   .promo {
-    padding-top: 140px;
     min-height: 850px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 140px;
   }
 
   .promo__main-section {

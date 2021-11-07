@@ -11,10 +11,12 @@
   align-items: center;
 }
 
-.navTab__sign-in-btn {
-  min-width: 76px;
+.navTab__link_type_sign-in {
+  width: 76px;
   height: 32px;
   margin-left: 30px;
+  padding: 8px 0;
+  box-sizing: border-box;
   background: #2BE080;
   border-radius: 3px;
   font-family: Inter;
@@ -22,6 +24,8 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
+  text-align: center;
+  color: black;
 }
 
 .navTab__link_type_sign-up {
@@ -34,7 +38,7 @@
 
 .navTab__links {
   width: 100%;
-  min-height: 32px;
+  min-height: 44px;
   margin: 0 auto;
   display: flex;
   flex-direction: row;
@@ -101,21 +105,55 @@
   font-weight: 500;
 }
 
+.navTab__menu-button {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  margin: 0;
+  background-image: url(../../images/NavTab/menu-icon.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-color: transparent;
+  display: none;
+}
+
+@media screen and (max-width: 1279px) {
+  .navTab__menu-button {
+    display: flex;
+  }
+
+  .navTab__link_type_profile {
+    display: none;
+  }
+
+  .navTab__films-wrapper {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 767px) {
   .navTab__nav-wrapper {
     width: 132px;
     min-height: 26px;
   }
 
-  .navTab__sign-in-btn {
+  .navTab__link_type_sign-in {
     min-width: 54px;
     height: 26px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     margin-left: 14px;
     font-size: 10px;
   }
 
   .navTab__link_type_sign-up {
     font-size: 10px;
+  }
+
+  .navTab__menu-button {
+    width: 40px;
+    height: 43px;
   }
 }
 

@@ -1,36 +1,44 @@
 @import url(./vendor/normalize.css);
 @import url(./vendor/fonts/fonts.css);
 
+/* * {
+  border: 1px solid red;
+} */
+
 button {
   outline: none;
   cursor: pointer;
   border: none;
+  transition: opacity .4s;
+}
+
+.button:hover {
+  opacity: 0.8;
+}
+
+a {
+  transition: opacity .4s;
+}
+
+a:hover {
+  opacity: 0.8;
 }
 
 .link {
   text-decoration: none;
   cursor: pointer;
   font-family: Inter;
+  transition: opacity .4s;
+}
+
+.link:hover {
+  opacity: 0.8;
 }
 
 .section {
   margin: 0 auto;
   box-sizing: border-box;
   width: 100%;
-}
-
-.section_type_l {
-  padding: 0 70px;
-}
-
-.section_type_m {
-  padding: 0 70px;
-}
-
-.section_type_narrow {
-  padding: 0 442px;
-  margin: 0 auto;
-  box-sizing: border-box;
 }
 
 .logo {
@@ -40,7 +48,7 @@ button {
 
 .section-title {
   width: 100%;
-  margin: 100px auto 0 0;
+  margin: 110px auto 0 0;
   padding-bottom: 23px;
   border-bottom: 1px solid black;
   font-family: Inter;
@@ -55,29 +63,9 @@ button {
   .section-title {
     margin-top: 90px;
   }
-
-  .section_type_m {
-    padding-left: 50px;
-    padding-right: 50px;
-  }
-
-  .section_type_l {
-    padding-left: 30px;
-    padding-right: 30px;
-  }
 }
 
 @media screen and (max-width: 767px) {
-  .section_type_m {
-    padding-left: 18px;
-    padding-right: 18px;
-  }
-
-  .section_type_l {
-    padding-left: 14px;
-    padding-right: 14px;
-  }
-
   .section-title {
     margin-top: 70px;
     padding-bottom: 28px;

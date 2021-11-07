@@ -1,11 +1,10 @@
 .page {
   margin: 0 auto;
+  padding: 0;
   box-sizing: border-box;
   max-width: 1280px;
   min-width: 320px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  height: 100%;
   font-family: Inter,'Helvetica Neue', Arial, sans-serif;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
