@@ -122,8 +122,9 @@
   }
 
   .promo__title {
-    width: 300px;
+    width: 100%;
     min-height: 114px;
+    margin-top: 44px;
     margin-bottom: 24px;
     font-size: 30px;
     line-height: 38px;

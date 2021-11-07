@@ -18,12 +18,11 @@ function MoviesCardList ({
       <MoviesCard />
       <MoviesCard />
       <MoviesCard />
+      <MoviesCard />
+      <MoviesCard />
+      <MoviesCard />
       </ul>
-      {isSavedMovies ? (
-        ''
-      ) : (
-        <button type="button" className="movies__append-button">Ещё</button>
-      )}
+        <button type="button" className={`movies__append-button  ${isSavedMovies ? 'movies__append-button_none' : ' '}`}>Ещё</button>
     </section>
   )
 };

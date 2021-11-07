@@ -105,6 +105,10 @@
   font-weight: 500;
 }
 
+.navTab__link_white {
+  color: white;
+}
+
 .navTab__menu-button {
   width: 44px;
   height: 44px;

@@ -6,10 +6,9 @@ import Footer from '../Footer/Footer';
 
 function Movies({
   isLoggedIn,
-  isMainPage
+  isMainPage,
+  isSavedMovies
 }) {
-
-  const [isSavedMovies, setIsSavedMovies] = React.useState(false);
 
   return (
     <div>

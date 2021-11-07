@@ -24,8 +24,8 @@ function NavTab ({
             </a>
             <div className="navTab__films-wrapper">
             <Route exact path="/" >
-              <Link className="link navTab__link navTab__link_type_all-films" to="/movies">Фильмы</Link>
-              <Link className="link navTab__link navTab__link_type_saved-films" to="/saved-movies">Сохранённые фильмы</Link>
+              <Link className="link navTab__link navTab__link_white navTab__link_type_all-films" to="/movies">Фильмы</Link>
+              <Link className="link navTab__link navTab__link_white navTab__link_type_saved-films" to="/saved-movies">Сохранённые фильмы</Link>
             </Route>
             <Route exact path="/movies" >
               <Link className="link navTab__link navTab__link_type_active navTab__link_type_all-films" to="/movies">Фильмы</Link>

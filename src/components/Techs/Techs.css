@@ -7,6 +7,10 @@
   background-color: #F5F5F5;
 }
 
+.techs__title {
+  margin-top: 100px;
+}
+
 .techs__text-wrapper {
   margin: 0 auto;
   display: flex;
@@ -69,6 +73,10 @@
     padding-right: 50px;
   }
 
+  .techs__title {
+    margin-top: 90px;
+  }
+
   .techs__subtitle {
     margin-top: 80px;
     margin-bottom: 22px;
@@ -78,7 +86,7 @@
     width: 648px;
     height: 57px;
     margin-top: 83px;
-    margin-bottom: 90px;
+    margin-bottom: 87px;
   }
 
   .techs__list-element {
@@ -93,6 +101,10 @@
   .techs {
     padding-left: 18px;
     padding-right: 18px;
+  }
+
+  .techs__title {
+    margin-top: 68px;
   }
 
   .techs__subtitle {

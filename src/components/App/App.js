@@ -10,9 +10,10 @@ import Login from '../Login/Login';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 function App() {
-  // хук для залогинивания
+
   const [loggedIn, setLoggedIn] = React.useState(true);
-  const [isMainPage, setIsMainPage] = React.useState(false);
+  const [isMainPage, setIsMainPage] = React.useState(true);
+  const [isSavedMovies, setIsSavedMovies] = React.useState(false);
 
   return (
     <div className="App">
@@ -34,6 +35,7 @@ function App() {
             <Movies
               isLoggedIn = {loggedIn}
               isMainPage = {isMainPage}
+              isSavedMovies = {isSavedMovies}
             />
           </Route>
           <Route exact path="/saved-movies">
