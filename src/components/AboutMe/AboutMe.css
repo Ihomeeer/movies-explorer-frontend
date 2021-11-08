@@ -1,10 +1,10 @@
-.aboutMe {
+.about-me {
   min-height: min-content;
   padding: 0 70px;
   margin: 0 auto;
 }
 
-.aboutMe__info-wrapper {
+.about-me__info-wrapper {
   width: 100%;
   margin: 66px auto 0;
   display: flex;
@@ -12,7 +12,7 @@
   justify-content: space-between;
 }
 
-.aboutMe__text-wrapper {
+.about-me__text-wrapper {
   width: 600px;
   min-height: 210px;
   display: flex;
@@ -20,14 +20,14 @@
   justify-content: space-between;
 }
 
-.aboutMe__photo {
+.about-me__photo {
   width: 270px;
   height: 327px;
   border-radius: 10px;
   object-fit: cover;
 }
 
-.aboutMe__name {
+.about-me__name {
   width: 600px;
   min-height: 58px;
   margin: 0 0 18px;
@@ -38,7 +38,7 @@
   line-height: 58px;
 }
 
-.aboutMe__vocation {
+.about-me__vocation {
   margin: 0;
   font-family: Inter;
   font-style: normal;
@@ -47,7 +47,7 @@
   line-height: 20px;
 }
 
-.aboutMe__text {
+.about-me__text {
   margin: 26px 0 0;
   min-height: fit-content;
   font-family: Inter;
@@ -57,7 +57,7 @@
   line-height: 22px;
 }
 
-.aboutMe__links {
+.about-me__links {
   width: 132px;
   min-height: 18px;
   margin: 55px 0 0;
@@ -66,7 +66,7 @@
   justify-content: space-between;
 }
 
-.aboutMe__link {
+.about-me__link {
   font-family: Inter;
   font-style: normal;
   font-weight: 500;
@@ -75,28 +75,28 @@
   color: black;
 }
 
-.aboutMe__link:nth-child(odd) {
+.about-me__link:nth-child(odd) {
   margin-right: 20px;
 }
 
 @media screen and (max-width: 1279px) {
-  .aboutMe {
+  .about-me {
     padding-left: 50px;
     padding-right: 50px;
   }
 
-  .aboutMe__photo {
+  .about-me__photo {
     width: 255px;
     height: 307px;
   }
 
-  .aboutMe__text-wrapper {
+  .about-me__text-wrapper {
     width: 307px;
     min-height: 307px;
     justify-content: space-around;
   }
 
-  .aboutMe__name {
+  .about-me__name {
     width: 384px;
     min-height: 40px;
     margin-bottom: 16px;
@@ -104,47 +104,47 @@
     line-height: 40px;
   }
 
-  .aboutMe__vocation {
+  .about-me__vocation {
     font-size: 12px;
     line-height: 18px;
   }
 
-  .aboutMe__text {
+  .about-me__text {
     margin-top: 20px;
     font-size: 12px;
     line-height: 18px;
   }
 
-  .aboutMe__links {
+  .about-me__links {
     margin: 0;
     justify-self: flex-end;
   }
 }
 
 @media screen and (max-width: 767px) {
-  .aboutMe {
+  .about-me {
     padding-left: 14px;
     padding-right: 14px;
   }
 
-  .aboutMe__info-wrapper {
+  .about-me__info-wrapper {
     width: 100%;
     margin-top: 60px;
     flex-direction: column-reverse;
     align-items: center;
   }
 
-  .aboutMe__text-wrapper {
+  .about-me__text-wrapper {
     width: 292px;
     min-height: 204px;
   }
 
-  .aboutMe__photo {
+  .about-me__photo {
     width: 292px;
     height: 352px;
   }
 
-  .aboutMe__name {
+  .about-me__name {
     width: 292px;
     min-height: 36px;
     margin-top: 40px;
@@ -153,32 +153,32 @@
     line-height: 36px;
   }
 
-  .aboutMe__vocation {
+  .about-me__vocation {
     width: 292px;
     min-height: 16px;
     font-size: 11px;
     line-height: 16px;
   }
 
-  .aboutMe__text {
+  .about-me__text {
     width: 292px;
     min-height: 112px;
     font-size: 11px;
     line-height: 16px;
   }
 
-  .aboutMe__links {
+  .about-me__links {
     width: 138px;
     min-height: 18px;
     margin-top: 20px;
   }
 
-  .aboutMe__link {
+  .about-me__link {
     font-size: 14px;
     line-height: 17px;
   }
 
-  .aboutMe__link:nth-child(odd) {
+  .about-me__link:nth-child(odd) {
     margin-right: 26px;
   }
 }

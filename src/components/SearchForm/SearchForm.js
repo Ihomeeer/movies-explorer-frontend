@@ -5,10 +5,10 @@ import './SearchForm.css';
 function SearchForm (props) {
 
   return (
-    <section className="section searchForm">
-      <form className="searchForm__form" noValidate>
-        <input className="searchForm__input" placeholder="Фильм"></input>
-        <button className="searchForm__search-button" aria-label="Найти"></button>
+    <section className="section search-form">
+      <form className="search-form__form" noValidate>
+        <input className="search-form__input" placeholder="Фильм"></input>
+        <button className="search-form__search-button" aria-label="Найти"></button>
       </form>
       <FilterCheckbox />
     </section>
