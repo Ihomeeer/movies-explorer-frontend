@@ -64,6 +64,11 @@
   border: 1px solid rgba(43, 37, 33, 0.137);
 }
 
+.movie__like-button_active {
+  background-image: url(../../images/MoviesCard/like_white.svg);
+  background-color: #2BE080;
+}
+
 .movie__poster {
   width: 364px;
   height: 203px;

@@ -6,13 +6,13 @@ import photoPath from '../../images/AboutMe/photo.jpg';
 function AboutMe(props) {
 
   return (
-    <section className="section aboutMe">
-      <h2 className="section-title aboutMe__title">Студент</h2>
-      <div className="aboutMe__info-wrapper">
-        <div className="aboutMe__text-wrapper">
-          <p className="aboutMe__name">Михаил</p>
-          <p className="aboutMe__vocation">Фронтенд-разработчик, 27 лет</p>
-          <p className="aboutMe__text">
+    <section className="section about-me">
+      <h2 className="section-title about-me__title">Студент</h2>
+      <div className="about-me__info-wrapper">
+        <div className="about-me__text-wrapper">
+          <p className="about-me__name">Михаил</p>
+          <p className="about-me__vocation">Фронтенд-разработчик, 27 лет</p>
+          <p className="about-me__text">
             Я родился и живу в Ростове-на-Дону, закончил физический факультет Южного федерального университета.
             В данный момент защищаю кандидатскую диссертацию по специальности «Физика и технология наноструктур,
             атомная и молекулярная физика».
@@ -21,12 +21,12 @@ function AboutMe(props) {
             После того, как прошёл курс по веб-разработке,
             начал заниматься поиском работы в сфере IT.
           </p>
-          <div className="aboutMe__links">
-            <a className="link aboutMe__link" href="https://www.facebook.com/mikhail.kirichkov.5">Facebook</a>
-            <a className="link aboutMe__link" href="https://github.com/Ihomeeer?tab=repositories">GitHub</a>
+          <div className="about-me__links">
+            <a className="link about-me__link" href="https://www.facebook.com/mikhail.kirichkov.5">Facebook</a>
+            <a className="link about-me__link" href="https://github.com/Ihomeeer?tab=repositories">GitHub</a>
           </div>
         </div>
-        <img className="aboutMe__photo" src={photoPath} alt="фото автора проекта" />
+        <img className="about-me__photo" src={photoPath} alt="фото автора проекта" />
       </div>
     <Portfolio />
     </section>
