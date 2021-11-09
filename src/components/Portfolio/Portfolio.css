@@ -2,7 +2,7 @@
   width: 250px;
   min-height: 20px;
   margin: 100px 0 0;
-  font-family: Inter;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
@@ -38,7 +38,7 @@
 
 .portfolio__element-name {
   margin: 0;
-  font-family: Inter;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 30px;

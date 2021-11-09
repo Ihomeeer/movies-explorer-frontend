@@ -29,7 +29,7 @@
   width: 100%;
   min-height: 18px;
   margin: 0;
-  font-family: Inter;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 15px;
@@ -41,7 +41,7 @@
   width: 47px;
   min-height: 13px;
   margin: 0;
-  font-family: Inter;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 11px;
@@ -67,6 +67,11 @@
 .movie__like-button_active {
   background-image: url(../../images/MoviesCard/like_white.svg);
   background-color: #2BE080;
+}
+
+.movie__like-button_saved {
+  background-image: url(../../images/SavedMovies/close-icon.svg);
+  background-color: #F9F9F9;
 }
 
 .movie__poster {

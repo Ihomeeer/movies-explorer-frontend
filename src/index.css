@@ -27,7 +27,7 @@ a:hover {
 .link {
   text-decoration: none;
   cursor: pointer;
-  font-family: Inter;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
   transition: opacity .4s;
 }
 
@@ -51,7 +51,7 @@ a:hover {
   margin: 110px auto 0 0;
   padding-bottom: 23px;
   border-bottom: 1px solid black;
-  font-family: Inter;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 22px;

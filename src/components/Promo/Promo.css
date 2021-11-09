@@ -21,7 +21,7 @@
   width: 640px;
   min-height: 174px;
   margin: 75px 0 36px;
-  font-family: Inter;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 50px;
@@ -33,7 +33,7 @@
   width: 310px;
   margin: 0;
   min-height: 32px;
-  font-family: Inter;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 13px;
@@ -57,7 +57,7 @@
   border-radius: 3px;
   color: white;
   opacity: 0.6;
-  font-family: Inter;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
