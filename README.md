@@ -1,2 +1,15 @@
-# movies-explorer-frontend
-Diploma project for Yandex (frontend)
+# Movies-explorer
+
+Фронтенд-часть проекта по поиску фильмов и одновременного отчета для Яндекс-практикума.
+Сделан с помощью React.
+
+## Скрипты для работы (стандартные для реакта)
+
+### `npm start`
+
+### `npm test`
+
+### `npm run build`
+
+### `npm run eject`
+
