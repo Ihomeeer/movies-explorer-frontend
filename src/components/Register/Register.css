@@ -74,6 +74,10 @@
   background-color: #F9F9F9;
 }
 
+.register__input_error {
+  color: #FF3055;
+}
+
 .register__error {
   width: 100%;
   min-height: 12px;

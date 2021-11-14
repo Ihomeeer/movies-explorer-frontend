@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import './App.css';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import mainApi from '../../utils/MainApi';
@@ -22,15 +22,18 @@ function App() {
   // проверка логина для навбара в хидере
   const [loggedIn, setLoggedIn] = React.useState(true);
   // проверка главной страницы для цвета хидера
-  const [isMainPage, setIsMainPage] = React.useState(true);
+  // const [isMainPage, setIsMainPage] = React.useState(true);
   // проверка для выделения активной кнопки в хидере
   const [isSavedMovies, setIsSavedMovies] = React.useState(false);
   // наличие ошибки при логине для выведения текста ошибки в соответствующий спан. По сути, сюда пишется текст ошибки
   const [isLoginError, setIsLoginError] = React.useState('');
   // наличие ошибки при регистрации для выведения текста ошибки в соответствующий спан. По сути, сюда пишется текст ошибки
   const [isRegisterError, setIsRegisterError] = React.useState('');
-  // наличие ошибки при регистрации для выведения текста ошибки в соответствующий спан. По сути, сюда пишется текст ошибки
-  const [isProfileError, setIsProfileError] = React.useState('');
+  // наличие сообщения при ихменении данных профиля для выведения текста в соответствующий спан. По сути, сюда пишется текст ошибки
+  const [isProfileMessage, setIsProfileMessage] = React.useState('');
+  const [allApiMovies, setAllApiMovies] = React.useState({});
+  // хук для осуществления поиска по ключевым словам
+  const [searchQuery, setSearchQuery] = React.useState('');
   // Проверка авторизации при отрисовке страницы
   React.useEffect(() => {
     checkToken();
@@ -117,16 +120,57 @@ function App() {
   const handleChangeProfile = (data) => {
     mainApi.sendUserInfo(data)
     .then(() => {
-      setIsProfileError('');
+      setIsProfileMessage('Профиль успешно обновлен');
     })
     .catch((err) => {
       if (err === '409' || '409') {
-        setIsProfileError('Пользователь с такими данными уже существует');
+        setIsProfileMessage('Пользователь с такими данными уже существует');
       } else {
-        setIsProfileError('При обновлении профиля произошла ошибка');
+        setIsProfileMessage('При обновлении профиля произошла ошибка');
       }
     })
   }
+
+  //Запрос на получение фильмов
+  // const getAllMovies = (title) => {
+  //   moviesApi.getAllMovies()
+  //   .then((res) => {
+  //     const filteredMovies = res.filter((item) => {
+  //       return item.nameRU.toLowerCase().includes(title.toLowerCase());
+  //     });
+
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   })
+  // }
+
+  // const handleSearchMovies = (title) => {
+  //   const moviesArray = JSON.parse(localStorage.getItem('allMovies'));
+  //   const filteredMovies = moviesArray.filter((item) => {
+  //    return item.nameRU.toLowerCase().includes(title.toLowerCase());
+  //   });
+  //   console.log(filteredMovies)
+  //   return filteredMovies;
+  // }
+
+  // //Фильтрация фильмов с использованием данных формы поиска
+  // const filterMovies = (title) => {
+  //   const moviesArray = JSON.parse(localStorage.getItem('allMovies'));
+  //   if(!moviesArray) {
+  //     moviesApi.getAllMovies()
+  //     .then((res) => {
+  //     localStorage.setItem('allMovies', (res))
+  //     })
+  //     .then(() => {
+  //       handleSearchMovies(title);
+  //     })
+  //     .catch(error => {
+  //       console.error(error)
+  //     });
+  //   }
+  // }
+
 
   return (
     <div className="App">
@@ -147,30 +191,29 @@ function App() {
             </Route>
             <Route exact path="/">
               <Main
-                isLoggedIn = {loggedIn}
-                isMainPage = {isMainPage}
+                isLoggedIn={loggedIn}
+                isMainPage="true"
               />
             </Route>
             <Route exact path="/movies">
               <Movies
-                isLoggedIn = {loggedIn}
-                isMainPage = {isMainPage}
+                isLoggedIn={loggedIn}
                 isSavedMovies = {isSavedMovies}
+                getAllMovies={getAllMovies}
+                // searchQuery={searchQuery}
               />
             </Route>
             <Route exact path="/saved-movies">
               <SavedMovies
-                isLoggedIn = {loggedIn}
-                isMainPage = {isMainPage}
+                isLoggedIn={loggedIn}
               />
             </Route>
             <Route exact path="/profile">
               <Profile
-                isLoggedIn = {loggedIn}
-                isMainPage = {isMainPage}
+                isLoggedIn={loggedIn}
                 handleLogOut = {handleLogOut}
                 handleChangeProfile = {handleChangeProfile}
-                isProfileError={isProfileError}
+                isProfileMessage={isProfileMessage}
               />
             </Route>
             <Route path="*">

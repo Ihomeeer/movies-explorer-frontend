@@ -6,17 +6,18 @@ import Footer from '../Footer/Footer';
 
 function Movies({
   isLoggedIn,
-  isMainPage,
-  isSavedMovies
+  isSavedMovies,
+  getAllMovies
 }) {
 
   return (
     <div>
       <Header
         isLoggedIn = {isLoggedIn}
-        isMainPage = {isMainPage}
       />
-      <SearchForm />
+      <SearchForm
+      getAllMovies={getAllMovies}
+      />
       <MoviesCardList
         isSavedMovies = {isSavedMovies}
       />

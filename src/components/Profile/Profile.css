@@ -71,6 +71,10 @@
   outline: none;
 }
 
+.profile__input_error {
+  color: #FF3055;
+}
+
 .profile__error {
   width: 100%;
   min-height: 12px;
@@ -104,6 +108,11 @@
   text-align: center;
   background-color: transparent;
   border: none;
+}
+
+.profile__button_disabled {
+  color: rgb(173, 171, 171);
+  cursor: default;
 }
 
 .profile__button:nth-child(even) {

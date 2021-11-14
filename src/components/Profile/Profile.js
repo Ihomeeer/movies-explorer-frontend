@@ -7,13 +7,13 @@ import './Profile.css';
 function Profile({
   handleLogOut,
   handleChangeProfile,
-  isProfileError
+  isProfileMessage,
+  isLoggedIn,
 }) {
 
   const currentUser = React.useContext(CurrentUserContext);
-  const [isEditActive, setIsEditActive] = React.useState();
 
-  const { values, setValues, errors, isValid, handleChange, } = useFormWithValidation();
+  const { values, setValues, errors, isValid, handleChange } = useFormWithValidation();
 
   React.useEffect(() => {
     setValues({
@@ -25,11 +25,14 @@ function Profile({
   const handleFormSubmit = (e) => {
     e.preventDefault();
     handleChangeProfile(values);
+    console.log('click');
   }
 
   return (
     <>
-      <Header />
+      <Header
+        isLoggedIn = {isLoggedIn}
+      />
       <form className="profile" onSubmit={handleFormSubmit}>
         <h1 className="profile__greetings">Привет, {values.name}</h1>
 
@@ -38,7 +41,7 @@ function Profile({
             <div className="profile__input-wrapper">
               <label className="profile__label profile__label_type_name" htmlFor="name">Имя</label>
               <input
-                className="profile__input profile__input_type_name"
+                className={`profile__input profile__input_type_name ${errors.name ? 'profile__input_error' : ''}`}
                 id="name"
                 name="name"
                 type="text"
@@ -55,7 +58,7 @@ function Profile({
             <div className="profile__input-wrapper">
               <label className="profile__label profile__label_type_email" htmlFor="email">E-mail</label>
                 <input
-                  className="profile__input profile__input_type_email"
+                  className={`profile__input profile__input_type_email ${errors.email ? 'profile__input_error' : ''}`}
                   id="email"
                   name="email"
                   type="text"
@@ -70,12 +73,12 @@ function Profile({
                 />
             </div>
 
-            <span className="profile__error">{(isProfileError) ? isProfileError : (errors.name) ? errors.name : (errors.email) ? errors.email : ''}</span>
+            <span className="profile__error">{(isProfileMessage) ? isProfileMessage : errors.name ? `Имя: ${(errors.name)}` : (errors.email) ? `E-mail: ${(errors.email)}` : ''}</span>
 
         </fieldset>
 
         <div className="profile__buttons">
-          <button type="submit" className="profile__button profile__button_type_submit" disabled={!isValid}>Редактировать</button>
+          <button type="submit" className={`profile__button profile__button_type_submit ${!isValid ? 'profile__button_disabled' : ''}`} disabled={!isValid}>Редактировать</button>
           <button type="button" className="profile__button profile__button_type_quit" onClick={handleLogOut}>Выйти из аккаунта</button>
         </div>
       </form>

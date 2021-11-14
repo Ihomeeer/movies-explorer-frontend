@@ -28,7 +28,7 @@ function Register({
         <div className="register__input-module">
           <label className="register__label register__label_type_name" htmlFor="name">Имя</label>
           <input
-            className="register__input register__input_type_name"
+            className={`register__input register__input_type_name ${errors.name ? 'register__input_error' : ''}`}
             id="name"
             name="name"
             type="text"
@@ -46,7 +46,7 @@ function Register({
         <div className="register__input-module">
           <label className="register__label register__label_type_email" htmlFor="email">E-mail</label>
           <input
-            className="register__input register__input_type_email"
+            className={`register__input register__input_type_email ${errors.email ? 'register__input_error' : ''}`}
             id="email"
             name="email"
             type="email"
@@ -65,7 +65,7 @@ function Register({
         <div className="register__input-module">
           <label className="register__label register__label_type_password" htmlFor="password">Пароль</label>
           <input
-            className="register__input register__input_type_password"
+            className={`register__input register__input_type_password ${errors.password ? 'register__input_error' : ''}`}
             id="password"
             name="password"
             type="password"

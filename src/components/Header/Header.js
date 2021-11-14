@@ -8,7 +8,7 @@ function Header({
 }) {
 
   return (
-    <header className={`section ${isMainPage ? 'header header-dark' : 'header header-white'}`}>
+    <header className={`section ${isMainPage === "true" ? 'header header-dark' : 'header header-white'}`}>
       <NavTab
         isLoggedIn = {isLoggedIn}
       />

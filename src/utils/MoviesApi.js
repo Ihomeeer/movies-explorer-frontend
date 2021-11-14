@@ -16,7 +16,7 @@ class MoviesApi {
   }
 
   //получение списка ВСЕХ фильмов от API (сделано специально, чтобы поработать с фильтрацией на стороне пользователя)
-  getUserInfo() {
+  getAllMovies() {
     return fetch(`${this._baseUrl}`, {
       method: 'GET',
       headers: this._headers,
