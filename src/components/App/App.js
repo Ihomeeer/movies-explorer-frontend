@@ -132,12 +132,22 @@ function App() {
   }
 
   //Запрос на получение фильмов
-  // const getAllMovies = (title) => {
-  //   moviesApi.getAllMovies()
-  //   .then((res) => {
-  //     const filteredMovies = res.filter((item) => {
-  //       return item.nameRU.toLowerCase().includes(title.toLowerCase());
-  //     });
+  const getAllMovies = () => {
+    moviesApi.getAllMovies()
+    .then((res) => {
+      console.log(res)
+      const filteredMovies = res.filter((item) => {
+        console.log(item.nameRU.toLowerCase())
+         return item.nameRU.toLowerCase().includes('а');
+      });
+      console.log(filteredMovies)
+    })
+    .catch((err) => {
+      console.log(err);
+     })
+  }
+
+
 
   //   })
   //   .catch((err) => {
