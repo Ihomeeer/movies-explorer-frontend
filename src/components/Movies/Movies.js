@@ -7,7 +7,7 @@ import Footer from '../Footer/Footer';
 function Movies({
   isLoggedIn,
   isSavedMovies,
-  getAllMovies
+  getAllMovies,
 }) {
 
   return (
@@ -16,7 +16,7 @@ function Movies({
         isLoggedIn = {isLoggedIn}
       />
       <SearchForm
-      getAllMovies={getAllMovies}
+        getAllMovies={getAllMovies}
       />
       <MoviesCardList
         isSavedMovies = {isSavedMovies}

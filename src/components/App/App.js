@@ -31,7 +31,9 @@ function App() {
   const [isRegisterError, setIsRegisterError] = React.useState('');
   // наличие сообщения при ихменении данных профиля для выведения текста в соответствующий спан. По сути, сюда пишется текст ошибки
   const [isProfileMessage, setIsProfileMessage] = React.useState('');
-  const [allApiMovies, setAllApiMovies] = React.useState({});
+  const [allApiMovies, setAllApiMovies] = React.useState([]);
+  // хук для записи отфильтрованных фильмов в стейт-переменную
+  const [searchedMovies, setSearchedMovies] = React.useState([]);
   // хук для осуществления поиска по ключевым словам
   const [searchQuery, setSearchQuery] = React.useState('');
   // Проверка авторизации при отрисовке страницы
@@ -131,55 +133,32 @@ function App() {
     })
   }
 
+
   //Запрос на получение фильмов
-  const getAllMovies = () => {
+  const getAllMovies = (title) => {
+    console.log(title)
     moviesApi.getAllMovies()
     .then((res) => {
-      console.log(res)
-      const filteredMovies = res.filter((item) => {
-        console.log(item.nameRU.toLowerCase())
-         return item.nameRU.toLowerCase().includes('а');
-      });
-      console.log(filteredMovies)
+      const newMovies = filterMovies(res, title);
+      console.log(newMovies)
+      setSearchedMovies(newMovies);
+      console.log(searchedMovies);
     })
     .catch((err) => {
       console.log(err);
      })
   }
 
+  //Генерация карточек по результатам поиска
+  const generateCards = () => {
 
+  }
 
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   })
-  // }
+  // Фильтрует полученные фильмы по значению инпута из SearchForm
+  const filterMovies = (arr, query) => {
+    return arr.filter(el => el.nameRU.toLowerCase().indexOf(query.toLowerCase()) !== -1)
+  }
 
-  // const handleSearchMovies = (title) => {
-  //   const moviesArray = JSON.parse(localStorage.getItem('allMovies'));
-  //   const filteredMovies = moviesArray.filter((item) => {
-  //    return item.nameRU.toLowerCase().includes(title.toLowerCase());
-  //   });
-  //   console.log(filteredMovies)
-  //   return filteredMovies;
-  // }
-
-  // //Фильтрация фильмов с использованием данных формы поиска
-  // const filterMovies = (title) => {
-  //   const moviesArray = JSON.parse(localStorage.getItem('allMovies'));
-  //   if(!moviesArray) {
-  //     moviesApi.getAllMovies()
-  //     .then((res) => {
-  //     localStorage.setItem('allMovies', (res))
-  //     })
-  //     .then(() => {
-  //       handleSearchMovies(title);
-  //     })
-  //     .catch(error => {
-  //       console.error(error)
-  //     });
-  //   }
-  // }
 
 
   return (
@@ -208,9 +187,8 @@ function App() {
             <Route exact path="/movies">
               <Movies
                 isLoggedIn={loggedIn}
-                isSavedMovies = {isSavedMovies}
+                isSavedMovies={isSavedMovies}
                 getAllMovies={getAllMovies}
-                // searchQuery={searchQuery}
               />
             </Route>
             <Route exact path="/saved-movies">
