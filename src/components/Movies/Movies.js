@@ -7,7 +7,8 @@ import Footer from '../Footer/Footer';
 function Movies({
   isLoggedIn,
   isSavedMovies,
-  getAllMovies,
+  getMovies,
+  searchedMovies
 }) {
 
   return (
@@ -16,10 +17,11 @@ function Movies({
         isLoggedIn = {isLoggedIn}
       />
       <SearchForm
-        getAllMovies={getAllMovies}
+        getMovies={getMovies}
       />
       <MoviesCardList
         isSavedMovies = {isSavedMovies}
+        searchedMovies={searchedMovies}
       />
       <Footer />
     </div>

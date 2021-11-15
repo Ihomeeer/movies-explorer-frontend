@@ -34,8 +34,9 @@ function App() {
   const [allApiMovies, setAllApiMovies] = React.useState([]);
   // хук для записи отфильтрованных фильмов в стейт-переменную
   const [searchedMovies, setSearchedMovies] = React.useState([]);
-  // хук для осуществления поиска по ключевым словам
-  const [searchQuery, setSearchQuery] = React.useState('');
+  // сообщение о ненайденных фильмах при поиске
+  const [searchMessage, setSearchMessage] = React.useState('');
+
   // Проверка авторизации при отрисовке страницы
   React.useEffect(() => {
     checkToken();
@@ -135,14 +136,13 @@ function App() {
 
 
   //Запрос на получение фильмов
-  const getAllMovies = (title) => {
+  const getMovies = (title) => {
     console.log(title)
     moviesApi.getAllMovies()
     .then((res) => {
       const newMovies = filterMovies(res, title);
-      console.log(newMovies)
+      // console.log(newMovies)
       setSearchedMovies(newMovies);
-      console.log(searchedMovies);
     })
     .catch((err) => {
       console.log(err);
@@ -150,9 +150,11 @@ function App() {
   }
 
   //Генерация карточек по результатам поиска
-  const generateCards = () => {
-
-  }
+  // const generateCards = () => {
+  //   searchedMovies.forEach((movie) => {
+  //     return movie;
+  //   })
+  // }
 
   // Фильтрует полученные фильмы по значению инпута из SearchForm
   const filterMovies = (arr, query) => {
@@ -188,7 +190,8 @@ function App() {
               <Movies
                 isLoggedIn={loggedIn}
                 isSavedMovies={isSavedMovies}
-                getAllMovies={getAllMovies}
+                getMovies={getMovies}
+                searchedMovies={searchedMovies}
               />
             </Route>
             <Route exact path="/saved-movies">

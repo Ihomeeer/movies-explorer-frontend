@@ -6,12 +6,16 @@ import './SearchForm.css';
 
 
 function SearchForm ({
-  getAllMovies
+  getMovies
 }) {
 
+  const [errorMessage, setErrorMessage] = React.useState('');
+
  const handleSubmit = (e) => {
-  e.preventDefault();
-  getAllMovies(values.search);
+
+    e.preventDefault();
+    getMovies(values.search);
+
  }
 
 const { values, handleChange } = useFormWithValidation();
@@ -32,6 +36,7 @@ const { values, handleChange } = useFormWithValidation();
         <button type='submit' className="button search-form__search-button" aria-label="Найти"></button>
       </form>
       <FilterCheckbox />
+      <span className="search-form__error">{errorMessage}</span>
     </section>
   )
 };

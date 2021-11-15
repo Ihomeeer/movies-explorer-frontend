@@ -72,6 +72,8 @@
   line-height: 16px;
   color: #000000;
   background-color: #F9F9F9;
+  outline: none;
+
 }
 
 .register__input_error {

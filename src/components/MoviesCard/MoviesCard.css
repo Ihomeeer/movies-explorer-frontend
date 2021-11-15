@@ -38,7 +38,7 @@
 }
 
 .movie__duration {
-  width: 47px;
+  width: 57px;
   min-height: 13px;
   margin: 0;
   font-family: 'Inter', Arial, Helvetica, sans-serif;
@@ -77,6 +77,7 @@
 .movie__poster {
   width: 364px;
   height: 203px;
+  margin: 0 auto;
 }
 
 @media screen and (max-width: 1279px) {
