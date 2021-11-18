@@ -3,7 +3,6 @@ import { Route, Switch, useHistory } from 'react-router-dom';
 import './App.css';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import mainApi from '../../utils/MainApi';
-import moviesApi from '../../utils/MoviesApi';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
@@ -16,27 +15,26 @@ function App() {
 
   const history = useHistory();
 
-  //---------------------------------------------------------------------------Хуки всякие
-  //хук для контекста
+  //---------------------------------------------------------------------------Хуки всякие, переменные
+  // переменная для контекста
   const [currentUser, setCurrentUser] = React.useState({});
   // проверка логина для навбара в хидере
   const [loggedIn, setLoggedIn] = React.useState(true);
-  // проверка главной страницы для цвета хидера
-  // const [isMainPage, setIsMainPage] = React.useState(true);
-  // проверка для выделения активной кнопки в хидере
-  const [isSavedMovies, setIsSavedMovies] = React.useState(false);
   // наличие ошибки при логине для выведения текста ошибки в соответствующий спан. По сути, сюда пишется текст ошибки
   const [isLoginError, setIsLoginError] = React.useState('');
   // наличие ошибки при регистрации для выведения текста ошибки в соответствующий спан. По сути, сюда пишется текст ошибки
   const [isRegisterError, setIsRegisterError] = React.useState('');
   // наличие сообщения при ихменении данных профиля для выведения текста в соответствующий спан. По сути, сюда пишется текст ошибки
   const [isProfileMessage, setIsProfileMessage] = React.useState('');
-  const [allApiMovies, setAllApiMovies] = React.useState([]);
-  // хук для записи отфильтрованных фильмов в стейт-переменную
-  const [searchedMovies, setSearchedMovies] = React.useState([]);
-  // сообщение о ненайденных фильмах при поиске
-  const [searchMessage, setSearchMessage] = React.useState('');
+  // переменная для выводивых фильмов
+  const [shownMoviesArray, setShownMoviesArray] = React.useState([[]]);
+  // переменная для записи отфильтрованных фильмов
+  const [searchedMoviesArray, setSearchedMoviesArray] = React.useState([]);
+  // переменная для записи короткометражек
+  const [shortMoviesArray, setShortMoviesArray] = React.useState([]);
 
+  // проверка для выделения активной кнопки в хидере
+  const [isSavedMovies, setIsSavedMovies] = React.useState(false);
   // Проверка авторизации при отрисовке страницы
   React.useEffect(() => {
     checkToken();
@@ -134,35 +132,6 @@ function App() {
     })
   }
 
-
-  //Запрос на получение фильмов
-  const getMovies = (title) => {
-    console.log(title)
-    moviesApi.getAllMovies()
-    .then((res) => {
-      const newMovies = filterMovies(res, title);
-      // console.log(newMovies)
-      setSearchedMovies(newMovies);
-    })
-    .catch((err) => {
-      console.log(err);
-     })
-  }
-
-  //Генерация карточек по результатам поиска
-  // const generateCards = () => {
-  //   searchedMovies.forEach((movie) => {
-  //     return movie;
-  //   })
-  // }
-
-  // Фильтрует полученные фильмы по значению инпута из SearchForm
-  const filterMovies = (arr, query) => {
-    return arr.filter(el => el.nameRU.toLowerCase().indexOf(query.toLowerCase()) !== -1)
-  }
-
-
-
   return (
     <div className="App">
       <CurrentUserContext.Provider value={currentUser}>
@@ -189,14 +158,18 @@ function App() {
             <Route exact path="/movies">
               <Movies
                 isLoggedIn={loggedIn}
-                isSavedMovies={isSavedMovies}
-                getMovies={getMovies}
-                searchedMovies={searchedMovies}
+                setShownMoviesArray={setShownMoviesArray}
+                setSearchedMoviesArray={setSearchedMoviesArray}
+                setShortMoviesArray={setShortMoviesArray}
+                shownMoviesArray={shownMoviesArray}
+                searchedMoviesArray={searchedMoviesArray}
+                shortMoviesArray={shortMoviesArray}
               />
             </Route>
             <Route exact path="/saved-movies">
               <SavedMovies
                 isLoggedIn={loggedIn}
+                isSavedMovies={isSavedMovies}
               />
             </Route>
             <Route exact path="/profile">
@@ -219,3 +192,38 @@ function App() {
 }
 
 export default App;
+
+
+
+
+  // //Запрос на получение фильмов
+  // const getMovies = (title) => {
+  //   if (title) {
+  //     moviesApi.getAllMovies()
+  //     .then((res) => {
+  //       const newMovies = filterMovies(res, title);
+  //       if (newMovies.length === 0) {
+  //         setSearchMessage('Ничего не найдено');
+  //         setIsMoviesVisible(false);
+
+  //         return
+  //       } else {
+  //         setSearchedMovies(newMovies);
+  //         setSearchMessage('');
+  //         setIsMoviesVisible(true);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       setSearchMessage('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен');
+  //       console.log(err);
+  //     })
+  //   } else {
+  //     setSearchMessage('Нужно ввести ключевое слово');
+  //     setIsMoviesVisible(false);
+
+  //     return
+  //   }
+  // }
+
+
+

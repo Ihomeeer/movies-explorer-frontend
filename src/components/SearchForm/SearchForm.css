@@ -1,6 +1,6 @@
 .search-form {
   width: 100%;
-  min-height: 148px;
+  min-height: min-content;
   padding: 0 70px;
   margin: 70px auto 0;
   display: flex;
@@ -39,15 +39,14 @@
 }
 
 .search-form__error {
-  min-height: 34px;
+  min-height: 12px;
   width: 100%;
   margin: 10px auto 0;
   font-style: normal;
   font-weight: 500;
-  font-size: 28px;
-  line-height: 34px;
-  color: black;
-  border: 1px solid red;
+  font-size: 12px;
+  line-height: 12px;
+  color: #A0A0A0;
   text-align: center;
 }
 
@@ -68,7 +67,7 @@
 @media screen and (max-width: 767px) {
   .search-form {
     width: 320px;
-    min-height: 157px;
+    /* min-height: 157px; */
     padding-left: 14px;
     padding-right: 14px;
     margin-top: 80px;
@@ -89,5 +88,4 @@
   .search-form__search-button {
     margin-bottom: 9px;
   }
-
 }

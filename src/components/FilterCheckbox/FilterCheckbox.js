@@ -1,14 +1,19 @@
 import React from 'react';
 import './FilterCheckbox.css';
 
-function FilterCheckbox (props) {
+function FilterCheckbox ({
+  handleShortMovies
+}) {
+
+
 
   return (
-    <div className="filter">
+    <div className="section filter">
       <label className="filter__switch">
         <input
           type="checkbox"
           className="filter__checkbox"
+          onClick={handleShortMovies}
         />
         <span className="filter__caption">Короткометражки</span>
       </label>

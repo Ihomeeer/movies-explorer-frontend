@@ -13,7 +13,7 @@
   margin: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: repeat(1, 1fr);
   column-gap: 24px;
   row-gap: 30px;
   list-style: none;

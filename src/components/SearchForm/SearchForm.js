@@ -1,25 +1,20 @@
 import React from 'react';
-import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import { useFormWithValidation } from '../../utils/validation';
 import './SearchForm.css';
 
 
 
 function SearchForm ({
-  getMovies
+  getMovies,
+  searchMessage,
 }) {
 
-  const [errorMessage, setErrorMessage] = React.useState('');
+  const { values, handleChange } = useFormWithValidation();
 
- const handleSubmit = (e) => {
-
+  const handleSubmit = (e) => {
     e.preventDefault();
     getMovies(values.search);
-
- }
-
-const { values, handleChange } = useFormWithValidation();
-
+  }
 
   return (
     <section className="section search-form">
@@ -35,8 +30,7 @@ const { values, handleChange } = useFormWithValidation();
         ></input>
         <button type='submit' className="button search-form__search-button" aria-label="Найти"></button>
       </form>
-      <FilterCheckbox />
-      <span className="search-form__error">{errorMessage}</span>
+      <span className="search-form__error">{searchMessage}</span>
     </section>
   )
 };
