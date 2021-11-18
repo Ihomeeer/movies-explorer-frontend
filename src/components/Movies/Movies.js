@@ -1,5 +1,6 @@
 import React from 'react';
 import moviesApi from '../../utils/MoviesApi';
+import useWindowSize from '../../utils/windowSize';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
@@ -17,7 +18,7 @@ function Movies({
   shortMoviesArray
 }) {
 
-
+  const windowSize = useWindowSize();
 
   // сообщение о ненайденных фильмах при поиске
   const [searchMessage, setSearchMessage] = React.useState('');
@@ -25,6 +26,40 @@ function Movies({
   const [isMoviesVisible, setIsMoviesVisible] = React.useState(false);
   // переменная для работы чекбокса короткометражек
   const [isShortMovies, setIsShortMovies] = React.useState(false);
+  // проверка ширины страницы для добавления нужного количества карточек
+  // сколько карточек рендерить и сколько прибавлять по нажатию кнопки
+  const [cardsAmount, setCardsAmount] = React.useState({total: 12, delta: 3});
+
+  // Фильтрует полученные фильмы по значению инпута из SearchForm
+  const filterMovies = (arr, query) => {
+    return arr.filter(el => el.nameRU.toLowerCase().indexOf(query.toLowerCase()) !== -1)
+  }
+
+
+  const checkAmount = () => {
+    if (windowSize.width >= 1280) {
+      setCardsAmount({total: 12, delta: 3})
+    } else if (windowSize.width >= 768) {
+      setCardsAmount({total: 8, delta: 2})
+    } else if (windowSize.width >= 320) {
+      setCardsAmount({total: 5, delta: 2})
+    }
+  }
+
+
+  React.useEffect(() => {
+    checkAmount();
+  }, [windowSize.width]);
+
+
+  const handleMoreButtonClick = () => {
+    return setCardsAmount({
+      ...cardsAmount,
+      total: cardsAmount.total + cardsAmount.delta,
+    });
+  };
+
+
 
   //Запрос на получение фильмов со всеми фильтрами и прочим
   const getMovies = (title) => {
@@ -39,7 +74,6 @@ function Movies({
         //добавление всего в стейты
         setSearchedMoviesArray(searchedMovies);
         setShortMoviesArray(shortMovies);
-        console.log(shortMovies)
         if (searchedMovies.length === 0) {
           setSearchMessage('Ничего не найдено');
           setIsMoviesVisible(false);
@@ -67,31 +101,24 @@ function Movies({
     }
   }
 
+  // Реализация работы чекбокса с короткометражками после поиска по названию
   React.useEffect(() => {
-    // const shortMovies = filterDuration(searchedMoviesArray);
     if (isShortMovies) {
-      console.log('попало в тру')
       setShownMoviesArray(shortMoviesArray);
       console.log(shortMoviesArray)
     } else {
-      console.log('попало в фолс')
       setShownMoviesArray(searchedMoviesArray);
     }
-  }, [isShortMovies])
+  }, [isShortMovies]);
+
+  //Работа с чекбоксом
+  const filterDuration = (movies) => {
+    return movies.filter((movie) => movie.duration <= 40);
+    }
 
   //функция для переключения стейта чекбоксом
   function handleShortMovies() {
     setIsShortMovies(!isShortMovies);
-  }
-
-  // Фильтрует полученные фильмы по значению инпута из SearchForm
-  const filterMovies = (arr, query) => {
-    return arr.filter(el => el.nameRU.toLowerCase().indexOf(query.toLowerCase()) !== -1)
-  }
-
-  //Работа с чекбоксом
-  const filterDuration = (movies) => {
-   return movies.filter((movie) => movie.duration <= 40);
   }
 
   return (
@@ -112,6 +139,8 @@ function Movies({
         <MoviesCardList
           isSavedMovies={isSavedMovies}
           shownMoviesArray={shownMoviesArray}
+          handleBtnClick = {handleMoreButtonClick}
+          total={cardsAmount.total}
         />
       ) : ('')}
       <Footer />

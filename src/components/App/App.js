@@ -32,7 +32,6 @@ function App() {
   const [searchedMoviesArray, setSearchedMoviesArray] = React.useState([]);
   // переменная для записи короткометражек
   const [shortMoviesArray, setShortMoviesArray] = React.useState([]);
-
   // проверка для выделения активной кнопки в хидере
   const [isSavedMovies, setIsSavedMovies] = React.useState(false);
   // Проверка авторизации при отрисовке страницы
@@ -111,7 +110,7 @@ function App() {
   //Логаут существующего пользователя
   const handleLogOut = () => {
     localStorage.removeItem('token');
-    // localStorage.removeItem('jwt');
+    localStorage.removeItem('allMovies');
     setLoggedIn(false);
     setCurrentUser({});
     history.push('/')
@@ -164,11 +163,19 @@ function App() {
                 shownMoviesArray={shownMoviesArray}
                 searchedMoviesArray={searchedMoviesArray}
                 shortMoviesArray={shortMoviesArray}
+                isSavedMovies={isSavedMovies}
               />
             </Route>
             <Route exact path="/saved-movies">
               <SavedMovies
                 isLoggedIn={loggedIn}
+                currentUser={currentUser}
+                setShownMoviesArray={setShownMoviesArray}
+                setSearchedMoviesArray={setSearchedMoviesArray}
+                setShortMoviesArray={setShortMoviesArray}
+                shownMoviesArray={shownMoviesArray}
+                searchedMoviesArray={searchedMoviesArray}
+                shortMoviesArray={shortMoviesArray}
                 isSavedMovies={isSavedMovies}
               />
             </Route>
