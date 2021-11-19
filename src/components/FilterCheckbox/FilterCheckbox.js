@@ -1,15 +1,10 @@
-import React from 'react';
-import './FilterCheckbox.css';
+import React from "react";
+import "./FilterCheckbox.css";
 
-function FilterCheckbox ({
-  handleShortMovies
-}) {
-
-
-
+function FilterCheckbox({ handleShortMovies }) {
   return (
-    <div className="section filter">
-      <label className="filter__switch">
+    <div className="section filter" id="filter">
+      <label className="filter__switch" htmlFor="filter">
         <input
           type="checkbox"
           className="filter__checkbox"
@@ -17,8 +12,8 @@ function FilterCheckbox ({
         />
         <span className="filter__caption">Короткометражки</span>
       </label>
-  </div>
-  )
-};
+    </div>
+  );
+}
 
 export default FilterCheckbox;

@@ -1,129 +1,150 @@
-import React from 'react';
-import moviesApi from '../../utils/MoviesApi';
-import Header from '../Header/Header';
-import SearchForm from '../SearchForm/SearchForm';
-import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
-import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import Footer from '../Footer/Footer';
+import React from "react";
+import mainApi from "../../utils/MainApi";
+import Header from "../Header/Header";
+import SearchForm from "../SearchForm/SearchForm";
+import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
+import MoviesCardList from "../MoviesCardList/MoviesCardList";
+import Footer from "../Footer/Footer";
 
 function SavedMovies({
   isLoggedIn,
-  isSavedMovies,
+  setSavedMoviesArray,
   setShownMoviesArray,
   setSearchedMoviesArray,
   setShortMoviesArray,
+  savedMoviesArray,
   shownMoviesArray,
   searchedMoviesArray,
   shortMoviesArray,
-  currentUser
+  currentUser,
+  onSaveMovie,
+  onDeleteMovie
 }) {
-
   // сообщение о ненайденных фильмах при поиске
-  const [searchMessage, setSearchMessage] = React.useState('');
+  const [searchMessage, setSearchMessage] = React.useState("");
   // Видимость секции "Movies"
   const [isMoviesVisible, setIsMoviesVisible] = React.useState(false);
   // переменная для работы чекбокса короткометражек
   const [isShortMovies, setIsShortMovies] = React.useState(false);
 
+  // Работа с чекбоксом
+  const filterDuration = (movies) =>
+    movies.filter((movie) => movie.duration <= 40);
 
-
-//Запись id в поле владельца сохраненной карточки
-const owner = currentUser._id;
-
-
-
-
-
-
-
-  // Фильтрует полученные фильмы по значению инпута из SearchForm
-  const filterMovies = (arr, query) => {
-    return arr.filter(el => el.nameRU.toLowerCase().indexOf(query.toLowerCase()) !== -1)
+  // функция для переключения стейта чекбоксом
+  const handleShortMovies = () => {
+    setIsShortMovies(!isShortMovies);
   }
 
-    //Запрос на получение фильмов со всеми фильтрами и прочим
-    const getMovies = (title) => {
-      if (title) {
-        moviesApi.getAllMovies()
-        .then((res) => {
-          // Засовывание всех фильмов в локалсторадж
-          localStorage.setItem('allMovies', JSON.stringify(res));
-          //передача в константы результатов поиска и короткометражек
-          const searchedMovies = filterMovies(JSON.parse(localStorage.getItem('allMovies')), title);
-          const shortMovies = filterDuration(searchedMovies);
-          //добавление всего в стейты
-          setSearchedMoviesArray(searchedMovies);
-          setShortMoviesArray(shortMovies);
-          if (searchedMovies.length === 0) {
-            setSearchMessage('Ничего не найдено');
-            setIsMoviesVisible(false);
-
-            return
+  React.useEffect(() => {
+    mainApi
+      .getMovies()
+      .then((res) => {
+        // Распихивание всего в локальное хранилище
+        localStorage.setItem("allSavedMovies", JSON.stringify(res.data));
+        localStorage.setItem(
+          "userSavedMovies",
+          JSON.stringify(
+            res.data.filter((movie) => movie.owner === currentUser._id)
+          )
+        );
+        const shortMovies = filterDuration(
+          JSON.parse(localStorage.getItem("userSavedMovies"))
+        );
+        localStorage.setItem("userSavedMoviesShorts", shortMovies);
+        setSavedMoviesArray(
+          JSON.parse(localStorage.getItem("userSavedMovies"))
+        );
+        setShortMoviesArray(shortMovies);
+        if (JSON.parse(localStorage.getItem("userSavedMovies")).length > 0) {
+          setIsMoviesVisible(true);
+          if (isShortMovies) {
+            setShownMoviesArray(
+              JSON.parse(localStorage.getItem("userSavedMoviesShorts"))
+            );
           } else {
-            setIsMoviesVisible(true);
-            setSearchMessage('');
-            if (isShortMovies) {
-              setShownMoviesArray(shortMovies);
-            } else {
-              setShownMoviesArray(searchedMovies);
-            }
+            setShownMoviesArray(
+              JSON.parse(localStorage.getItem("userSavedMovies"))
+            );
           }
-        })
-        .catch((err) => {
-          setSearchMessage('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен');
-          console.log(err);
-        })
-      } else {
-        setSearchMessage('Нужно ввести ключевое слово');
-        setIsMoviesVisible(false);
+        } else {
+          setIsMoviesVisible(false);
+          setSearchMessage("Отсутствуют сохраненные элементы");
+        }
+      })
+      .catch((err) => {
+        setSearchMessage(
+          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен"
+        );
+        console.log(err);
+      });
+  }, []);
 
-        return
-      }
+  // Реализация работы чекбокса с короткометражками после поиска по названию
+  React.useEffect(() => {
+    if (isShortMovies) {
+      setShownMoviesArray(shortMoviesArray);
+    } else {
+      setShownMoviesArray(searchedMoviesArray);
     }
-
-    // Реализация работы чекбокса с короткометражками после поиска по названию
-    React.useEffect(() => {
-      if (isShortMovies) {
-        setShownMoviesArray(shortMoviesArray);
-        console.log(shortMoviesArray)
-      } else {
-        setShownMoviesArray(searchedMoviesArray);
-      }
-    }, [isShortMovies]);
-
-    //Работа с чекбоксом
-    const filterDuration = (movies) => {
-      return movies.filter((movie) => movie.duration <= 40);
-      }
-
-    //функция для переключения стейта чекбоксом
-    function handleShortMovies() {
-      setIsShortMovies(!isShortMovies);
-    }
+  }, [isShortMovies]);
 
   return (
     <div>
-      <Header
-        isLoggedIn = {isLoggedIn}
-      />
+      <Header isLoggedIn={isLoggedIn} />
       <SearchForm
-        getMovies={getMovies}
+        // getMovies={getMovies}
+        setSearchMessage={setSearchMessage}
         searchMessage={searchMessage}
-        isMoviesVisible={isMoviesVisible}
-        searchedMovies={searchedMoviesArray}
       />
-      <FilterCheckbox
-        handleShortMovies={handleShortMovies}
-      />
+      <FilterCheckbox handleShortMovies={handleShortMovies} />
       {isMoviesVisible ? (
         <MoviesCardList
-          isSavedMovies={isSavedMovies}
+          isSavedMovies
           shownMoviesArray={shownMoviesArray}
+          savedMoviesArray={savedMoviesArray}
+          onSaveMovie={onSaveMovie}
+          onDeleteMovie={onDeleteMovie}
         />
-      ) : ('')}
+      ) : (
+        ""
+      )}
       <Footer />
     </div>
-  )
+  );
 }
 
 export default SavedMovies;
+
+// Отображение сохраненок сразу при рендере страницы
+// React.useEffect(() => {
+//   mainApi.getMovies()
+//   .then((res) => {
+//     if (res.data.length > 0) {
+//       setIsMoviesVisible(true);
+//       setShownMoviesArray(res.data.filter((movie) => movie.owner === currentUser._id))
+//       localStorage.setItem('savedMovies', JSON.stringify(res.data));
+//       setShownMoviesArray(res.data.filter((movie) => movie.owner === currentUser._id));
+//       if (isShortMovies) {
+//         setShownMoviesArray(shortMoviesArray);
+//         setSearchMessage('');
+//       } else {
+//         setShownMoviesArray(savedMoviesArray);
+//         setSearchMessage('');
+//       }
+//     } else {
+//       setIsMoviesVisible(false);
+//       setSearchMessage('Отсутствуют сохраненные элементы');
+//     }
+//   })
+//   .catch((err) => {
+//     setSearchMessage('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен');
+//     console.log(err);
+//   })
+// }, [currentUser]);
+
+// // Фильтрует полученные фильмы по значению инпута из SearchForm
+// const filterMovies = (arr, query) => {
+
+//   return arr.filter(el => el.nameRU.toLowerCase().indexOf(query.toLowerCase()) !== -1)
+// }

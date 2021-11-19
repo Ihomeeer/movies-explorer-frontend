@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
+import {serverUrl} from '../../utils/constants';
 import './App.css';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import mainApi from '../../utils/MainApi';
@@ -14,8 +15,8 @@ import NotFoundPage from '../NotFoundPage/NotFoundPage';
 function App() {
 
   const history = useHistory();
-
-  //---------------------------------------------------------------------------Хуки всякие, переменные
+  console.log(serverUrl)
+  //  ---------------------------------------------------------------------------Хуки всякие, переменные
   // переменная для контекста
   const [currentUser, setCurrentUser] = React.useState({});
   // проверка логина для навбара в хидере
@@ -27,17 +28,14 @@ function App() {
   // наличие сообщения при ихменении данных профиля для выведения текста в соответствующий спан. По сути, сюда пишется текст ошибки
   const [isProfileMessage, setIsProfileMessage] = React.useState('');
   // переменная для выводивых фильмов
-  const [shownMoviesArray, setShownMoviesArray] = React.useState([[]]);
+  const [shownMoviesArray, setShownMoviesArray] = React.useState([]);
   // переменная для записи отфильтрованных фильмов
   const [searchedMoviesArray, setSearchedMoviesArray] = React.useState([]);
   // переменная для записи короткометражек
   const [shortMoviesArray, setShortMoviesArray] = React.useState([]);
-  // проверка для выделения активной кнопки в хидере
-  const [isSavedMovies, setIsSavedMovies] = React.useState(false);
-  // Проверка авторизации при отрисовке страницы
-  React.useEffect(() => {
-    checkToken();
-  }, [])
+  // переменная для хранения сохраненок
+  const [savedMoviesArray, setSavedMoviesArray] = React.useState([]);
+
   // Получение инфы о пользователе при отрисовке страницы и отправка ее в контекст
   React.useEffect(() => {
     if (loggedIn) {
@@ -46,12 +44,13 @@ function App() {
         setCurrentUser(res.data)
       })
       .catch(error => {
-        console.error(error)
+        console.log(error)
       })
     }
   }, [loggedIn])
-  //---------------------------------------------------------------------------Хэндлеры, функции и прочее
-  //проверка наличия и подлинности токена пользователя
+
+  // ---------------------------------------------------------------------------Работа с пользователем
+  // проверка наличия и подлинности токена пользователя
   const checkToken = () => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -66,12 +65,14 @@ function App() {
         console.log('проверка токена сломалась')
         console.log(err);
       })
-    } else {
-      return
     }
   }
+    // Проверка авторизации при отрисовке страницы
+    React.useEffect(() => {
+      checkToken();
+    }, [])
 
-  //Регистрация нового пользователя
+  // Регистрация нового пользователя
   const handleRegister = (name, email, password) => {
     mainApi.register(name, email, password)
     .then((res) => {
@@ -88,7 +89,7 @@ function App() {
     })
   }
 
-  //Логин существующего пользователя
+  // Логин существующего пользователя
   const handleLogin = (email, password) => {
     mainApi.authorize(email, password)
     .then((res) => {
@@ -107,16 +108,17 @@ function App() {
     })
   }
 
-  //Логаут существующего пользователя
+  // Логаут существующего пользователя
   const handleLogOut = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('allMovies');
+    localStorage.removeItem('savedMovies');
     setLoggedIn(false);
     setCurrentUser({});
     history.push('/')
   }
 
-  //Измененение данных текущего пользователя
+  // Измененение данных текущего пользователя
   const handleChangeProfile = (data) => {
     mainApi.sendUserInfo(data)
     .then(() => {
@@ -129,6 +131,38 @@ function App() {
         setIsProfileMessage('При обновлении профиля произошла ошибка');
       }
     })
+  }
+
+  // ---------------------------------------------------------------------------Карточки с фильмами
+
+  // Сохранение карточки
+  const handleSaveMovie = (data) => {
+    mainApi.addNewMovie(data)
+      .then((res) => {
+        setSavedMoviesArray([res.data, ...savedMoviesArray])
+        localStorage.setItem('userSavedMovies', JSON.stringify([res.data, ...savedMoviesArray]));
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  }
+
+  // Удаление карточки
+  const handleDeleteMovie = (data) => {
+    const savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
+    mainApi
+      .deleteSavedMovie(data._id)
+      .then(() => {
+        setSavedMoviesArray((newArray) => newArray.filter((element) => element._id !== data._id));
+        const updatedArray = savedMovies.filter(
+          (element) => element._id !== data._id,
+        );
+        localStorage.setItem('savedMovies', JSON.stringify(updatedArray));
+        setSavedMoviesArray(updatedArray);
+      })
+      .catch(err => {
+        console.error(err)
+      })
   }
 
   return (
@@ -163,20 +197,23 @@ function App() {
                 shownMoviesArray={shownMoviesArray}
                 searchedMoviesArray={searchedMoviesArray}
                 shortMoviesArray={shortMoviesArray}
-                isSavedMovies={isSavedMovies}
+                onSaveMovie={handleSaveMovie}
               />
             </Route>
             <Route exact path="/saved-movies">
               <SavedMovies
                 isLoggedIn={loggedIn}
                 currentUser={currentUser}
+                setSavedMoviesArray={setSavedMoviesArray}
                 setShownMoviesArray={setShownMoviesArray}
                 setSearchedMoviesArray={setSearchedMoviesArray}
                 setShortMoviesArray={setShortMoviesArray}
+                savedMoviesArray={savedMoviesArray}
                 shownMoviesArray={shownMoviesArray}
                 searchedMoviesArray={searchedMoviesArray}
                 shortMoviesArray={shortMoviesArray}
-                isSavedMovies={isSavedMovies}
+                onSaveMovie={handleSaveMovie}
+                onDeleteMovie={handleDeleteMovie}
               />
             </Route>
             <Route exact path="/profile">
