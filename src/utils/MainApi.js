@@ -89,7 +89,7 @@ class MainApi {
         description: movieData.description ? movieData.description : "Описание отсутствует",
         image: movieData.image,
         trailer: movieData.trailer ? movieData.trailer : "https://youtube.ru",
-        thumbnail: movieData.thumbnail ? movieData.thumbnail : "Свойство отстутствует",
+        thumbnail: movieData.thumbnail ? movieData.thumbnail : "отсутствует",
         nameRU: movieData.nameRU ? movieData.nameRU : "Имя отутствует в базе",
         nameEN: movieData.nameEN ? movieData.nameEN : "Имя отутствует в базе",
         movieId: movieData.movieId,

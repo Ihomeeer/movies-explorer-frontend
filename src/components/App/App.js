@@ -15,7 +15,7 @@ import NotFoundPage from '../NotFoundPage/NotFoundPage';
 function App() {
 
   const history = useHistory();
-  console.log(serverUrl)
+
   //  ---------------------------------------------------------------------------Хуки всякие, переменные
   // переменная для контекста
   const [currentUser, setCurrentUser] = React.useState({});

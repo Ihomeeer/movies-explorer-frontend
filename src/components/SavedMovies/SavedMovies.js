@@ -37,36 +37,19 @@ function SavedMovies({
   }
 
   React.useEffect(() => {
-    mainApi
-      .getMovies()
+    mainApi.getMovies()
       .then((res) => {
         // Распихивание всего в локальное хранилище
         localStorage.setItem("allSavedMovies", JSON.stringify(res.data));
-        localStorage.setItem(
-          "userSavedMovies",
-          JSON.stringify(
-            res.data.filter((movie) => movie.owner === currentUser._id)
-          )
-        );
-        const shortMovies = filterDuration(
-          JSON.parse(localStorage.getItem("userSavedMovies"))
-        );
-        localStorage.setItem("userSavedMoviesShorts", shortMovies);
-        setSavedMoviesArray(
-          JSON.parse(localStorage.getItem("userSavedMovies"))
-        );
+        localStorage.setItem("userSavedMovies", JSON.stringify(res.data.filter((movie) => movie.owner === currentUser._id)));
+        const shortMovies = filterDuration(JSON.parse(localStorage.getItem("userSavedMovies")));
+        localStorage.setItem("userSavedMoviesShorts", JSON.stringify(shortMovies));
+        setSavedMoviesArray(JSON.parse(localStorage.getItem("userSavedMovies")));
         setShortMoviesArray(shortMovies);
+        console.log(JSON.parse(localStorage.getItem("userSavedMovies")))
         if (JSON.parse(localStorage.getItem("userSavedMovies")).length > 0) {
+          setShownMoviesArray(savedMoviesArray);
           setIsMoviesVisible(true);
-          if (isShortMovies) {
-            setShownMoviesArray(
-              JSON.parse(localStorage.getItem("userSavedMoviesShorts"))
-            );
-          } else {
-            setShownMoviesArray(
-              JSON.parse(localStorage.getItem("userSavedMovies"))
-            );
-          }
         } else {
           setIsMoviesVisible(false);
           setSearchMessage("Отсутствуют сохраненные элементы");
@@ -85,7 +68,7 @@ function SavedMovies({
     if (isShortMovies) {
       setShownMoviesArray(shortMoviesArray);
     } else {
-      setShownMoviesArray(searchedMoviesArray);
+      setShownMoviesArray(savedMoviesArray);
     }
   }, [isShortMovies]);
 
@@ -97,7 +80,9 @@ function SavedMovies({
         setSearchMessage={setSearchMessage}
         searchMessage={searchMessage}
       />
-      <FilterCheckbox handleShortMovies={handleShortMovies} />
+      <FilterCheckbox
+        handleShortMovies={handleShortMovies}
+      />
       {isMoviesVisible ? (
         <MoviesCardList
           isSavedMovies
@@ -116,35 +101,15 @@ function SavedMovies({
 
 export default SavedMovies;
 
-// Отображение сохраненок сразу при рендере страницы
-// React.useEffect(() => {
-//   mainApi.getMovies()
-//   .then((res) => {
-//     if (res.data.length > 0) {
-//       setIsMoviesVisible(true);
-//       setShownMoviesArray(res.data.filter((movie) => movie.owner === currentUser._id))
-//       localStorage.setItem('savedMovies', JSON.stringify(res.data));
-//       setShownMoviesArray(res.data.filter((movie) => movie.owner === currentUser._id));
-//       if (isShortMovies) {
-//         setShownMoviesArray(shortMoviesArray);
-//         setSearchMessage('');
-//       } else {
-//         setShownMoviesArray(savedMoviesArray);
-//         setSearchMessage('');
-//       }
-//     } else {
-//       setIsMoviesVisible(false);
-//       setSearchMessage('Отсутствуют сохраненные элементы');
-//     }
-//   })
-//   .catch((err) => {
-//     setSearchMessage('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен');
-//     console.log(err);
-//   })
-// }, [currentUser]);
 
-// // Фильтрует полученные фильмы по значению инпута из SearchForm
-// const filterMovies = (arr, query) => {
 
-//   return arr.filter(el => el.nameRU.toLowerCase().indexOf(query.toLowerCase()) !== -1)
-// }
+  // Реализация работы чекбокса с короткометражками после поиска по названию
+  // React.useEffect(() => {
+  //   if (isShortMovies) {
+  //     console.log(shortMoviesArray)
+  //     console.log('лох')
+  //     setShownMoviesArray(shortMoviesArray);
+  //   } else {
+  //     setShownMoviesArray(searchedMoviesArray);
+  //   }
+  // }, [isShortMovies]);

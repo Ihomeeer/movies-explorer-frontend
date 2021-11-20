@@ -24,8 +24,12 @@ function MoviesCardList({
     <section className="section movies">
       {isSavedMovies ? (
         <ul className="movies__list">
-          {savedMoviesArray.map((movie) => (
-            <MoviesCard key={movie._id} card={movie} />
+          {shownMoviesArray.map((movie) => (
+            <MoviesCard
+            key={movie._id}
+            card={movie}
+            isSavedMovies={isSavedMovies}
+            />
           ))}
         </ul>
       ) : (
@@ -38,6 +42,7 @@ function MoviesCardList({
                 isSavedMovies={isSavedMovies}
                 onSaveMovie={onSaveMovie}
                 onDeleteMovie={onDeleteMovie}
+                savedMoviesArray={savedMoviesArray}
               />
             ))}
           </ul>

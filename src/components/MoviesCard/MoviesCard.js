@@ -7,7 +7,8 @@ function MoviesCard({
   isSavedMovies,
   isLiked,
   onSaveMovie,
-  onDeleteMovie
+  onDeleteMovie,
+  savedMoviesArray
 }) {
 
   const cardToSave = {
@@ -18,7 +19,7 @@ function MoviesCard({
     description: card.description,
     image: isSavedMovies ? card.image : `${serverUrl}${card.image.url}`,
     trailer:  isSavedMovies ? card.trailer : card.trailerLink,
-    thumbnail: isSavedMovies ? card.image.formats.thumbnail.url : `${serverUrl}${card.image.formats.thumbnail.url}`,
+    thumbnail: isSavedMovies ? card.thumbnail : `${serverUrl}${card.image.formats.thumbnail.url}`,
     movieId: isSavedMovies ? card._id : card.id,
     nameRU: card.nameRU,
     nameEN: card.nameEN,
@@ -32,12 +33,12 @@ function MoviesCard({
 
   function buttonClick(card) {
     if (isSavedMovies) {
-      onDeleteMovie(savedMovies.filter((element) => element.movieId === card.id)[0]);
+      console.log(savedMoviesArray)
+      onDeleteMovie(savedMoviesArray.filter((element) => element.movieId === card.id)[0]);
     } else {
       onSaveMovie(cardToSave);
     }
   }
-  console.log(card)
 
   return (
     <li className="movie__card">

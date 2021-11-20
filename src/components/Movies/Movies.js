@@ -74,10 +74,7 @@ function Movies({
           // Засовывание всех фильмов в локалсторадж
           localStorage.setItem("allMovies", JSON.stringify(res));
           // передача в константы результатов поиска и короткометражек
-          const searchedMovies = filterMovies(
-            JSON.parse(localStorage.getItem("allMovies")),
-            title
-          );
+          const searchedMovies = filterMovies(JSON.parse(localStorage.getItem("allMovies")),title);
           const shortMovies = filterDuration(searchedMovies);
           // добавление всего в стейты
           setSearchedMoviesArray(searchedMovies);
@@ -124,7 +121,9 @@ function Movies({
         setSearchMessage={setSearchMessage}
         searchMessage={searchMessage}
       />
-      <FilterCheckbox handleShortMovies={handleShortMovies} />
+      <FilterCheckbox
+        handleShortMovies={handleShortMovies}
+      />
       {isMoviesVisible ? (
         <MoviesCardList
           isSavedMovies={false}
