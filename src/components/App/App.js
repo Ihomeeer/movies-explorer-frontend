@@ -176,34 +176,35 @@ function App() {
   // ---------------------------------------------------------------------------Карточки с фильмами
 
   // Сохранение карточки
-  // const handleSaveMovie = (data) => {
-  //   mainApi.addNewMovie(data)
-  //     .then((res) => {
-  //       setSavedMoviesArray([res.data, ...savedMoviesArray]) //заменить на перерендер сейвов
-  //       localStorage.setItem('userSavedMovies', JSON.stringify([res.data, ...savedMoviesArray]));
-  //     })
-  //     .catch(error => {
-  //       console.error(error)
-  //     })
-  // }
+  const handleSaveMovie = (data) => {
+    mainApi.addNewMovie(data)
+      .then((res) => { // написать проверку id, чтобы не сохранять несколько одинаковых карточек
+        console.log(res)
+        setUserSavedMoviesArray([res.data, ...userSavedMoviesArray]) //заменить на перерендер сейвов
+        localStorage.setItem('userSavedMovies', JSON.stringify([res.data, ...userSavedMoviesArray]));
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  }
 
   // // Удаление карточки
-  // const handleDeleteMovie = (data) => { //упростить
-  //   const savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
-  //   mainApi
-  //     .deleteSavedMovie(data._id)
-  //     .then(() => {
-  //       setSavedMoviesArray((newArray) => newArray.filter((element) => element._id !== data._id));
-  //       const updatedArray = savedMovies.filter(
-  //         (element) => element._id !== data._id,
-  //       );
-  //       localStorage.setItem('savedMovies', JSON.stringify(updatedArray));
-  //       setSavedMoviesArray(updatedArray);
-  //     })
-  //     .catch(err => {
-  //       console.error(err)
-  //     })
-  // }
+  const handleDeleteMovie = (data) => { //упростить, можно вставить просто перерендер нового массива
+    const savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
+    mainApi
+      .deleteMovie(data._id)
+      .then(() => {
+        setUserSavedMoviesArray((array) => array.filter((element) => element._id !== data._id));
+        const updatedArray = savedMovies.filter(
+          (element) => element._id !== data._id,
+        );
+        localStorage.setItem('savedMovies', JSON.stringify(updatedArray));
+        setUserSavedMoviesArray(updatedArray);
+      })
+      .catch(err => {
+        console.error(err)
+      })
+  }
 
 
   // Отфильтровывание фильмов, сохраненных пользователем
@@ -249,7 +250,7 @@ function App() {
               shownMoviesArray={shownMoviesArray}
               searchedMoviesArray={searchedMoviesArray}
               shortMoviesArray={shortMoviesArray}
-              // onSaveMovie={handleSaveMovie}
+              onSaveMovie={handleSaveMovie}
             />
 
             <ProtectedRoute exact path="/saved-movies"
