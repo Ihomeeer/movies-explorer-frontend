@@ -5,7 +5,8 @@ import './NavTab.css';
 import Navigation from '../Navigation/Navigation';
 
 function NavTab ({
-  isLoggedIn
+  isAuth,
+  isMainPage
 }) {
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -16,7 +17,7 @@ function NavTab ({
 
   return (
     <section className="nav-tab">
-        {isLoggedIn ? (
+        {isAuth ? (
           <>
           <div className="nav-tab__links">
             <a href="/#aboutProject">

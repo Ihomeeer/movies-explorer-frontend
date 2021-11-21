@@ -44,8 +44,8 @@ function MoviesCard({
     <li className="movie__card">
       <div className="movie__info-panel">
         <div className="movie__info-wrapper">
-          <p className="movie__title">{card.nameRU}</p>
-          <p className="movie__duration">{convertDuration(card.duration)}</p>
+          <p className="movie__title">{cardToSave.nameRU}</p>
+          <p className="movie__duration">{convertDuration(cardToSave.duration)}</p>
         </div>
         <button
           className={
@@ -64,7 +64,7 @@ function MoviesCard({
         <img
           className="movie__poster"
           alt="Постер фильма"
-          src={isSavedMovies ? card.image : `${serverUrl}${card.image.url}`}
+          src={cardToSave.image}
         />
       </a>
     </li>

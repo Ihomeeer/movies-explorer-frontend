@@ -8,7 +8,7 @@ function Profile({
   handleLogOut,
   handleChangeProfile,
   isProfileMessage,
-  isLoggedIn,
+  isAuth,
 }) {
 
   const currentUser = React.useContext(CurrentUserContext);
@@ -31,7 +31,7 @@ function Profile({
   return (
     <>
       <Header
-        isLoggedIn = {isLoggedIn}
+        isAuth = {isAuth}
       />
       <form className="profile" onSubmit={handleFormSubmit}>
         <h1 className="profile__greetings">Привет, {values.name}</h1>

@@ -9,7 +9,7 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 
 function Movies({
-  isLoggedIn,
+  isAuth,
   setShownMoviesArray,
   setSearchedMoviesArray,
   setShortMoviesArray,
@@ -74,7 +74,7 @@ function Movies({
           // Засовывание всех фильмов в локалсторадж
           localStorage.setItem("allMovies", JSON.stringify(res));
           // передача в константы результатов поиска и короткометражек
-          const searchedMovies = filterMovies(JSON.parse(localStorage.getItem("allMovies")),title);
+          const searchedMovies = filterMovies(JSON.parse(localStorage.getItem("allMovies")), title);
           const shortMovies = filterDuration(searchedMovies);
           // добавление всего в стейты
           setSearchedMoviesArray(searchedMovies);
@@ -107,7 +107,7 @@ function Movies({
   // Реализация работы чекбокса с короткометражками после поиска по названию
   React.useEffect(() => {
     if (isShortMovies) {
-        setShownMoviesArray(shortMoviesArray);
+      setShownMoviesArray(shortMoviesArray);
     } else {
       setShownMoviesArray(searchedMoviesArray);
     }
@@ -115,7 +115,7 @@ function Movies({
 
   return (
     <div>
-      <Header isLoggedIn={isLoggedIn} />
+      <Header isAuth={isAuth} />
       <SearchForm
         getMovies={getMovies}
         setSearchMessage={setSearchMessage}

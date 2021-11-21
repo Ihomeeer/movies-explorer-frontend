@@ -7,14 +7,14 @@ import AboutMe from '../AboutMe/AboutMe';
 import Footer from '../Footer/Footer';
 
 function Main({
-  isLoggedIn,
+  isAuth,
   isMainPage,
 }) {
 
   return (
     <div className="main">
       <Header
-        isLoggedIn = {isLoggedIn}
+        isAuth = {isAuth}
         isMainPage = {isMainPage}
       />
       <Promo />

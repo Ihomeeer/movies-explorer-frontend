@@ -7,16 +7,11 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 
 function SavedMovies({
-  isLoggedIn,
-  setSavedMoviesArray,
-  setShownMoviesArray,
-  setSearchedMoviesArray,
-  setShortMoviesArray,
-  savedMoviesArray,
-  shownMoviesArray,
-  searchedMoviesArray,
-  shortMoviesArray,
-  currentUser,
+  isAuth,
+  userSavedMoviesArray,
+  userSavedShortsArray,
+  setShownSavedMoviesArray,
+  shownSavedMoviesArray,
   onSaveMovie,
   onDeleteMovie
 }) {
@@ -27,56 +22,43 @@ function SavedMovies({
   // переменная для работы чекбокса короткометражек
   const [isShortMovies, setIsShortMovies] = React.useState(false);
 
-  // Работа с чекбоксом
-  const filterDuration = (movies) =>
-    movies.filter((movie) => movie.duration <= 40);
+    console.log(userSavedMoviesArray)
+    console.log(userSavedShortsArray)
 
   // функция для переключения стейта чекбоксом
   const handleShortMovies = () => {
     setIsShortMovies(!isShortMovies);
   }
 
-  React.useEffect(() => {
-    mainApi.getMovies()
-      .then((res) => {
-        // Распихивание всего в локальное хранилище
-        localStorage.setItem("allSavedMovies", JSON.stringify(res.data));
-        localStorage.setItem("userSavedMovies", JSON.stringify(res.data.filter((movie) => movie.owner === currentUser._id)));
-        const shortMovies = filterDuration(JSON.parse(localStorage.getItem("userSavedMovies")));
-        localStorage.setItem("userSavedMoviesShorts", JSON.stringify(shortMovies));
-        setSavedMoviesArray(JSON.parse(localStorage.getItem("userSavedMovies")));
-        setShortMoviesArray(shortMovies);
-        console.log(JSON.parse(localStorage.getItem("userSavedMovies")))
-        if (JSON.parse(localStorage.getItem("userSavedMovies")).length > 0) {
-          setShownMoviesArray(savedMoviesArray);
-          setIsMoviesVisible(true);
-        } else {
-          setIsMoviesVisible(false);
-          setSearchMessage("Отсутствуют сохраненные элементы");
-        }
-      })
-      .catch((err) => {
-        setSearchMessage(
-          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен"
-        );
-        console.log(err);
-      });
-  }, []);
+  // Фильтрует сохраненные фильмы по значению инпута из SearchForm
+  const filterMovies = (arr, query) =>
+    arr.filter(
+      (el) => el.nameRU.toLowerCase().indexOf(query.toLowerCase()) !== -1
+    );
+
+    const getMovies = (title) => {
+      // const currentMovies = filterMovies(userSavedMoviesArray);
+      // setShownSavedMoviesArray(currentMovies);
+
+      setIsMoviesVisible(true);
+    }
+
+
 
   // Реализация работы чекбокса с короткометражками после поиска по названию
   React.useEffect(() => {
     if (isShortMovies) {
-      setShownMoviesArray(shortMoviesArray);
+      setShownSavedMoviesArray(userSavedShortsArray);
     } else {
-      setShownMoviesArray(savedMoviesArray);
+      setShownSavedMoviesArray(userSavedMoviesArray);
     }
   }, [isShortMovies]);
 
   return (
     <div>
-      <Header isLoggedIn={isLoggedIn} />
+      <Header isAuth={isAuth} />
       <SearchForm
-        // getMovies={getMovies}
+        getMovies={getMovies}
         setSearchMessage={setSearchMessage}
         searchMessage={searchMessage}
       />
@@ -86,8 +68,8 @@ function SavedMovies({
       {isMoviesVisible ? (
         <MoviesCardList
           isSavedMovies
-          shownMoviesArray={shownMoviesArray}
-          savedMoviesArray={savedMoviesArray}
+          shownSavedMoviesArray={shownSavedMoviesArray}
+          userSavedMoviesArray={userSavedMoviesArray}
           onSaveMovie={onSaveMovie}
           onDeleteMovie={onDeleteMovie}
         />
@@ -113,3 +95,93 @@ export default SavedMovies;
   //     setShownMoviesArray(searchedMoviesArray);
   //   }
   // }, [isShortMovies]);
+
+
+
+
+
+
+
+
+
+  // // Работа с чекбоксом
+  // const filterDuration = (movies) =>
+  //   movies.filter((movie) => movie.duration <= 40);
+
+  // // Отфильтровывание фильмов, сохраненных пользователем
+  // const filterOwner = (movies) =>
+  //    movies.filter((movie) => movie.owner === currentUser._id);
+
+
+
+  // React.useEffect(() => {
+  //   mainApi.getMovies()
+  //     .then((res) => {
+  //       // Распихивание всего в локальное хранилище
+  //       localStorage.setItem("allSavedMovies", JSON.stringify(res.data));
+  //       localStorage.setItem("userSavedMovies", JSON.stringify(res.data.filter((movie) => movie.owner === currentUser._id)));
+  //       const shortMovies = filterDuration(JSON.parse(localStorage.getItem("userSavedMovies")));
+  //       localStorage.setItem("userSavedMoviesShorts", JSON.stringify(shortMovies));
+  //       setSavedMoviesArray(JSON.parse(localStorage.getItem("userSavedMovies")));
+  //       setShortMoviesArray(shortMovies);
+  //       console.log(JSON.parse(localStorage.getItem("userSavedMovies")))
+  //       if (JSON.parse(localStorage.getItem("userSavedMovies")).length > 0) {
+  //         setShownMoviesArray(savedMoviesArray);
+  //         setIsMoviesVisible(true);
+  //       } else {
+  //         setIsMoviesVisible(false);
+  //         setSearchMessage("Отсутствуют сохраненные элементы");
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       setSearchMessage(
+  //         "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен"
+  //       );
+  //       console.log(err);
+  //     });
+  // }, []);
+
+
+
+  // React.useEffect(() => {
+  //   mainApi.getMovies()
+  //     .then((res) => {
+  //       const allSavedMovies = res.data;
+  //       const userSavedMovies = filterOwner(allSavedMovies);
+  //       const userSavedShorts = filterDuration(userSavedMovies);
+  //       console.log(currentUser)
+  //       console.log(allSavedMovies)
+  //       console.log(userSavedMovies)
+  //       console.log(userSavedShorts)
+  //     })
+
+  // }, []);
+
+
+
+  // React.useEffect(() => { //рендер карточек только после поиска, перенести в app
+  //   mainApi.getMovies()
+  //     .then((res) => {
+  //       // Распихивание всего в локальное хранилище
+  //       localStorage.setItem("allSavedMovies", JSON.stringify(res.data));
+  //       localStorage.setItem("userSavedMovies", JSON.stringify(res.data.filter((movie) => movie.owner === currentUser._id)));
+  //       const shortMovies = filterDuration(JSON.parse(localStorage.getItem("userSavedMovies")));
+  //       localStorage.setItem("userSavedMoviesShorts", JSON.stringify(shortMovies));
+  //       setSavedMoviesArray(JSON.parse(localStorage.getItem("userSavedMovies")));
+  //       setShortMoviesArray(shortMovies);
+  //       console.log(JSON.parse(localStorage.getItem("userSavedMovies")))
+  //       if (JSON.parse(localStorage.getItem("userSavedMovies")).length > 0) {
+  //         setShownMoviesArray(savedMoviesArray);
+  //         setIsMoviesVisible(true);
+  //       } else {
+  //         setIsMoviesVisible(false);
+  //         setSearchMessage("Отсутствуют сохраненные элементы");
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       setSearchMessage(
+  //         "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен"
+  //       );
+  //       console.log(err);
+  //     });
+  // }, []);
