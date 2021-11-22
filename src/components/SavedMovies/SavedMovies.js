@@ -12,7 +12,6 @@ function SavedMovies({
   userSavedShortsArray,
   setShownSavedMoviesArray,
   shownSavedMoviesArray,
-  onSaveMovie,
   onDeleteMovie
 }) {
   // сообщение о ненайденных фильмах при поиске
@@ -22,8 +21,8 @@ function SavedMovies({
   // переменная для работы чекбокса короткометражек
   const [isShortMovies, setIsShortMovies] = React.useState(false);
 
-    console.log(userSavedMoviesArray)
-    console.log(userSavedShortsArray)
+    // console.log(userSavedMoviesArray)
+    // console.log(userSavedShortsArray)
 
   // функция для переключения стейта чекбоксом
   const handleShortMovies = () => {
@@ -38,7 +37,6 @@ function SavedMovies({
 
   const getMovies = (title) => {
     const currentMovies = filterMovies(JSON.parse(localStorage.getItem("userSavedMovies")), title);
-    console.log(currentMovies);
     setShownSavedMoviesArray(currentMovies);
     if (currentMovies.length > 0) {
       setIsSavedMoviesVisible(true);
@@ -58,6 +56,10 @@ function SavedMovies({
     }
   }, [isShortMovies]);
 
+  React.useEffect(() => {
+      setShownSavedMoviesArray(userSavedMoviesArray);
+  }, [userSavedMoviesArray]);
+
   return (
     <div>
       <Header isAuth={isAuth} />
@@ -74,7 +76,6 @@ function SavedMovies({
           isSavedMovies
           shownSavedMoviesArray={shownSavedMoviesArray}
           userSavedMoviesArray={userSavedMoviesArray}
-          onSaveMovie={onSaveMovie}
           onDeleteMovie={onDeleteMovie}
         />
       ) : (

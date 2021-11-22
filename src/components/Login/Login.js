@@ -13,7 +13,7 @@ function Register({
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    handleLogin( values.email, values.password);
+    handleLogin(values.email, values.password);
   }
 
   return (

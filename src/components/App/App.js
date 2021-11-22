@@ -54,7 +54,7 @@ function App() {
   // Получение инфы о пользователе при отрисовке страницы и отправка ее в контекст
   React.useEffect(() => {
     if (isAuth) {
-      mainApi.checkUser()
+      mainApi.getUserInfo()
       .then((res) => {
         setCurrentUser(res.data)
       })
@@ -69,7 +69,7 @@ function App() {
   const checkToken = () => {
     const token = localStorage.getItem('token');
     if (token) {
-      mainApi.checkUser()
+      mainApi.getUserInfo()
       .then((res) => {
         if (res.data.email) {
           console.log('проверка токена успешна')
@@ -109,6 +109,7 @@ function App() {
   const handleLogin = (email, password) => {
     mainApi.authorize(email, password)
     .then((res) => {
+      console.log(res)
       if (res.token) {
         localStorage.setItem('token', res.token);
         mainApi.getUserInfo()
@@ -126,7 +127,7 @@ function App() {
               // записывание всего в локальное хранилище
               localStorage.setItem("allSavedMovies", JSON.stringify(allSavedMovies));
               localStorage.setItem("userSavedMovies", JSON.stringify(userSavedMovies));
-              localStorage.setItem("userSavedShorts", JSON.stringify(userSavedShorts));
+              localStorage.setItem("userSavedShorts", JSON.stringify(userSavedShorts));  //убрать шорты, они тут не нужны
               // записывание в стейты
               setUserSavedMoviesArray(userSavedMovies); //вот эти 2 стейта я прокидываю в savedMovies (строки 258 и 259)
               setUserSavedShortsArray(userSavedShorts);
@@ -146,9 +147,6 @@ function App() {
       }
     })
   }
-
-  console.log(userSavedMoviesArray)
-  console.log(userSavedShortsArray)
 
   // Логаут существующего пользователя
   const handleLogOut = () => {
@@ -188,22 +186,27 @@ function App() {
       })
   }
 
-  // // Удаление карточки
-  const handleDeleteMovie = (data) => { //упростить, можно вставить просто перерендер нового массива
-    const savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
-    mainApi
-      .deleteMovie(data._id)
-      .then(() => {
-        setUserSavedMoviesArray((array) => array.filter((element) => element._id !== data._id));
-        const updatedArray = savedMovies.filter(
-          (element) => element._id !== data._id,
-        );
-        localStorage.setItem('savedMovies', JSON.stringify(updatedArray));
-        setUserSavedMoviesArray(updatedArray);
+  // Удаление карточки
+  const handleDeleteMovie = (id) => {
+    mainApi.deleteMovie(id)
+    .then(() => {
+      mainApi.getMovies()
+      .then((res) => {
+        const newMoviesArray = res.data;
+        const userId = currentUser._id;
+        const newUserSavedMovies = filterOwner(newMoviesArray, userId);
+        console.log(newUserSavedMovies);
+        localStorage.setItem("allSavedMovies", JSON.stringify(newMoviesArray));
+        localStorage.setItem("userSavedMovies", JSON.stringify(newUserSavedMovies));
+        setUserSavedMoviesArray(newUserSavedMovies);
       })
-      .catch(err => {
-        console.error(err)
+      .catch(error => {
+        console.log(error)
       })
+    })
+    .catch(error => {
+      console.log(error)
+    })
   }
 
 
@@ -260,17 +263,17 @@ function App() {
               userSavedShortsArray={userSavedShortsArray}
               setShownSavedMoviesArray={setShownSavedMoviesArray}
               shownSavedMoviesArray={shownSavedMoviesArray}
-              // onSaveMovie={handleSaveMovie}
-              // onDeleteMovie={handleDeleteMovie}
+              onDeleteMovie={handleDeleteMovie}
             />
 
             <ProtectedRoute exact path="/profile"
-                component={Profile}
-                isAuth={isAuth}
-                handleLogOut = {handleLogOut}
-                handleChangeProfile = {handleChangeProfile}
-                isProfileMessage={isProfileMessage}
-              />
+              component={Profile}
+              isAuth={isAuth}
+              handleLogOut = {handleLogOut}
+              handleChangeProfile = {handleChangeProfile}
+              setIsProfileMessage={setIsProfileMessage}
+              isProfileMessage={isProfileMessage}
+            />
 
             <Route path="*">
               <NotFoundPage />
@@ -357,3 +360,47 @@ export default App;
     //     })
     //   }
     // }
+
+
+      // // Удаление карточки
+  // const handleDeleteMovie = (data) => { //упростить, можно вставить просто перерендер нового массива
+  //   // const savedMovies = JSON.parse(localStorage.getItem('userSavedMovies'));
+  //   mainApi
+  //     .deleteMovie(data._id)
+  //     .then(() => {
+  //       setUserSavedMoviesArray((array) => array.filter((element) => element._id !== data._id));
+  //       const updatedArray = savedMovies.filter(
+  //         (element) => element._id !== data._id,
+  //       );
+  //       localStorage.setItem('userSavedMovies', JSON.stringify(updatedArray));
+  //       setUserSavedMoviesArray(updatedArray);
+  //     })
+  //     .catch(err => {
+  //       console.error(err)
+  //     })
+  // }
+
+
+
+
+
+
+  // const handleDeleteMovie = (data) => { //упростить, можно вставить просто перерендер нового массива
+  //   // const savedMovies = JSON.parse(localStorage.getItem('userSavedMovies'));
+  //   mainApi
+  //     .deleteMovie(data._id)
+  //     .catch(err => {
+  //       console.error(err)
+  //     })
+  //     mainApi.getMovies()
+  //     .then((res) => {
+  //       // записывание всего в константы
+  //       const allSavedMovies = res.data;
+  //       const userSavedMovies = filterOwner(allSavedMovies, currentUserId);
+  //       localStorage.setItem("allSavedMovies", JSON.stringify(allSavedMovies));
+  //       localStorage.setItem("userSavedMovies", JSON.stringify(userSavedMovies));
+  //       // записывание в стейты
+  //       setUserSavedMoviesArray(userSavedMovies); //вот эти 2 стейта я прокидываю в savedMovies (строки 258 и 259)
+  //     })
+  //     .catch((err) => console.log(err));
+  // }

@@ -20,9 +20,9 @@ function NavTab ({
         {isAuth ? (
           <>
           <div className="nav-tab__links">
-            <a href="/#aboutProject">
+            <Link to="/#aboutProject">
               <img className="logo nav-tab__logo" src={navTabLogoPath} alt="лого проекта" />
-            </a>
+            </Link>
             <div className="nav-tab__films-wrapper">
             <Route exact path="/" >
               <Link className="link nav-tab__link nav-tab__link_white nav-tab__link_type_all-films" to="/movies">Фильмы</Link>

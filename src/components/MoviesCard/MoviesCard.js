@@ -33,8 +33,7 @@ function MoviesCard({
 
   function buttonClick(card) {
     if (isSavedMovies) {
-      console.log(savedMoviesArray)
-      onDeleteMovie(savedMoviesArray.filter((element) => element.movieId === card.id)[0]);
+      onDeleteMovie(cardToSave.movieId);
     } else {
       onSaveMovie(cardToSave);
     }

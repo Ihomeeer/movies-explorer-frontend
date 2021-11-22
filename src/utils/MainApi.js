@@ -40,14 +40,6 @@ class MainApi {
     }).then((res) => this._checkStatus(res));
   }
 
-  // Запрос для проверки валидности токена
-  checkUser() {
-    return fetch(`${this._baseUrl}/users/me`, {
-      method: "GET",
-      headers: this._headers,
-    }).then((res) => this._checkStatus(res));
-  }
-
   // получение информации о пользователе с сервера
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {

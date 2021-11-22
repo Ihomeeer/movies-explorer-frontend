@@ -7,11 +7,13 @@ import './Profile.css';
 function Profile({
   handleLogOut,
   handleChangeProfile,
+  setIsProfileMessage,
   isProfileMessage,
   isAuth,
 }) {
 
   const currentUser = React.useContext(CurrentUserContext);
+  const [isDisabled, setIsDisabled] = React.useState(false);
 
   const { values, setValues, errors, isValid, handleChange } = useFormWithValidation();
 
@@ -25,8 +27,13 @@ function Profile({
   const handleFormSubmit = (e) => {
     e.preventDefault();
     handleChangeProfile(values);
-    console.log('click');
+    setIsDisabled(true)
   }
+
+  React.useEffect(() => {
+    setIsDisabled(false)
+    setIsProfileMessage('')
+  }, [values.name, values.email])
 
   return (
     <>
@@ -78,7 +85,7 @@ function Profile({
         </fieldset>
 
         <div className="profile__buttons">
-          <button type="submit" className={`profile__button profile__button_type_submit ${!isValid ? 'profile__button_disabled' : ''}`} disabled={!isValid}>Редактировать</button>
+          <button type="submit" className={`profile__button profile__button_type_submit ${!isValid ? 'profile__button_disabled' : ''}`} disabled={!isValid || isDisabled}>Редактировать</button>
           <button type="button" className="profile__button profile__button_type_quit" onClick={handleLogOut}>Выйти из аккаунта</button>
         </div>
       </form>

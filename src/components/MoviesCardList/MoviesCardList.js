@@ -31,6 +31,7 @@ function MoviesCardList({
             key={movie._id}
             card={movie}
             isSavedMovies={isSavedMovies}
+            onDeleteMovie={onDeleteMovie}
             />
           ))}
         </ul>

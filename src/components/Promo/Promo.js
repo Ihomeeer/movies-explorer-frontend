@@ -1,6 +1,7 @@
 import React from 'react';
 import './Promo.css';
-import promoIllustrationRoute from '../../images/Promo/illustration.png'
+import promoIllustrationRoute from '../../images/Promo/illustration.png';
+import { Link } from 'react-router-dom';
 
 function Promo(props) {
 
@@ -13,7 +14,9 @@ function Promo(props) {
         </div>
         <img className="promo__illustration" src={promoIllustrationRoute} alt="главная иллюстрация проекта"/>
       </div>
-      <button className="promo__learn-more-button" aria-label="Узнать больше">Узнать больше</button>
+      <Link to="/#aboutProject">
+        <button className="promo__learn-more-button" aria-label="Узнать больше">Узнать больше</button>
+      </Link>
     </section>
   );
 }
