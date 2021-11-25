@@ -4,9 +4,10 @@ import { useFormWithValidation } from '../../utils/validation';
 import loginLogoPath from '../../images/NavTab/logo.svg';
 import '../Register/Register';
 
-function Register({
+function Login({
   handleLogin,
-  isLoginError
+  isLoginError,
+  isLoginInputsDisabled
 }) {
 
   const { values, errors, isValid, handleChange } = useFormWithValidation();
@@ -39,6 +40,7 @@ function Register({
             placeholder="E-mail"
             onChange={handleChange}
             value={values.email || ''}
+            disabled={isLoginInputsDisabled}
           />
           <span className={`register__error_type_email ${errors.email ? "register__error" : ''}`}>{errors.email}</span>
         </div>
@@ -57,6 +59,7 @@ function Register({
             placeholder="Пароль"
             onChange={handleChange}
             value={values.password || ''}
+            disabled={isLoginInputsDisabled}
           />
           <span className={`register__error_type_password ${errors.password ? "register__error" : ''}`}>{errors.password}</span>
         </div>
@@ -72,4 +75,4 @@ function Register({
   );
 }
 
-export default Register;
+export default Login;

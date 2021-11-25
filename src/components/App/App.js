@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
-import {serverUrl} from '../../utils/constants';
 import './App.css';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
@@ -28,6 +27,14 @@ function App() {
   const [isRegisterError, setIsRegisterError] = React.useState('');
   // наличие сообщения при ихменении данных профиля для выведения текста в соответствующий спан. По сути, сюда пишется текст ошибки
   const [isProfileMessage, setIsProfileMessage] = React.useState('');
+  // видимость загрузочной крутилки
+  const [isPreloaderVisible, setIsPreloaderVisible] = React.useState(false);
+  // отключение инпутов профиля, чтобы не случилось беды
+  const [isProfileInputsDisabled, setIsProfileInputsDisabled] = React.useState(false)
+  // отключение инпутов профиля, чтобы не случилось беды
+  const [isLoginInputsDisabled, setIsLoginInputsDisabled] = React.useState(false)
+  // отключение инпутов профиля, чтобы не случилось беды
+  const [isRegisterInputsDisabled, setIsRegisterInputsDisabled] = React.useState(false)
 
 
 
@@ -90,13 +97,15 @@ function App() {
 
   // Регистрация нового пользователя
   const handleRegister = (name, email, password) => {
+    setIsRegisterInputsDisabled(true);
     mainApi.register(name, email, password)
     .then((res) => {
-      console.log(res);
+      setIsRegisterInputsDisabled(false);
       history.push('/signin')
       setIsRegisterError('');
     })
     .catch((err) => {
+      setIsRegisterInputsDisabled(false);
       if (err === '409') {
         setIsRegisterError('Пользователь с такими данными уже существует');
       } else {
@@ -107,9 +116,10 @@ function App() {
 
   // Логин существующего пользователя
   const handleLogin = (email, password) => {
+    setIsLoginInputsDisabled(true);
     mainApi.authorize(email, password)
     .then((res) => {
-      console.log(res)
+      setIsLoginInputsDisabled(true);
       if (res.token) {
         localStorage.setItem('token', res.token);
         mainApi.getUserInfo()
@@ -132,14 +142,19 @@ function App() {
               setUserSavedMoviesArray(userSavedMovies); //вот эти 2 стейта я прокидываю в savedMovies (строки 258 и 259)
               setUserSavedShortsArray(userSavedShorts);
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+              console.log(err)
+            });
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err)
+        });
         history.push('/movies')
       }
     })
     .catch((err) => {
+      setIsLoginInputsDisabled(false);
       if (err === '401' || '400') {
         setIsLoginError('Введены некорректные данные пользователя');
       } else {
@@ -158,11 +173,14 @@ function App() {
 
   // Измененение данных текущего пользователя
   const handleChangeProfile = (data) => {
+    setIsProfileInputsDisabled(true);
     mainApi.sendUserInfo(data)
     .then(() => {
+      setIsProfileInputsDisabled(false);
       setIsProfileMessage('Профиль успешно обновлен');
     })
     .catch((err) => {
+      setIsProfileInputsDisabled(false);
       if (err === '409' || '409') {
         setIsProfileMessage('Пользователь с такими данными уже существует');
       } else {
@@ -227,6 +245,7 @@ function App() {
               <Register
                 handleRegister={handleRegister}
                 isRegisterError={isRegisterError}
+                isRegisterInputsDisabled={isRegisterInputsDisabled}
               />
             </Route>
 
@@ -234,6 +253,7 @@ function App() {
               <Login
                 handleLogin={handleLogin}
                 isLoginError={isLoginError}
+                isLoginInputsDisabled={isLoginInputsDisabled}
               />
             </Route>
 
@@ -254,6 +274,8 @@ function App() {
               searchedMoviesArray={searchedMoviesArray}
               shortMoviesArray={shortMoviesArray}
               onSaveMovie={handleSaveMovie}
+              isPreloaderVisible={isPreloaderVisible}
+              setIsPreloaderVisible={setIsPreloaderVisible}
             />
 
             <ProtectedRoute exact path="/saved-movies"
@@ -273,6 +295,7 @@ function App() {
               handleChangeProfile = {handleChangeProfile}
               setIsProfileMessage={setIsProfileMessage}
               isProfileMessage={isProfileMessage}
+              isProfileInputsDisabled={isProfileInputsDisabled}
             />
 
             <Route path="*">

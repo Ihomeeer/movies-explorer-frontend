@@ -1,5 +1,4 @@
 import React from "react";
-import mainApi from "../../utils/MainApi";
 import Header from "../Header/Header";
 import SearchForm from "../SearchForm/SearchForm";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
@@ -12,7 +11,7 @@ function SavedMovies({
   userSavedShortsArray,
   setShownSavedMoviesArray,
   shownSavedMoviesArray,
-  onDeleteMovie
+  onDeleteMovie,
 }) {
   // сообщение о ненайденных фильмах при поиске
   const [searchMessage, setSearchMessage] = React.useState("");
@@ -20,9 +19,6 @@ function SavedMovies({
   const [isSavedMoviesVisible, setIsSavedMoviesVisible] = React.useState(false);
   // переменная для работы чекбокса короткометражек
   const [isShortMovies, setIsShortMovies] = React.useState(false);
-
-    // console.log(userSavedMoviesArray)
-    // console.log(userSavedShortsArray)
 
   // функция для переключения стейта чекбоксом
   const handleShortMovies = () => {
@@ -44,8 +40,6 @@ function SavedMovies({
       setIsSavedMoviesVisible(false);
     }
   }
-
-
 
   // Реализация работы чекбокса с короткометражками после поиска по названию
   React.useEffect(() => {

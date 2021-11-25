@@ -10,9 +10,11 @@ function Profile({
   setIsProfileMessage,
   isProfileMessage,
   isAuth,
+  isProfileInputsDisabled
 }) {
 
   const currentUser = React.useContext(CurrentUserContext);
+  // отключение кнопки "Редактировать"
   const [isDisabled, setIsDisabled] = React.useState(false);
 
   const { values, setValues, errors, isValid, handleChange } = useFormWithValidation();
@@ -59,6 +61,7 @@ function Profile({
                 onChange={handleChange}
                 value={values.name || ''}
                 placeholder={currentUser.name}
+                disabled={isProfileInputsDisabled}
               />
             </div>
 
@@ -77,6 +80,7 @@ function Profile({
                   onChange={handleChange}
                   value={values.email || ''}
                   placeholder={currentUser.email}
+                  disabled={isProfileInputsDisabled}
                 />
             </div>
 

@@ -7,6 +7,7 @@ import SearchForm from "../SearchForm/SearchForm";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
+import Preloader from "../Preloader/Preloader";
 
 function Movies({
   isAuth,
@@ -16,7 +17,9 @@ function Movies({
   shownMoviesArray,
   searchedMoviesArray,
   shortMoviesArray,
-  onSaveMovie
+  onSaveMovie,
+  isPreloaderVisible,
+  setIsPreloaderVisible
 }) {
   const windowSize = useWindowSize();
 
@@ -68,6 +71,7 @@ function Movies({
   // Запрос на получение фильмов со всеми фильтрами и прочим
   const getMovies = (title) => {
     if (title) {
+      setIsPreloaderVisible(true);
       moviesApi
         .getAllMovies()
         .then((res) => {
@@ -94,10 +98,14 @@ function Movies({
         })
         .catch((err) => {
           console.log(err);
+          setIsPreloaderVisible(false);
           setSearchMessage(
             "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен"
           );
-        });
+        })
+        .finally(() => {
+          setIsPreloaderVisible(false);
+        })
     } else {
       setSearchMessage("Нужно ввести ключевое слово");
       setIsMoviesVisible(false);
@@ -132,6 +140,11 @@ function Movies({
           handleBtnClick={handleMoreButtonClick}
           total={cardsAmount.total}
         />
+      ) : (
+        ""
+      )}
+      {isPreloaderVisible ? (
+        <Preloader />
       ) : (
         ""
       )}

@@ -7,7 +7,8 @@ import './Register.css';
 
 function Register({
   handleRegister,
-  isRegisterError
+  isRegisterError,
+  isRegisterInputsDisabled
 }) {
 
   const { values, errors, isValid, handleChange } = useFormWithValidation();
@@ -39,6 +40,7 @@ function Register({
             placeholder="Имя"
             onChange={handleChange}
             value={values.name || ''}
+            disabled={isRegisterInputsDisabled}
           />
           <span className={`register__error_type_name ${errors.name ? "register__error" : ''}`}>{errors.name}</span>
         </div>
@@ -58,6 +60,7 @@ function Register({
             placeholder="E-mail"
             onChange={handleChange}
             value={values.email || ''}
+            disabled={isRegisterInputsDisabled}
           />
           <span className={`register__error_type_email ${errors.email ? "register__error" : ''}`}>{errors.email}</span>
         </div>
@@ -76,6 +79,7 @@ function Register({
             placeholder="Пароль"
             onChange={handleChange}
             value={values.password || ''}
+            disabled={isRegisterInputsDisabled}
           />
           <span className={`register__error_type_password ${errors.password ? "register__error" : ''}`}>{errors.password}</span>
         </div>
