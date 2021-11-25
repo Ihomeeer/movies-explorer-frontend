@@ -40,9 +40,9 @@ function App() {
 
 
   //  ---------------------------------------------------------------------------стейты для компонента Movies (BeatsFilm)
-  // переменная для отфильтрованных по названию фильмов
+  // переменная для сохраненных фильмов, которые будут отрисовываться на странице
   const [shownMoviesArray, setShownMoviesArray] = React.useState([]);
-  // переменная для записи отфильтрованных фильмов
+  // переменная для записи отфильтрованных фильмов (по названию)
   const [searchedMoviesArray, setSearchedMoviesArray] = React.useState([]);
   // переменная для записи короткометражек
   const [shortMoviesArray, setShortMoviesArray] = React.useState([]);
@@ -51,11 +51,13 @@ function App() {
 
 
   //  ---------------------------------------------------------------------------стейты для компонента savedMovies
-  // переменная для отфильтрованных по названию сохраненных пользователем фильмов
+  // переменная для сохраненных фильмов, которые будут отрисовываться на странице
   const [shownSavedMoviesArray, setShownSavedMoviesArray] = React.useState([]);
+  // переменная для записи сохраненных отфильтрованных фильмов (по названию)
+  const [searchedSavedMoviesArray, setSearchedSavedMoviesArray] = React.useState([]);
   // переменная для хранения сохраненных пользователем фильмов
   const [userSavedMoviesArray, setUserSavedMoviesArray] = React.useState([]);
-  // переменная для отфильтрованных по названию сохраненных пользователем фильмов
+  // переменная для сохраненных короткометражек
   const [userSavedShortsArray, setUserSavedShortsArray] = React.useState([]);
 
   // Получение инфы о пользователе при отрисовке страницы и отправка ее в контекст
@@ -95,11 +97,15 @@ function App() {
     checkToken();
   }, [])
 
+  // Отфильтровывание фильмов, сохраненных пользователем
+  const filterOwner = (movies, id) =>
+  movies.filter((movie) => movie.owner === id);
+
   // Регистрация нового пользователя
   const handleRegister = (name, email, password) => {
     setIsRegisterInputsDisabled(true);
     mainApi.register(name, email, password)
-    .then((res) => {
+    .then(() => {
       setIsRegisterInputsDisabled(false);
       history.push('/signin')
       setIsRegisterError('');
@@ -119,7 +125,7 @@ function App() {
     setIsLoginInputsDisabled(true);
     mainApi.authorize(email, password)
     .then((res) => {
-      setIsLoginInputsDisabled(true);
+      setIsLoginInputsDisabled(false);
       if (res.token) {
         localStorage.setItem('token', res.token);
         mainApi.getUserInfo()
@@ -133,14 +139,13 @@ function App() {
               // записывание всего в константы
               const allSavedMovies = res.data;
               const userSavedMovies = filterOwner(allSavedMovies, currentUserId);
-              const userSavedShorts = filterDuration(userSavedMovies);
               // записывание всего в локальное хранилище
-              localStorage.setItem("allSavedMovies", JSON.stringify(allSavedMovies));
+              // localStorage.setItem("allSavedMovies", JSON.stringify(allSavedMovies));
               localStorage.setItem("userSavedMovies", JSON.stringify(userSavedMovies));
-              localStorage.setItem("userSavedShorts", JSON.stringify(userSavedShorts));  //убрать шорты, они тут не нужны
+              // localStorage.setItem("userSavedShorts", JSON.stringify(userSavedShorts));
               // записывание в стейты
-              setUserSavedMoviesArray(userSavedMovies); //вот эти 2 стейта я прокидываю в savedMovies (строки 258 и 259)
-              setUserSavedShortsArray(userSavedShorts);
+              setUserSavedMoviesArray(userSavedMovies);
+              // setUserSavedShortsArray(userSavedShorts);
             })
             .catch((err) => {
               console.log(err)
@@ -213,8 +218,7 @@ function App() {
         const newMoviesArray = res.data;
         const userId = currentUser._id;
         const newUserSavedMovies = filterOwner(newMoviesArray, userId);
-        console.log(newUserSavedMovies);
-        localStorage.setItem("allSavedMovies", JSON.stringify(newMoviesArray));
+        // localStorage.setItem("allSavedMovies", JSON.stringify(newMoviesArray));
         localStorage.setItem("userSavedMovies", JSON.stringify(newUserSavedMovies));
         setUserSavedMoviesArray(newUserSavedMovies);
       })
@@ -226,14 +230,6 @@ function App() {
       console.log(error)
     })
   }
-
-
-  // Отфильтровывание фильмов, сохраненных пользователем
-  const filterOwner = (movies, id) =>
-  movies.filter((movie) => movie.owner === id);
-
-  const filterDuration = (movies) =>
-  movies.filter((movie) => movie.duration <= 40);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -281,7 +277,10 @@ function App() {
             <ProtectedRoute exact path="/saved-movies"
               component={SavedMovies}
               isAuth={isAuth}
+              searchedSavedMoviesArray={searchedSavedMoviesArray}
+              setSearchedSavedMoviesArray={setSearchedSavedMoviesArray}
               userSavedMoviesArray={userSavedMoviesArray}
+              setUserSavedShortsArray={setUserSavedShortsArray}
               userSavedShortsArray={userSavedShortsArray}
               setShownSavedMoviesArray={setShownSavedMoviesArray}
               shownSavedMoviesArray={shownSavedMoviesArray}
@@ -311,119 +310,3 @@ function App() {
 }
 
 export default App;
-
-
-
-
-  // //Запрос на получение фильмов
-  // const getMovies = (title) => {
-  //   if (title) {
-  //     moviesApi.getAllMovies()
-  //     .then((res) => {
-  //       const newMovies = filterMovies(res, title);
-  //       if (newMovies.length === 0) {
-  //         setSearchMessage('Ничего не найдено');
-  //         setIsMoviesVisible(false);
-
-  //         return
-  //       } else {
-  //         setSearchedMovies(newMovies);
-  //         setSearchMessage('');
-  //         setIsMoviesVisible(true);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       setSearchMessage('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен');
-  //       console.log(err);
-  //     })
-  //   } else {
-  //     setSearchMessage('Нужно ввести ключевое слово');
-  //     setIsMoviesVisible(false);
-
-  //     return
-  //   }
-  // }
-
-
-
-  // // Логин существующего пользователя
-  // const handleLogin = (email, password) => {
-  //   mainApi.authorize(email, password)
-  //   .then((res) => {
-  //     if (res.token) {
-  //       localStorage.setItem('token', res.token);
-  //       setLoggedIn(true);
-  //       history.push('/movies')
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     if (err === '401' || '400') {
-  //       setIsLoginError('Введены некорректные данные пользователя');
-  //     } else {
-  //       setIsLoginError('При авторизации произошла ошибка');
-  //     }
-  //   })
-  // }
-
-
-    // // проверка наличия и подлинности токена пользователя
-    // const checkToken = () => {
-    //   const token = localStorage.getItem('token');
-    //   if (token) {
-    //     mainApi.checkUser()
-    //     .then((res) => {
-    //       if (res.data.email) {
-    //         setLoggedIn(true);
-    //         console.log('проверка токена успешна')
-    //       }
-    //     })
-    //     .catch((err)=>{
-    //       console.log('проверка токена сломалась')
-    //       console.log(err);
-    //     })
-    //   }
-    // }
-
-
-      // // Удаление карточки
-  // const handleDeleteMovie = (data) => { //упростить, можно вставить просто перерендер нового массива
-  //   // const savedMovies = JSON.parse(localStorage.getItem('userSavedMovies'));
-  //   mainApi
-  //     .deleteMovie(data._id)
-  //     .then(() => {
-  //       setUserSavedMoviesArray((array) => array.filter((element) => element._id !== data._id));
-  //       const updatedArray = savedMovies.filter(
-  //         (element) => element._id !== data._id,
-  //       );
-  //       localStorage.setItem('userSavedMovies', JSON.stringify(updatedArray));
-  //       setUserSavedMoviesArray(updatedArray);
-  //     })
-  //     .catch(err => {
-  //       console.error(err)
-  //     })
-  // }
-
-
-
-
-
-
-  // const handleDeleteMovie = (data) => { //упростить, можно вставить просто перерендер нового массива
-  //   // const savedMovies = JSON.parse(localStorage.getItem('userSavedMovies'));
-  //   mainApi
-  //     .deleteMovie(data._id)
-  //     .catch(err => {
-  //       console.error(err)
-  //     })
-  //     mainApi.getMovies()
-  //     .then((res) => {
-  //       // записывание всего в константы
-  //       const allSavedMovies = res.data;
-  //       const userSavedMovies = filterOwner(allSavedMovies, currentUserId);
-  //       localStorage.setItem("allSavedMovies", JSON.stringify(allSavedMovies));
-  //       localStorage.setItem("userSavedMovies", JSON.stringify(userSavedMovies));
-  //       // записывание в стейты
-  //       setUserSavedMoviesArray(userSavedMovies); //вот эти 2 стейта я прокидываю в savedMovies (строки 258 и 259)
-  //     })
-  //     .catch((err) => console.log(err));
-  // }

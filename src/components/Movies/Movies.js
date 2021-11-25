@@ -80,6 +80,7 @@ function Movies({
           // передача в константы результатов поиска и короткометражек
           const searchedMovies = filterMovies(JSON.parse(localStorage.getItem("allMovies")), title);
           const shortMovies = filterDuration(searchedMovies);
+          console.log(shortMovies)
           // добавление всего в стейты
           setSearchedMoviesArray(searchedMovies);
           setShortMoviesArray(shortMovies);

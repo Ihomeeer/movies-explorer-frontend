@@ -14,6 +14,10 @@ function SearchForm({ getMovies, setSearchMessage, searchMessage }) {
     getMovies(values.search);
   };
 
+  React.useEffect(() => {
+    getMovies(values.search);
+  }, []);
+
   return (
     <section className="section search-form">
       <form className="search-form__form" noValidate onSubmit={handleSubmit}>

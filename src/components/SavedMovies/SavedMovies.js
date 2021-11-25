@@ -7,7 +7,10 @@ import Footer from "../Footer/Footer";
 
 function SavedMovies({
   isAuth,
+  searchedSavedMoviesArray,
+  setSearchedSavedMoviesArray,
   userSavedMoviesArray,
+  setUserSavedShortsArray,
   userSavedShortsArray,
   setShownSavedMoviesArray,
   shownSavedMoviesArray,
@@ -25,6 +28,12 @@ function SavedMovies({
     setIsShortMovies(!isShortMovies);
   }
 
+  // Фильтрует сохраненные фильмы по длительности
+  const filterDuration = (movies) =>
+    movies.filter(
+      (movie) => movie.duration <= 40
+    );
+
   // Фильтрует сохраненные фильмы по значению инпута из SearchForm
   const filterMovies = (arr, query) =>
     arr.filter(
@@ -32,12 +41,22 @@ function SavedMovies({
     );
 
   const getMovies = (title) => {
-    const currentMovies = filterMovies(JSON.parse(localStorage.getItem("userSavedMovies")), title);
-    setShownSavedMoviesArray(currentMovies);
-    if (currentMovies.length > 0) {
-      setIsSavedMoviesVisible(true);
-    } else {
+    const searchedMovies = filterMovies(JSON.parse(localStorage.getItem("userSavedMovies")), title);
+    const shortMovies = filterDuration(searchedMovies);
+    console.log(shortMovies)
+    setSearchedSavedMoviesArray(searchedMovies);
+    setUserSavedShortsArray(shortMovies);
+    if (searchedMovies.length === 0) {
+      setSearchMessage("Ничего не найдено");
       setIsSavedMoviesVisible(false);
+    } else {
+      setIsSavedMoviesVisible(true);
+      setSearchMessage("");
+      if (isShortMovies) {
+        setShownSavedMoviesArray(shortMovies);
+      } else {
+        setShownSavedMoviesArray(searchedMovies);
+      }
     }
   }
 
@@ -46,12 +65,20 @@ function SavedMovies({
     if (isShortMovies) {
       setShownSavedMoviesArray(userSavedShortsArray);
     } else {
-      setShownSavedMoviesArray(userSavedMoviesArray);
+      setShownSavedMoviesArray(searchedSavedMoviesArray);
     }
   }, [isShortMovies]);
 
+
+  // эффект для прорисовки массива после удаления карточки
   React.useEffect(() => {
+    console.log(isShortMovies);
+    if (isShortMovies === true) {
+      const shortMovies = filterDuration(userSavedMoviesArray);
+      setShownSavedMoviesArray(shortMovies);
+    } else {
       setShownSavedMoviesArray(userSavedMoviesArray);
+    }
   }, [userSavedMoviesArray]);
 
   return (
