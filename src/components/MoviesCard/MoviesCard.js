@@ -10,10 +10,14 @@ function MoviesCard({
   userSavedMoviesArray
 }) {
 
+  // стейт для определения наличия лайка
   const [isLiked, setIsLiked] = React.useState(false)
 
   // проверка, присутствует ли карточка в массиве с сохраненками. Number, потому что в бд id дается строкой
   const isSaved = card.id && JSON.parse(localStorage.getItem("userSavedMovies")).some(element => Number(element.movieId) === card.id);
+
+  // просто вынесенный класс кнопки
+  const likeButtonStatus = (`movie__like-button ${isLiked ? 'movie__like-button_active' : 'movie__like-button_inactive'}`)
 
   React.useEffect(() => {
     if (!isSavedMovies) {
@@ -23,7 +27,7 @@ function MoviesCard({
         setIsLiked(false)
       }
     }
-  }, [isLiked])
+  })
 
    // Тут проверка, надо ли рисовать
 
@@ -71,18 +75,22 @@ function MoviesCard({
           <p className="movie__title">{cardToSave.nameRU}</p>
           <p className="movie__duration">{convertDuration(cardToSave.duration)}</p>
         </div>
-        <button
-          className={
-            isSavedMovies
-              ? "movie__like-button movie__like-button_saved"
-              : isLiked
-              ? "movie__like-button movie__like-button_active"
-              : "movie__like-button movie__like-button_inactive"
+          {isSavedMovies ? (
+            <button
+              className="movie__like-button movie__like-button_saved"
+              onClick={buttonClick}
+              type="button"
+              aria-label="like"
+            />
+           ) : (
+            <button
+            className={likeButtonStatus}
+            onClick={buttonClick}
+            type="button"
+            aria-label="like"
+            />
+            )
           }
-          onClick={buttonClick}
-          type="button"
-          aria-label="like"
-        />
       </div>
       <a className="movie__trailer-link" target="_blank" href={card.trailerLink}>
         <img
