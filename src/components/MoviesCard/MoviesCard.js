@@ -5,12 +5,30 @@ import { serverUrl } from "../../utils/constants";
 function MoviesCard({
   card,
   isSavedMovies,
-  isLiked,
   onSaveMovie,
   onDeleteMovie,
-  savedMoviesArray
+  userSavedMoviesArray
 }) {
 
+  const [isLiked, setIsLiked] = React.useState(false)
+
+  // проверка, присутствует ли карточка в массиве с сохраненками. Number, потому что в бд id дается строкой
+  const isSaved = card.id && JSON.parse(localStorage.getItem("userSavedMovies")).some(element => Number(element.movieId) === card.id);
+
+  React.useEffect(() => {
+    if (!isSavedMovies) {
+      if (isSaved) {
+        setIsLiked (true)
+      } else {
+        setIsLiked(false)
+      }
+    }
+  }, [isLiked])
+
+   // Тут проверка, надо ли рисовать
+
+
+  // некоторые поля в объекте могут отсутствовать или быть разными для разных api
   const cardToSave = {
     country: card.country,
     director: card.director,
@@ -25,17 +43,24 @@ function MoviesCard({
     nameEN: card.nameEN,
   }
 
+  // Перевод длительности в формат чч:мм
   function convertDuration(mins) {
     const hours = Math.trunc(mins / 60);
     const minutes = mins % 60;
     return `${hours}ч ${minutes}мин`;
   }
 
-  function buttonClick(card) {
+  function buttonClick() {
     if (isSavedMovies) {
       onDeleteMovie(cardToSave.movieId);
     } else {
-      onSaveMovie(cardToSave);
+      if (isSaved) {
+        const currentSavedMovies = JSON.parse(localStorage.getItem("userSavedMovies"));
+        const currentMovie = currentSavedMovies.filter((element) => Number(element.movieId) === card.id);
+        onDeleteMovie(currentMovie[0]._id);
+      } else {
+        onSaveMovie(cardToSave);
+      }
     }
   }
 
@@ -49,10 +74,10 @@ function MoviesCard({
         <button
           className={
             isSavedMovies
-              ? "movie__like-button_saved"
+              ? "movie__like-button movie__like-button_saved"
               : isLiked
-              ? "movie__like-button_active"
-              : "movie__like-button"
+              ? "movie__like-button movie__like-button_active"
+              : "movie__like-button movie__like-button_inactive"
           }
           onClick={buttonClick}
           type="button"

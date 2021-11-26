@@ -55,13 +55,16 @@
   padding: 0;
   margin: auto 14px auto auto;
   border-radius: 36px;
-  background-image: url(../../images/MoviesCard/like.svg);
   background-repeat: no-repeat;
   background-size: initial;
   background-position: center;
+  border: 1px solid rgba(43, 37, 33, 0.137);
+}
+
+.movie__like-button_inactive {
+  background-image: url(../../images/MoviesCard/like.svg);
   background-color: #F9F9F9;
   /* Добавил границу, потому что без нее кнопку ВООБЩЕ не видно */
-  border: 1px solid rgba(43, 37, 33, 0.137);
 }
 
 .movie__like-button_active {
@@ -70,17 +73,7 @@
 }
 
 .movie__like-button_saved {
-  width: 30px;
-  height: 30px;
-  padding: 0;
-  margin: auto 14px auto auto;
-  border-radius: 36px;
-  background-repeat: no-repeat;
-  background-size: initial;
-  background-position: center;
-  background-color: #F9F9F9;
-  /* Добавил границу, потому что без нее кнопку ВООБЩЕ не видно */
-  border: 1px solid rgba(43, 37, 33, 0.137);
+
   background-image: url(../../images/SavedMovies/close-icon.svg);
   background-color: #F9F9F9;
 }

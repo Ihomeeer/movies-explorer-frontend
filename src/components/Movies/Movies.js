@@ -18,8 +18,10 @@ function Movies({
   searchedMoviesArray,
   shortMoviesArray,
   onSaveMovie,
+  onDeleteMovie,
   isPreloaderVisible,
-  setIsPreloaderVisible
+  setIsPreloaderVisible,
+  userSavedMoviesArray
 }) {
   const windowSize = useWindowSize();
 
@@ -137,9 +139,11 @@ function Movies({
         <MoviesCardList
           isSavedMovies={false}
           onSaveMovie={onSaveMovie}
+          onDeleteMovie={onDeleteMovie}
           shownMoviesArray={shownMoviesArray}
           handleBtnClick={handleMoreButtonClick}
           total={cardsAmount.total}
+          userSavedMoviesArray={userSavedMoviesArray}
         />
       ) : (
         ""

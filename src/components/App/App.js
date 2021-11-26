@@ -97,10 +97,6 @@ function App() {
     checkToken();
   }, [])
 
-  // Отфильтровывание фильмов, сохраненных пользователем
-  const filterOwner = (movies, id) =>
-  movies.filter((movie) => movie.owner === id);
-
   // Регистрация нового пользователя
   const handleRegister = (name, email, password) => {
     setIsRegisterInputsDisabled(true);
@@ -140,12 +136,9 @@ function App() {
               const allSavedMovies = res.data;
               const userSavedMovies = filterOwner(allSavedMovies, currentUserId);
               // записывание всего в локальное хранилище
-              // localStorage.setItem("allSavedMovies", JSON.stringify(allSavedMovies));
               localStorage.setItem("userSavedMovies", JSON.stringify(userSavedMovies));
-              // localStorage.setItem("userSavedShorts", JSON.stringify(userSavedShorts));
               // записывание в стейты
               setUserSavedMoviesArray(userSavedMovies);
-              // setUserSavedShortsArray(userSavedShorts);
             })
             .catch((err) => {
               console.log(err)
@@ -196,29 +189,42 @@ function App() {
 
   // ---------------------------------------------------------------------------Карточки с фильмами
 
+  // Отфильтровывание фильмов, сохраненных пользователем
+  const filterOwner = (movies, id) =>
+  movies.filter((movie) => movie.owner === id);
+
   // Сохранение карточки
   const handleSaveMovie = (data) => {
     mainApi.addNewMovie(data)
-      .then((res) => { // написать проверку id, чтобы не сохранять несколько одинаковых карточек
-        console.log(res)
-        setUserSavedMoviesArray([res.data, ...userSavedMoviesArray]) //заменить на перерендер сейвов
-        localStorage.setItem('userSavedMovies', JSON.stringify([res.data, ...userSavedMoviesArray]));
+    .then(() => {
+      // если ответ 200, то повторный запрос сохраненок и перерисовывание их на странице в новом составе
+      mainApi.getMovies()
+      .then((res) => {
+        const newMoviesArray = res.data;
+        const userId = currentUser._id;
+        const newUserSavedMovies = filterOwner(newMoviesArray, userId);
+        localStorage.setItem("userSavedMovies", JSON.stringify(newUserSavedMovies));
+        setUserSavedMoviesArray(newUserSavedMovies);
       })
       .catch(error => {
-        console.error(error)
+        console.log(error)
       })
+    })
+    .catch(error => {
+      console.log(error)
+    })
   }
 
   // Удаление карточки
   const handleDeleteMovie = (id) => {
     mainApi.deleteMovie(id)
     .then(() => {
+      // если ответ 200, то повторный запрос сохраненок и перерисовывание их на странице в новом составе
       mainApi.getMovies()
       .then((res) => {
         const newMoviesArray = res.data;
         const userId = currentUser._id;
         const newUserSavedMovies = filterOwner(newMoviesArray, userId);
-        // localStorage.setItem("allSavedMovies", JSON.stringify(newMoviesArray));
         localStorage.setItem("userSavedMovies", JSON.stringify(newUserSavedMovies));
         setUserSavedMoviesArray(newUserSavedMovies);
       })
@@ -270,8 +276,10 @@ function App() {
               searchedMoviesArray={searchedMoviesArray}
               shortMoviesArray={shortMoviesArray}
               onSaveMovie={handleSaveMovie}
+              onDeleteMovie={handleDeleteMovie}
               isPreloaderVisible={isPreloaderVisible}
               setIsPreloaderVisible={setIsPreloaderVisible}
+              userSavedMoviesArray={userSavedMoviesArray}
             />
 
             <ProtectedRoute exact path="/saved-movies"

@@ -8,7 +8,7 @@ function MoviesCardList({
   onDeleteMovie,
   shownMoviesArray,
   shownSavedMoviesArray,
-  savedMoviesArray,
+  userSavedMoviesArray,
   handleBtnClick,
   total,
 }) {
@@ -32,6 +32,7 @@ function MoviesCardList({
             card={movie}
             isSavedMovies={isSavedMovies}
             onDeleteMovie={onDeleteMovie}
+            userSavedMoviesArray={userSavedMoviesArray}
             />
           ))}
         </ul>
@@ -45,7 +46,7 @@ function MoviesCardList({
                 isSavedMovies={isSavedMovies}
                 onSaveMovie={onSaveMovie}
                 onDeleteMovie={onDeleteMovie}
-                savedMoviesArray={savedMoviesArray}
+                userSavedMoviesArray={userSavedMoviesArray}
               />
             ))}
           </ul>
