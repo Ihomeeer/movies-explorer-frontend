@@ -30,6 +30,7 @@ function Profile({
     e.preventDefault();
     handleChangeProfile(values);
     setIsDisabled(true)
+    e.target.reset()
   }
 
   React.useEffect(() => {

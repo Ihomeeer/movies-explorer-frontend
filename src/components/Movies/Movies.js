@@ -82,7 +82,9 @@ function Movies({
           // передача в константы результатов поиска и короткометражек
           const searchedMovies = filterMovies(JSON.parse(localStorage.getItem("allMovies")), title);
           const shortMovies = filterDuration(searchedMovies);
-          console.log(shortMovies)
+          // Засовывание фильтрованных фильмов в локалсторадж, чтобы потом при перезаходе показывать
+          localStorage.setItem("searchedMovies", JSON.stringify(searchedMovies));
+          localStorage.setItem("searchedShorts", JSON.stringify(shortMovies));
           // добавление всего в стейты
           setSearchedMoviesArray(searchedMovies);
           setShortMoviesArray(shortMovies);
@@ -123,6 +125,30 @@ function Movies({
       setShownMoviesArray(searchedMoviesArray);
     }
   }, [isShortMovies]);
+
+  // рендер результатов предыдущего поиска при монтировании компонента
+  React.useEffect(() => {
+    if (JSON.parse(localStorage.getItem("searchedMovies"))) {
+      const lastSearchedMovies = JSON.parse(localStorage.getItem("searchedMovies"))
+      const lastSearchedShorts = JSON.parse(localStorage.getItem("searchedShorts"))
+      if (lastSearchedMovies.length > 0) {
+        setSearchedMoviesArray(lastSearchedMovies);
+        setShortMoviesArray(lastSearchedShorts)
+        if (lastSearchedMovies.length === 0) {
+          setSearchMessage("Ничего не найдено");
+          setIsMoviesVisible(false);
+        } else {
+          setIsMoviesVisible(true);
+          setSearchMessage("");
+          if (isShortMovies) {
+            setShownMoviesArray(lastSearchedShorts);
+          } else {
+            setShownMoviesArray(lastSearchedMovies);
+          }
+        }
+      }
+    }
+  }, []);
 
   return (
     <div>

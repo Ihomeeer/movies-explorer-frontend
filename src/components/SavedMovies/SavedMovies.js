@@ -41,9 +41,12 @@ function SavedMovies({
     );
 
   const getMovies = (title) => {
+    // передача в константы результатов поиска и короткометражек
     const searchedMovies = filterMovies(JSON.parse(localStorage.getItem("userSavedMovies")), title);
     const shortMovies = filterDuration(searchedMovies);
-    console.log(shortMovies)
+    // Засовывание фильтрованных фильмов в локалсторадж, чтобы потом при перезаходе показывать
+    localStorage.setItem("searchedSavedMovies", JSON.stringify(searchedMovies));
+    localStorage.setItem("searchedSavedShorts", JSON.stringify(shortMovies));
     setSearchedSavedMoviesArray(searchedMovies);
     setUserSavedShortsArray(shortMovies);
     if (searchedMovies.length === 0) {
@@ -72,7 +75,6 @@ function SavedMovies({
 
   // эффект для прорисовки массива после удаления карточки
   React.useEffect(() => {
-    console.log(isShortMovies);
     if (isShortMovies === true) {
       const shortMovies = filterDuration(userSavedMoviesArray);
       setShownSavedMoviesArray(shortMovies);
@@ -80,6 +82,31 @@ function SavedMovies({
       setShownSavedMoviesArray(userSavedMoviesArray);
     }
   }, [userSavedMoviesArray]);
+
+  // рендер результатов предыдущего поиска при монтировании компонента
+  React.useEffect(() => {
+    if (JSON.parse(localStorage.getItem("searchedSavedMovies"))) {
+      const lastSearchedSavedMovies = JSON.parse(localStorage.getItem("searchedSavedMovies"))
+      const lastSearchedSavedShorts = JSON.parse(localStorage.getItem("searchedSavedShorts"))
+      if (lastSearchedSavedMovies.length > 0) {
+        setSearchedSavedMoviesArray(lastSearchedSavedMovies);
+        setUserSavedShortsArray(lastSearchedSavedShorts);
+        if (lastSearchedSavedMovies.length === 0) {
+          setSearchMessage("Ничего не найдено");
+          setIsSavedMoviesVisible(false);
+        } else {
+          setIsSavedMoviesVisible(true);
+          setSearchMessage("");
+          if (isShortMovies) {
+            setShownSavedMoviesArray(lastSearchedSavedShorts);
+          } else {
+            setShownSavedMoviesArray(lastSearchedSavedMovies);
+          }
+        }
+      }
+    }
+
+  }, []);
 
   return (
     <div>

@@ -71,7 +71,7 @@ function App() {
         console.log(error)
       })
     }
-  }, [isAuth])
+  }, [])
 
   // ---------------------------------------------------------------------------Работа с пользователем
   // проверка наличия и подлинности токена пользователя
@@ -122,34 +122,34 @@ function App() {
     mainApi.authorize(email, password)
     .then((res) => {
       setIsLoginInputsDisabled(false);
-      if (res.token) {
-        localStorage.setItem('token', res.token);
-        mainApi.getUserInfo()
-        .then((res) => {
-          if(res.data.email) {
-            setCurrentUser(res.data);
-            setIsAuth(true);
-            const currentUserId = res.data._id;
-            mainApi.getMovies()
-            .then((res) => {
-              // записывание всего в константы
-              const allSavedMovies = res.data;
-              const userSavedMovies = filterOwner(allSavedMovies, currentUserId);
-              // записывание всего в локальное хранилище
-              localStorage.setItem("userSavedMovies", JSON.stringify(userSavedMovies));
-              // записывание в стейты
-              setUserSavedMoviesArray(userSavedMovies);
-            })
-            .catch((err) => {
-              console.log(err)
-            });
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-        });
-        history.push('/movies')
-      }
+      localStorage.setItem('token', res.token);
+      mainApi.getUserInfo()
+      .then((res) => {
+        console.log(res)
+        if(res.data.email) {
+          setCurrentUser(res.data);
+          setIsAuth(true);
+          const currentUserId = res.data._id;
+          console.log(res.data._id)
+          mainApi.getMovies()
+          .then((res) => {
+            // записывание всего в константы
+            const allSavedMovies = res.data;
+            const userSavedMovies = filterOwner(allSavedMovies, currentUserId);
+            // записывание всего в локальное хранилище
+            localStorage.setItem("userSavedMovies", JSON.stringify(userSavedMovies));
+            // записывание в стейты
+            setUserSavedMoviesArray(userSavedMovies);
+          })
+          .catch((err) => {
+            console.log(err)
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      });
+      history.push('/movies')
     })
     .catch((err) => {
       setIsLoginInputsDisabled(false);
@@ -164,9 +164,11 @@ function App() {
   // Логаут существующего пользователя
   const handleLogOut = () => {
     localStorage.clear();
-    setCurrentUser({});
     setIsAuth(false);
+    setCurrentUser('');
+    setUserSavedMoviesArray([]);
     history.push('/');
+    console.log(currentUser)
   }
 
   // Измененение данных текущего пользователя
@@ -196,7 +198,8 @@ function App() {
   // Сохранение карточки
   const handleSaveMovie = (data) => {
     mainApi.addNewMovie(data)
-    .then(() => {
+    .then((res) => {
+      console.log(res)
       // если ответ 200, то повторный запрос сохраненок и перерисовывание их на странице в новом составе
       mainApi.getMovies()
       .then((res) => {
@@ -318,3 +321,50 @@ function App() {
 }
 
 export default App;
+
+
+
+
+// const handleLogin = (email, password) => {
+//   setIsLoginInputsDisabled(true);
+//   mainApi.authorize(email, password)
+//   .then((res) => {
+//     setIsLoginInputsDisabled(false);
+//     localStorage.setItem('token', res.token);
+//     mainApi.getUserInfo()
+//     .then((res) => {
+//       console.log(res)
+//       if(res.data.email) {
+//         setCurrentUser(res.data);
+//         setIsAuth(true);
+//         const currentUserId = res.data._id;
+//         console.log(res.data._id)
+//         mainApi.getMovies()
+//         .then((res) => {
+//           // записывание всего в константы
+//           const allSavedMovies = res.data;
+//           const userSavedMovies = filterOwner(allSavedMovies, currentUserId);
+//           // записывание всего в локальное хранилище
+//           localStorage.setItem("userSavedMovies", JSON.stringify(userSavedMovies));
+//           // записывание в стейты
+//           setUserSavedMoviesArray(userSavedMovies);
+//         })
+//         .catch((err) => {
+//           console.log(err)
+//         });
+//       }
+//     })
+//     .catch((err) => {
+//       console.log(err)
+//     });
+//     history.push('/movies')
+//   })
+//   .catch((err) => {
+//     setIsLoginInputsDisabled(false);
+//     if (err === '401' || '400') {
+//       setIsLoginError('Введены некорректные данные пользователя');
+//     } else {
+//       setIsLoginError('При авторизации произошла ошибка');
+//     }
+//   })
+// }

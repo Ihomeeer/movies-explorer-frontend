@@ -29,9 +29,6 @@ function MoviesCard({
     }
   })
 
-   // Тут проверка, надо ли рисовать
-
-
   // некоторые поля в объекте могут отсутствовать или быть разными для разных api
   const cardToSave = {
     country: card.country,
