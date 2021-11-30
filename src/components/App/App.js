@@ -36,9 +36,6 @@ function App() {
   // отключение инпутов профиля, чтобы не случилось беды
   const [isRegisterInputsDisabled, setIsRegisterInputsDisabled] = React.useState(false)
 
-
-
-
   //  ---------------------------------------------------------------------------стейты для компонента Movies (BeatsFilm)
   // переменная для сохраненных фильмов, которые будут отрисовываться на странице
   const [shownMoviesArray, setShownMoviesArray] = React.useState([]);
@@ -46,9 +43,6 @@ function App() {
   const [searchedMoviesArray, setSearchedMoviesArray] = React.useState([]);
   // переменная для записи короткометражек
   const [shortMoviesArray, setShortMoviesArray] = React.useState([]);
-
-
-
 
   //  ---------------------------------------------------------------------------стейты для компонента savedMovies
   // переменная для сохраненных фильмов, которые будут отрисовываться на странице
@@ -60,42 +54,33 @@ function App() {
   // переменная для сохраненных короткометражек
   const [userSavedShortsArray, setUserSavedShortsArray] = React.useState([]);
 
-  // Получение инфы о пользователе при отрисовке страницы и отправка ее в контекст
-  React.useEffect(() => {
-    if (isAuth) {
-      mainApi.getUserInfo()
-      .then((res) => {
-        setCurrentUser(res.data)
-      })
-      .catch(error => {
-        console.log(error)
-      })
+  // ---------------------------------------------------------------------------Аутентификация
+
+    // проверка наличия и подлинности токена пользователя
+    const checkToken = () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        mainApi.getUserInfo()
+        .then((res) => {
+          if (res.data.email) {
+            setCurrentUser(res.data)
+            setIsAuth(true);
+          }
+        })
+        .catch((err)=>{
+          console.log(err);
+          setIsAuth(false);
+          localStorage.clear()
+        })
+      }
     }
-  }, [])
+
+    // Проверка авторизации при отрисовке страницы
+    React.useEffect(() => {
+      checkToken();
+    }, [])
 
   // ---------------------------------------------------------------------------Работа с пользователем
-  // проверка наличия и подлинности токена пользователя
-  const checkToken = () => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      mainApi.getUserInfo()
-      .then((res) => {
-        if (res.data.email) {
-          console.log('проверка токена успешна')
-          setIsAuth(true);
-        }
-      })
-      .catch((err)=>{
-        console.log('проверка токена сломалась')
-        console.log(err);
-        setIsAuth(false);
-      })
-    }
-  }
-  // Проверка авторизации при отрисовке страницы
-  React.useEffect(() => {
-    checkToken();
-  }, [])
 
   // Регистрация нового пользователя
   const handleRegister = (name, email, password) => {
@@ -125,12 +110,10 @@ function App() {
       localStorage.setItem('token', res.token);
       mainApi.getUserInfo()
       .then((res) => {
-        console.log(res)
         if(res.data.email) {
           setCurrentUser(res.data);
           setIsAuth(true);
           const currentUserId = res.data._id;
-          console.log(res.data._id)
           mainApi.getMovies()
           .then((res) => {
             // записывание всего в константы
@@ -165,10 +148,9 @@ function App() {
   const handleLogOut = () => {
     localStorage.clear();
     setIsAuth(false);
-    setCurrentUser('');
     setUserSavedMoviesArray([]);
+    setCurrentUser('');
     history.push('/');
-    console.log(currentUser)
   }
 
   // Измененение данных текущего пользователя
@@ -198,8 +180,7 @@ function App() {
   // Сохранение карточки
   const handleSaveMovie = (data) => {
     mainApi.addNewMovie(data)
-    .then((res) => {
-      console.log(res)
+    .then(() => {
       // если ответ 200, то повторный запрос сохраненок и перерисовывание их на странице в новом составе
       mainApi.getMovies()
       .then((res) => {
@@ -282,7 +263,6 @@ function App() {
               onDeleteMovie={handleDeleteMovie}
               isPreloaderVisible={isPreloaderVisible}
               setIsPreloaderVisible={setIsPreloaderVisible}
-              userSavedMoviesArray={userSavedMoviesArray}
             />
 
             <ProtectedRoute exact path="/saved-movies"
@@ -321,50 +301,3 @@ function App() {
 }
 
 export default App;
-
-
-
-
-// const handleLogin = (email, password) => {
-//   setIsLoginInputsDisabled(true);
-//   mainApi.authorize(email, password)
-//   .then((res) => {
-//     setIsLoginInputsDisabled(false);
-//     localStorage.setItem('token', res.token);
-//     mainApi.getUserInfo()
-//     .then((res) => {
-//       console.log(res)
-//       if(res.data.email) {
-//         setCurrentUser(res.data);
-//         setIsAuth(true);
-//         const currentUserId = res.data._id;
-//         console.log(res.data._id)
-//         mainApi.getMovies()
-//         .then((res) => {
-//           // записывание всего в константы
-//           const allSavedMovies = res.data;
-//           const userSavedMovies = filterOwner(allSavedMovies, currentUserId);
-//           // записывание всего в локальное хранилище
-//           localStorage.setItem("userSavedMovies", JSON.stringify(userSavedMovies));
-//           // записывание в стейты
-//           setUserSavedMoviesArray(userSavedMovies);
-//         })
-//         .catch((err) => {
-//           console.log(err)
-//         });
-//       }
-//     })
-//     .catch((err) => {
-//       console.log(err)
-//     });
-//     history.push('/movies')
-//   })
-//   .catch((err) => {
-//     setIsLoginInputsDisabled(false);
-//     if (err === '401' || '400') {
-//       setIsLoginError('Введены некорректные данные пользователя');
-//     } else {
-//       setIsLoginError('При авторизации произошла ошибка');
-//     }
-//   })
-// }

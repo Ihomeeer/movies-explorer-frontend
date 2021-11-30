@@ -6,8 +6,7 @@ function MoviesCard({
   card,
   isSavedMovies,
   onSaveMovie,
-  onDeleteMovie,
-  userSavedMoviesArray
+  onDeleteMovie
 }) {
 
   // стейт для определения наличия лайка

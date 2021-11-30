@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from "react";
 import moviesApi from "../../utils/MoviesApi";
 import useWindowSize from "../../utils/windowSize";
@@ -20,8 +19,7 @@ function Movies({
   onSaveMovie,
   onDeleteMovie,
   isPreloaderVisible,
-  setIsPreloaderVisible,
-  userSavedMoviesArray
+  setIsPreloaderVisible
 }) {
   const windowSize = useWindowSize();
 
@@ -51,10 +49,12 @@ function Movies({
     }
   };
 
+  // зависимость количества добавляемых карт от ширины окна
   React.useEffect(() => {
     checkAmount();
   }, [windowSize.width]);
 
+  // перерисовывание массива карточек после нажатия кнопки "еще"
   const handleMoreButtonClick = () =>
     setCardsAmount({
       ...cardsAmount,
@@ -169,7 +169,6 @@ function Movies({
           shownMoviesArray={shownMoviesArray}
           handleBtnClick={handleMoreButtonClick}
           total={cardsAmount.total}
-          userSavedMoviesArray={userSavedMoviesArray}
         />
       ) : (
         ""
@@ -177,7 +176,7 @@ function Movies({
       {isPreloaderVisible ? (
         <Preloader />
       ) : (
-        ""
+        ''
       )}
       <Footer />
     </div>

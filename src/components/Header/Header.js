@@ -10,16 +10,11 @@ function Header({
   return (
     <header className={`section ${isMainPage === "true" ? 'header header-dark' : 'header header-white'}`}>
       <NavTab
-         isAuth = {isAuth}
-        isMainPage={isMainPage}
+        isAuth = {isAuth}
+        isMainPage= {isMainPage}
       />
     </header>
   )
 }
 
 export default Header;
-
-
-
-
-

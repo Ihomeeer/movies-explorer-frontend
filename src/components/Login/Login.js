@@ -10,6 +10,7 @@ function Login({
   isLoginInputsDisabled
 }) {
 
+  // валидация инпутов
   const { values, errors, isValid, handleChange } = useFormWithValidation();
 
   const handleFormSubmit = (e) => {

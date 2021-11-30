@@ -123,11 +123,10 @@ function SavedMovies({
         <MoviesCardList
           isSavedMovies
           shownSavedMoviesArray={shownSavedMoviesArray}
-          userSavedMoviesArray={userSavedMoviesArray}
           onDeleteMovie={onDeleteMovie}
         />
       ) : (
-        ""
+        ''
       )}
       <Footer />
     </div>

@@ -9,11 +9,12 @@ function NavTab ({
   isMainPage
 }) {
 
+  // стейт-переменная для октрытия меню
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-    const openMenu = () => {
-      setIsMenuOpen(true);
-    }
+  const openMenu = () => {
+    setIsMenuOpen(true);
+  }
 
   return (
     <section className="nav-tab">
@@ -45,7 +46,7 @@ function NavTab ({
               <p className="nav-tab__profile-text">Аккаунт</p>
               <div className="nav-tab__profile-icon"></div>
             </Link>
-            <button type="button" className="nav-tab__menu-button" onClick={openMenu}></button>
+            <button type="button" className={`nav-tab__menu-button ${isMainPage ? "nav-tab__menu-button-white" : "nav-tab__menu-button-black"}`} onClick={openMenu}></button>
           </div>
           <Navigation
            setIsMenuOpen = {setIsMenuOpen}

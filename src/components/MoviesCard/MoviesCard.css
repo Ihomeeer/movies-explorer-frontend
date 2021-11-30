@@ -64,7 +64,6 @@
 .movie__like-button_inactive {
   background-image: url(../../images/MoviesCard/like.svg);
   background-color: #F9F9F9;
-  /* Добавил границу, потому что без нее кнопку ВООБЩЕ не видно */
 }
 
 .movie__like-button_active {

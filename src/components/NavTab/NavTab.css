@@ -114,12 +114,19 @@
   height: 44px;
   padding: 0;
   margin: 0;
-  background-image: url(../../images/NavTab/menu-icon.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   background-color: transparent;
   display: none;
+}
+
+.nav-tab__menu-button-black {
+  background-image: url(../../images/NavTab/menu-icon.svg);
+}
+
+.nav-tab__menu-button-white {
+  background-image: url(../../images/NavTab/menu-icon-white.svg);
 }
 
 @media screen and (max-width: 1279px) {

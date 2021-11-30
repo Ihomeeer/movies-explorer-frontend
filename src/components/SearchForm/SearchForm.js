@@ -2,7 +2,12 @@ import React from "react";
 import { useFormWithValidation } from "../../utils/validation";
 import "./SearchForm.css";
 
-function SearchForm({ getMovies, setSearchMessage, searchMessage }) {
+function SearchForm({
+  getMovies,
+  setSearchMessage,
+  searchMessage
+}) {
+  // валидация инпутов
   const { values, handleChange } = useFormWithValidation();
 
   React.useEffect(() => {

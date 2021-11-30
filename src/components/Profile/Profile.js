@@ -16,7 +16,7 @@ function Profile({
   const currentUser = React.useContext(CurrentUserContext);
   // отключение кнопки "Редактировать"
   const [isDisabled, setIsDisabled] = React.useState(false);
-
+  // валидация инпутов
   const { values, setValues, errors, isValid, handleChange } = useFormWithValidation();
 
   React.useEffect(() => {
@@ -33,6 +33,7 @@ function Profile({
     e.target.reset()
   }
 
+  // включение кнопки "Редактировать" при изменении значения инпутов
   React.useEffect(() => {
     setIsDisabled(false)
     setIsProfileMessage('')

@@ -1,7 +1,9 @@
 import React from "react";
 import "./FilterCheckbox.css";
 
-function FilterCheckbox({ handleShortMovies }) {
+function FilterCheckbox({
+  handleShortMovies
+}) {
   return (
     <div className="section filter" id="filter">
       <label className="filter__switch" htmlFor="filter">

@@ -1,10 +1,9 @@
-import { mainApiUrl, serverUrl } from "./constants";
-import noimage from '../images/MoviesCard/noimage.jpg';
+import { mainApiUrl } from "./constants";
+
 // Класс содержит всю логику для работы с BeatFilmsApi
 class MainApi {
-  constructor({ baseUrl, headers }) {
+  constructor({ baseUrl }) {
     this._baseUrl = baseUrl;
-    this._headers = headers;
   }
 
   // проверка состояния промиса
@@ -32,7 +31,11 @@ class MainApi {
   authorize(email, password) {
     return fetch(`${this._baseUrl}/signin`, {
       method: "POST",
-      headers: this._headers,
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         password,
         email,
@@ -44,7 +47,11 @@ class MainApi {
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
-      headers: this._headers,
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
     }).then((res) => this._checkStatus(res));
   }
 
@@ -52,7 +59,11 @@ class MainApi {
   sendUserInfo(userData) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         name: userData.name,
         email: userData.email,
@@ -64,15 +75,23 @@ class MainApi {
   getMovies() {
     return fetch(`${this._baseUrl}/movies`, {
       method: "GET",
-      headers: this._headers,
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
     }).then((res) => this._checkStatus(res));
   }
 
-  // карточка с кинцом на сервер
+  // отправка карточки с фильмом в сохраненки
   addNewMovie(movieData) {
     return fetch(`${this._baseUrl}/movies`, {
       method: "POST",
-      headers: this._headers,
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         country: movieData.country ? movieData.country : "Страна не указана",
         director: movieData.director ? movieData.director : "Директор не указан",
@@ -94,18 +113,17 @@ class MainApi {
   deleteMovie(id) {
     return fetch(`${this._baseUrl}/movies/${id}`, {
       method: "DELETE",
-      headers: this._headers,
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
     }).then((res) => this._checkStatus(res));
   }
 }
 
 const mainApi = new MainApi({
   baseUrl: mainApiUrl,
-  headers: {
-    Accept: "application/json",
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-    "Content-Type": "application/json",
-  },
 });
 
 export default mainApi;

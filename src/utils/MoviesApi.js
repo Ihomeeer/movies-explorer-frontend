@@ -1,13 +1,13 @@
 import { moviesApiUrl } from './constants';
 
-//Класс содержит всю логику для работы с BeatFilmsApi
+// Класс содержит всю логику для работы с BeatFilmsApi
 class MoviesApi {
   constructor({baseUrl, headers}) {
     this._baseUrl = baseUrl;
     this._headers = headers;
   }
 
-  //проверка состояния промиса
+  // проверка состояния промиса
   _checkStatus(res) {
     if (res.ok) {
       return res.json();
@@ -15,7 +15,7 @@ class MoviesApi {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  //получение списка ВСЕХ фильмов от API (сделано специально, чтобы поработать с фильтрацией на стороне пользователя)
+  // получение списка ВСЕХ фильмов от API (сделано специально, чтобы поработать с фильтрацией на стороне пользователя)
   getAllMovies() {
     return fetch(`${this._baseUrl}`, {
       method: 'GET',

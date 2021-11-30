@@ -3,7 +3,7 @@ import './Promo.css';
 import promoIllustrationRoute from '../../images/Promo/illustration.png';
 import { Link } from 'react-router-dom';
 
-function Promo(props) {
+function Promo() {
 
   return (
     <section className="section promo">
