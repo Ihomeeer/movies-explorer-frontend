@@ -1,5 +1,5 @@
 const moviesApiUrl = "https://api.nomoreparties.co/beatfilm-movies";
-const mainApiUrl = "http://localhost:3001";
+const mainApiUrl = "https://api.ihomeer-movies.nomoredomains.monster";
 const serverUrl = "https://api.nomoreparties.co";
 
 export {
