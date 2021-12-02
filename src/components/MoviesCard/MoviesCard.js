@@ -88,7 +88,7 @@ function MoviesCard({
             )
           }
       </div>
-      <a className="movie__trailer-link" target="_blank" href={card.trailerLink}>
+      <a className="movie__trailer-link" target="_blank" href={isSavedMovies ? card.trailer : card.trailerLink}>
         <img
           className="movie__poster"
           alt="Постер фильма"

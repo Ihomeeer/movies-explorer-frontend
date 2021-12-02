@@ -16,6 +16,11 @@ function Profile({
   const currentUser = React.useContext(CurrentUserContext);
   // отключение кнопки "Редактировать"
   const [isDisabled, setIsDisabled] = React.useState(false);
+  // предыдущие значения инпутов
+  const [previousValues, setPreviousValues] = React.useState({
+    name: currentUser.name,
+    email: currentUser.email,
+  });
   // валидация инпутов
   const { values, setValues, errors, isValid, handleChange } = useFormWithValidation();
 
@@ -33,10 +38,23 @@ function Profile({
     e.target.reset()
   }
 
+  React.useEffect(() => {
+    const currentName = currentUser.name;
+    const currentEmail = currentUser.email;
+    setPreviousValues({
+      name: currentUser.name,
+      email: currentUser.email,
+    });
+  }, [values.name, values.email]);
+
   // включение кнопки "Редактировать" при изменении значения инпутов
   React.useEffect(() => {
-    setIsDisabled(false)
-    setIsProfileMessage('')
+    if (values.name != previousValues.name || values.email != previousValues.email) {
+      setIsDisabled(false);
+      setIsProfileMessage('')
+    } else {
+      setIsDisabled(true)
+    }
   }, [values.name, values.email])
 
   return (
@@ -100,3 +118,20 @@ function Profile({
 }
 
 export default Profile;
+
+
+// React.useEffect(() => {
+//   console.log(previousValues.name);
+//   console.log(values.name);
+//   if (values.name === previousValues.name) {
+//     console.log('совпало имя')
+//     setIsDisabled(true);
+//   } else if (values.email === previousValues.email) {
+//     console.log('совпало мыло')
+//     setIsDisabled(true);
+//   } else {
+//     setIsDisabled(false)
+//     console.log('не совпало')
+//     setIsProfileMessage('')
+//   }
+// }, [values.name, values.email])

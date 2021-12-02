@@ -65,11 +65,13 @@ function App() {
           if (res.data.email) {
             setCurrentUser(res.data)
             setIsAuth(true);
+            console.log('токен норм')
           }
         })
         .catch((err)=>{
           console.log(err);
           setIsAuth(false);
+          console.log('токен сдох')
           localStorage.clear()
         })
       }
@@ -88,8 +90,8 @@ function App() {
     mainApi.register(name, email, password)
     .then(() => {
       setIsRegisterInputsDisabled(false);
-      history.push('/signin')
       setIsRegisterError('');
+      handleLogin(email, password);
     })
     .catch((err) => {
       setIsRegisterInputsDisabled(false);
@@ -157,7 +159,8 @@ function App() {
   const handleChangeProfile = (data) => {
     setIsProfileInputsDisabled(true);
     mainApi.sendUserInfo(data)
-    .then(() => {
+    .then((res) => {
+      setCurrentUser(res.data);
       setIsProfileInputsDisabled(false);
       setIsProfileMessage('Профиль успешно обновлен');
     })
