@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
 import './App.css';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
@@ -231,19 +231,25 @@ function App() {
           <Switch>
 
             <Route exact path="/signup">
-              <Register
+            {isAuth
+              ? <Redirect to="/" />
+              : <Register
                 handleRegister={handleRegister}
                 isRegisterError={isRegisterError}
                 isRegisterInputsDisabled={isRegisterInputsDisabled}
-              />
+                />
+            }
             </Route>
 
             <Route exact path="/signin">
-              <Login
-                handleLogin={handleLogin}
-                isLoginError={isLoginError}
-                isLoginInputsDisabled={isLoginInputsDisabled}
-              />
+              {isAuth
+                ? <Redirect to="/" />
+                : <Login
+                    handleLogin={handleLogin}
+                    isLoginError={isLoginError}
+                    isLoginInputsDisabled={isLoginInputsDisabled}
+                  />
+              }
             </Route>
 
             <Route exact path="/">
