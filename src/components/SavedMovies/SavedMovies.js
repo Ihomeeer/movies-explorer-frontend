@@ -75,11 +75,14 @@ function SavedMovies({
 
   // эффект для прорисовки массива после удаления карточки
   React.useEffect(() => {
+    const updatedUserMovies = JSON.parse(localStorage.getItem("userSavedMovies"));
+    const shortMovies = filterDuration(updatedUserMovies);
+    localStorage.setItem("searchedSavedMovies", JSON.stringify(updatedUserMovies));
+    localStorage.setItem("searchedSavedShorts", JSON.stringify(shortMovies));
     if (isShortMovies === true) {
-      const shortMovies = filterDuration(userSavedMoviesArray);
       setShownSavedMoviesArray(shortMovies);
     } else {
-      setShownSavedMoviesArray(userSavedMoviesArray);
+      setShownSavedMoviesArray(updatedUserMovies);
     }
   }, [userSavedMoviesArray]);
 
@@ -134,3 +137,31 @@ function SavedMovies({
 }
 
 export default SavedMovies;
+
+
+
+
+  // эффект для прорисовки массива после удаления карточки
+  // React.useEffect(() => {
+  //   const shortMovies = filterDuration(userSavedMoviesArray);
+  //   localStorage.setItem("searchedSavedMovies", JSON.stringify(userSavedMoviesArray));
+  //   localStorage.setItem("searchedSavedShorts", JSON.stringify(shortMovies));
+  //   if (isShortMovies === true) {
+
+  //     setShownSavedMoviesArray(shortMovies);
+  //   } else {
+  //     setShownSavedMoviesArray(userSavedMoviesArray);
+  //   }
+  // }, [userSavedMoviesArray]);
+
+
+
+
+  // React.useEffect(() => {
+  //   if (isShortMovies === true) {
+  //     const shortMovies = filterDuration(userSavedMoviesArray);
+  //     setShownSavedMoviesArray(shortMovies);
+  //   } else {
+  //     setShownSavedMoviesArray(userSavedMoviesArray);
+  //   }
+  // }, [userSavedMoviesArray]);
