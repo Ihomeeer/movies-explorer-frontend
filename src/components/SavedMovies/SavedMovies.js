@@ -72,22 +72,9 @@ function SavedMovies({
     }
   }, [isShortMovies]);
 
-
-  // эффект для прорисовки массива после удаления карточки
+  // рендер результатов предыдущего поиска при монтировании компонента, а так же при удалении карточки
   React.useEffect(() => {
-    const updatedUserMovies = JSON.parse(localStorage.getItem("userSavedMovies"));
-    const shortMovies = filterDuration(updatedUserMovies);
-    localStorage.setItem("searchedSavedMovies", JSON.stringify(updatedUserMovies));
-    localStorage.setItem("searchedSavedShorts", JSON.stringify(shortMovies));
-    if (isShortMovies === true) {
-      setShownSavedMoviesArray(shortMovies);
-    } else {
-      setShownSavedMoviesArray(updatedUserMovies);
-    }
-  }, [userSavedMoviesArray]);
-
-  // рендер результатов предыдущего поиска при монтировании компонента
-  React.useEffect(() => {
+    console.log('перерисовка для результатов')
     if (JSON.parse(localStorage.getItem("searchedSavedMovies"))) {
       const lastSearchedSavedMovies = JSON.parse(localStorage.getItem("searchedSavedMovies"))
       const lastSearchedSavedShorts = JSON.parse(localStorage.getItem("searchedSavedShorts"))
@@ -108,8 +95,7 @@ function SavedMovies({
         }
       }
     }
-
-  }, []);
+  }, [userSavedMoviesArray]);
 
   return (
     <div>
@@ -137,31 +123,3 @@ function SavedMovies({
 }
 
 export default SavedMovies;
-
-
-
-
-  // эффект для прорисовки массива после удаления карточки
-  // React.useEffect(() => {
-  //   const shortMovies = filterDuration(userSavedMoviesArray);
-  //   localStorage.setItem("searchedSavedMovies", JSON.stringify(userSavedMoviesArray));
-  //   localStorage.setItem("searchedSavedShorts", JSON.stringify(shortMovies));
-  //   if (isShortMovies === true) {
-
-  //     setShownSavedMoviesArray(shortMovies);
-  //   } else {
-  //     setShownSavedMoviesArray(userSavedMoviesArray);
-  //   }
-  // }, [userSavedMoviesArray]);
-
-
-
-
-  // React.useEffect(() => {
-  //   if (isShortMovies === true) {
-  //     const shortMovies = filterDuration(userSavedMoviesArray);
-  //     setShownSavedMoviesArray(shortMovies);
-  //   } else {
-  //     setShownSavedMoviesArray(userSavedMoviesArray);
-  //   }
-  // }, [userSavedMoviesArray]);
