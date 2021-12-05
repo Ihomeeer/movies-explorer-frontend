@@ -31,6 +31,8 @@ function Movies({
   const [isShortMovies, setIsShortMovies] = React.useState(false);
   // сколько карточек рендерить и сколько прибавлять по нажатию кнопки
   const [cardsAmount, setCardsAmount] = React.useState({ total: 12, delta: 3 });
+  // видимость кнопки "еще". false - видимая, true - невидимая. Ну вот так вот вышло.
+  const [buttonVisibility, setButtonVisibility] = React.useState(false);
 
   // Фильтрует полученные фильмы по значению инпута из SearchForm
   const filterMovies = (arr, query) =>
@@ -73,6 +75,7 @@ function Movies({
   // Запрос на получение фильмов со всеми фильтрами и прочим
   const getMovies = (title) => {
     if (title) {
+      localStorage.setItem("lastMoviesRequest", JSON.stringify(title));
       setIsPreloaderVisible(true);
       moviesApi
         .getAllMovies()
@@ -150,6 +153,16 @@ function Movies({
     }
   }, []);
 
+  React.useEffect(() => {
+    if (cardsAmount.total > shownMoviesArray.length) {
+      setButtonVisibility(true);
+    } else if (cardsAmount.total == shownMoviesArray.length) {
+      setButtonVisibility(true);
+    } else {
+      setButtonVisibility(false);
+    }
+  }, [shownMoviesArray, cardsAmount.total]);
+
   return (
     <div>
       <Header isAuth={isAuth} />
@@ -169,6 +182,7 @@ function Movies({
           shownMoviesArray={shownMoviesArray}
           handleBtnClick={handleMoreButtonClick}
           total={cardsAmount.total}
+          buttonVisibility={buttonVisibility}
         />
       ) : (
         ""

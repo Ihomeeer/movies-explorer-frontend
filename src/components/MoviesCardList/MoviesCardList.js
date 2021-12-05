@@ -10,16 +10,8 @@ function MoviesCardList({
   shownSavedMoviesArray,
   handleBtnClick,
   total,
+  buttonVisibility,
 }) {
-  const [buttonVisibility, setButtonVisibility] = React.useState(false);
-
-  React.useEffect(() => {
-    if (!isSavedMovies && total > shownMoviesArray.length) {
-      setButtonVisibility(true);
-    } else {
-      setButtonVisibility(false);
-    }
-  }, [shownMoviesArray, total]);
 
   return (
     <section className="section movies">
