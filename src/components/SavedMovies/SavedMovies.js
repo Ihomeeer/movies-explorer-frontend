@@ -74,25 +74,33 @@ function SavedMovies({
     }
   }, [isShortMovies]);
 
-  // рендер результатов предыдущего поиска при монтировании компонента, а так же при удалении карточки
+  // рендер результатов предыдущего поиска при монтировании компонента, а так же при удалении карточки,
+  // а также рендер всего кинца, если не совершался поиск
   React.useEffect(() => {
-    console.log('перерисовка для результатов')
-    if (JSON.parse(localStorage.getItem("searchedSavedMovies"))) {
-      const lastSearchedSavedMovies = JSON.parse(localStorage.getItem("searchedSavedMovies"))
-      const lastSearchedSavedShorts = JSON.parse(localStorage.getItem("searchedSavedShorts"))
-      if (lastSearchedSavedMovies.length > 0) {
-        setSearchedSavedMoviesArray(lastSearchedSavedMovies);
-        setUserSavedShortsArray(lastSearchedSavedShorts);
-        if (lastSearchedSavedMovies.length === 0) {
-          setSearchMessage("Ничего не найдено");
-          setIsSavedMoviesVisible(false);
-        } else {
-          setIsSavedMoviesVisible(true);
-          setSearchMessage("");
-          if (isShortMovies) {
-            setShownSavedMoviesArray(lastSearchedSavedShorts);
+    if (!localStorage.getItem("searchedSavedMovies")) {
+      setIsSavedMoviesVisible(true);
+      const initialSavedMovies = JSON.parse(localStorage.getItem("userSavedMovies"));
+      setShownSavedMoviesArray(initialSavedMovies);
+    } else {
+      console.log('перерисовка для результатов')
+      if (JSON.parse(localStorage.getItem("searchedSavedMovies"))) {
+        const lastSearchedSavedMovies = JSON.parse(localStorage.getItem("searchedSavedMovies"))
+        console.log(lastSearchedSavedMovies)
+        const lastSearchedSavedShorts = JSON.parse(localStorage.getItem("searchedSavedShorts"))
+        if (lastSearchedSavedMovies.length > 0) {
+          setSearchedSavedMoviesArray(lastSearchedSavedMovies);
+          setUserSavedShortsArray(lastSearchedSavedShorts);
+          if (lastSearchedSavedMovies.length === 0) {
+            setSearchMessage("Ничего не найдено");
+            setIsSavedMoviesVisible(false);
           } else {
-            setShownSavedMoviesArray(lastSearchedSavedMovies);
+            setIsSavedMoviesVisible(true);
+            setSearchMessage("");
+            if (isShortMovies) {
+              setShownSavedMoviesArray(lastSearchedSavedShorts);
+            } else {
+              setShownSavedMoviesArray(lastSearchedSavedMovies);
+            }
           }
         }
       }
@@ -113,7 +121,7 @@ function SavedMovies({
       />
       {isSavedMoviesVisible ? (
         <MoviesCardList
-          isSavedMovies
+          isSavedMovies={true}
           shownSavedMoviesArray={shownSavedMoviesArray}
           onDeleteMovie={onDeleteMovie}
         />

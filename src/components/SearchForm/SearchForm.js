@@ -54,12 +54,3 @@ function SearchForm({
 }
 
 export default SearchForm;
-
-
-// value={
-//   if (localStorage.getItem("lastMoviesRequest")) {
-//     JSON.parse(localStorage.getItem("lastMoviesRequest"))
-// } else {
-//   values.search || ""
-// }
-// }
