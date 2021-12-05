@@ -41,6 +41,8 @@ function SavedMovies({
     );
 
   const getMovies = (title) => {
+    // Засовывание значения инпута в локалсторадж
+    localStorage.setItem("lastSavedMoviesRequest", JSON.stringify(title));
     // передача в константы результатов поиска и короткометражек
     const searchedMovies = filterMovies(JSON.parse(localStorage.getItem("userSavedMovies")), title);
     const shortMovies = filterDuration(searchedMovies);
@@ -101,6 +103,7 @@ function SavedMovies({
     <div>
       <Header isAuth={isAuth} />
       <SearchForm
+        isSavedMovies={true}
         getMovies={getMovies}
         setSearchMessage={setSearchMessage}
         searchMessage={searchMessage}

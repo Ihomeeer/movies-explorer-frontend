@@ -3,9 +3,10 @@ import { useFormWithValidation } from "../../utils/validation";
 import "./SearchForm.css";
 
 function SearchForm({
+  isSavedMovies,
   getMovies,
   setSearchMessage,
-  searchMessage
+  searchMessage,
 }) {
   // валидация инпутов
   const { values, handleChange } = useFormWithValidation();
@@ -24,7 +25,17 @@ function SearchForm({
       <form className="search-form__form" noValidate onSubmit={handleSubmit}>
         <input
           className="search-form__input"
-          placeholder="Фильм"
+          placeholder={
+            isSavedMovies
+            ?
+              localStorage.getItem("lastSavedMoviesRequest")
+              ? JSON.parse(localStorage.getItem("lastSavedMoviesRequest"))
+              : "Фильм"
+            :
+              localStorage.getItem("lastMoviesRequest")
+              ? JSON.parse(localStorage.getItem("lastMoviesRequest"))
+              : "Фильм"
+          }
           required
           type="search"
           name="search"
@@ -43,3 +54,12 @@ function SearchForm({
 }
 
 export default SearchForm;
+
+
+// value={
+//   if (localStorage.getItem("lastMoviesRequest")) {
+//     JSON.parse(localStorage.getItem("lastMoviesRequest"))
+// } else {
+//   values.search || ""
+// }
+// }

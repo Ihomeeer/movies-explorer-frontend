@@ -75,6 +75,7 @@ function Movies({
   // Запрос на получение фильмов со всеми фильтрами и прочим
   const getMovies = (title) => {
     if (title) {
+      // Засовывание значения инпута в локалсторадж
       localStorage.setItem("lastMoviesRequest", JSON.stringify(title));
       setIsPreloaderVisible(true);
       moviesApi
@@ -153,6 +154,7 @@ function Movies({
     }
   }, []);
 
+  // видимость кнопки "еще"
   React.useEffect(() => {
     if (cardsAmount.total > shownMoviesArray.length) {
       setButtonVisibility(true);
@@ -167,6 +169,7 @@ function Movies({
     <div>
       <Header isAuth={isAuth} />
       <SearchForm
+        isSavedMovies={false}
         getMovies={getMovies}
         setSearchMessage={setSearchMessage}
         searchMessage={searchMessage}
