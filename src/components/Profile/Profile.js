@@ -39,8 +39,6 @@ function Profile({
   }
 
   React.useEffect(() => {
-    const currentName = currentUser.name;
-    const currentEmail = currentUser.email;
     setPreviousValues({
       name: currentUser.name,
       email: currentUser.email,
