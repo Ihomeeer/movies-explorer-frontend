@@ -2,7 +2,8 @@ import React from "react";
 import "./FilterCheckbox.css";
 
 function FilterCheckbox({
-  handleShortMovies
+  handleShortMovies,
+  isSavedMovies
 }) {
   return (
     <div className="section filter" id="filter">
@@ -10,7 +11,12 @@ function FilterCheckbox({
         <input
           type="checkbox"
           className="filter__checkbox"
-          onClick={handleShortMovies}
+          onChange={handleShortMovies}
+          checked={
+            isSavedMovies == true
+            ? JSON.parse(localStorage.getItem("savedMoviesCheckBoxStatus")) || false
+            : JSON.parse(localStorage.getItem("moviesCheckBoxStatus")) || false
+          }
         />
         <span className="filter__caption">Короткометражки</span>
       </label>

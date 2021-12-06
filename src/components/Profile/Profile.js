@@ -118,20 +118,3 @@ function Profile({
 }
 
 export default Profile;
-
-
-// React.useEffect(() => {
-//   console.log(previousValues.name);
-//   console.log(values.name);
-//   if (values.name === previousValues.name) {
-//     console.log('совпало имя')
-//     setIsDisabled(true);
-//   } else if (values.email === previousValues.email) {
-//     console.log('совпало мыло')
-//     setIsDisabled(true);
-//   } else {
-//     setIsDisabled(false)
-//     console.log('не совпало')
-//     setIsProfileMessage('')
-//   }
-// }, [values.name, values.email])

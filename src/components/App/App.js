@@ -214,13 +214,11 @@ function App() {
 
   // Удаление карточки
   const handleDeleteMovie = (id) => {
-    console.log(id);
     const searchedSavedMovies = JSON.parse(localStorage.getItem("searchedSavedMovies"));
     const newSeachedSavedMovies = searchedSavedMovies.filter((movie) => movie._id != id);
     const newSeachedSavedShorts = filterDuration(newSeachedSavedMovies);
     localStorage.setItem("searchedSavedMovies", JSON.stringify(newSeachedSavedMovies));
     localStorage.setItem("searchedSavedShorts", JSON.stringify(newSeachedSavedShorts));
-    console.log(newSeachedSavedMovies);
     mainApi.deleteMovie(id)
     .then(() => {
       // если ответ 200, то повторный запрос сохраненок и перерисовывание их на странице в новом составе

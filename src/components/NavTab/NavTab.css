@@ -103,6 +103,7 @@
 
 .nav-tab__link_type_active {
   font-weight: 500;
+  border-bottom: 1px solid black;
 }
 
 .nav-tab__link_white {

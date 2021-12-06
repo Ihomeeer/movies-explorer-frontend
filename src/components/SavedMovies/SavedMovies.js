@@ -22,11 +22,15 @@ function SavedMovies({
   // Видимость секции "Movies"
   const [isSavedMoviesVisible, setIsSavedMoviesVisible] = React.useState(false);
   // переменная для работы чекбокса короткометражек
-  const [isShortMovies, setIsShortMovies] = React.useState(false);
+  const [isSavedShortMovies, setIsSavedShortMovies] = React.useState(`${localStorage.getItem("savedMoviesCheckBoxStatus")
+  ? JSON.parse(localStorage.getItem("savedMoviesCheckBoxStatus"))
+  : false
+ }`);
 
   // функция для переключения стейта чекбоксом
   const handleShortMovies = () => {
-    setIsShortMovies(!isShortMovies);
+    localStorage.setItem("savedMoviesCheckBoxStatus", !isSavedShortMovies);
+    setIsSavedShortMovies(!isSavedShortMovies);
   }
 
   // Фильтрует сохраненные фильмы по длительности
@@ -42,47 +46,46 @@ function SavedMovies({
     );
 
   const getMovies = (title) => {
-    // Засовывание значения инпута в локалсторадж
-    localStorage.setItem("lastSavedMoviesRequest", JSON.stringify(title));
-    // передача в константы результатов поиска и короткометражек
-    const searchedMovies = filterMovies(JSON.parse(localStorage.getItem("userSavedMovies")), title);
-    const shortMovies = filterDuration(searchedMovies);
-    // Засовывание фильтрованных фильмов в локалсторадж, чтобы потом при перезаходе показывать
-    localStorage.setItem("searchedSavedMovies", JSON.stringify(searchedMovies));
-    localStorage.setItem("searchedSavedShorts", JSON.stringify(shortMovies));
-    setSearchedSavedMoviesArray(searchedMovies);
-    setUserSavedShortsArray(shortMovies);
-    if (searchedMovies.length === 0) {
-      setSearchMessage("Ничего не найдено");
-      setIsSavedMoviesVisible(false);
-    } else {
-      setIsSavedMoviesVisible(true);
-      setSearchMessage("");
-      if (isShortMovies) {
-        setShownSavedMoviesArray(shortMovies);
+    if (title) {
+      // Засовывание значения инпута в локалсторадж
+      localStorage.setItem("lastSavedMoviesRequest", JSON.stringify(title));
+      // передача в константы результатов поиска и короткометражек
+      const searchedMovies = filterMovies(JSON.parse(localStorage.getItem("userSavedMovies")), title);
+      const shortMovies = filterDuration(searchedMovies);
+      // Засовывание фильтрованных фильмов в локалсторадж, чтобы потом при перезаходе показывать
+      localStorage.setItem("searchedSavedMovies", JSON.stringify(searchedMovies));
+      localStorage.setItem("searchedSavedShorts", JSON.stringify(shortMovies));
+      setSearchedSavedMoviesArray(searchedMovies);
+      setUserSavedShortsArray(shortMovies);
+      if (searchedMovies.length === 0) {
+        setSearchMessage("Ничего не найдено");
+        setIsSavedMoviesVisible(false);
       } else {
-        setShownSavedMoviesArray(searchedMovies);
+        setIsSavedMoviesVisible(true);
+        setSearchMessage("");
+        if (JSON.parse(localStorage.getItem("savedMoviesCheckBoxStatus")) == true) {
+          setShownSavedMoviesArray(shortMovies);
+        } else {
+          setShownSavedMoviesArray(searchedMovies);
+        }
       }
+    }  else {
+      setSearchMessage("Нужно ввести ключевое слово");
+      setIsSavedMoviesVisible(false);
     }
   }
 
   // Реализация работы чекбокса с короткометражками после поиска по названию
   React.useEffect(() => {
-    if (isShortMovies) {
+    if (isSavedShortMovies) {
       setShownSavedMoviesArray(userSavedShortsArray);
     } else {
       setShownSavedMoviesArray(searchedSavedMoviesArray);
     }
-  }, [isShortMovies]);
+  }, [isSavedShortMovies]);
 
   // рендер результатов предыдущего поиска при монтировании компонента, а так же при удалении карточки,
-  // а также рендер всего кинца, если не совершался поиск
   React.useEffect(() => {
-    if (!localStorage.getItem("searchedSavedMovies")) {
-      setIsSavedMoviesVisible(true);
-      const initialSavedMovies = JSON.parse(localStorage.getItem("userSavedMovies"));
-      setShownSavedMoviesArray(initialSavedMovies);
-    } else {
       if (JSON.parse(localStorage.getItem("searchedSavedMovies"))) {
         const lastSearchedSavedMovies = JSON.parse(localStorage.getItem("searchedSavedMovies"));
         const lastSearchedSavedShorts = JSON.parse(localStorage.getItem("searchedSavedShorts"));
@@ -95,7 +98,7 @@ function SavedMovies({
           } else {
             setIsSavedMoviesVisible(true);
             setSearchMessage("");
-            if (isShortMovies) {
+            if (JSON.parse(localStorage.getItem("savedMoviesCheckBoxStatus")) == true) {
               setShownSavedMoviesArray(lastSearchedSavedShorts);
             } else {
               setShownSavedMoviesArray(lastSearchedSavedMovies);
@@ -103,7 +106,6 @@ function SavedMovies({
           }
         }
       }
-    }
   }, [userSavedMoviesArray]);
 
   return (
@@ -117,6 +119,7 @@ function SavedMovies({
       />
       <FilterCheckbox
         handleShortMovies={handleShortMovies}
+        isSavedMovies={true}
       />
       {isSavedMoviesVisible ? (
         <MoviesCardList

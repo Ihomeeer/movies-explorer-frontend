@@ -37,7 +37,10 @@ function Movies({
   // Видимость секции "Movies"
   const [isMoviesVisible, setIsMoviesVisible] = React.useState(false);
   // переменная для работы чекбокса короткометражек
-  const [isShortMovies, setIsShortMovies] = React.useState(false);
+  const [isShortMovies, setIsShortMovies] = React.useState(`${localStorage.getItem("moviesCheckBoxStatus")
+   ? JSON.parse(localStorage.getItem("moviesCheckBoxStatus"))
+   : false
+  }`);
   // сколько карточек рендерить и сколько прибавлять по нажатию кнопки
   const [cardsAmount, setCardsAmount] = React.useState(DesktopCardsAmount);
   // видимость кнопки "еще". false - видимая, true - невидимая. Ну вот так вот вышло.
@@ -78,6 +81,7 @@ function Movies({
 
   // функция для переключения стейта чекбоксом
   const handleShortMovies = () => {
+    localStorage.setItem("moviesCheckBoxStatus", !isShortMovies);
     setIsShortMovies(!isShortMovies);
   }
 
@@ -107,7 +111,7 @@ function Movies({
           } else {
             setIsMoviesVisible(true);
             setSearchMessage("");
-            if (isShortMovies) {
+            if (JSON.parse(localStorage.getItem("moviesCheckBoxStatus")) == true) {
               setShownMoviesArray(shortMovies);
             } else {
               setShownMoviesArray(searchedMovies);
@@ -153,7 +157,7 @@ function Movies({
         } else {
           setIsMoviesVisible(true);
           setSearchMessage("");
-          if (isShortMovies) {
+          if (JSON.parse(localStorage.getItem("moviesCheckBoxStatus")) == true) {
             setShownMoviesArray(lastSearchedShorts);
           } else {
             setShownMoviesArray(lastSearchedMovies);
@@ -185,6 +189,7 @@ function Movies({
       />
       <FilterCheckbox
         handleShortMovies={handleShortMovies}
+        isSavedMovies={false}
       />
       {isMoviesVisible ? (
         <MoviesCardList
