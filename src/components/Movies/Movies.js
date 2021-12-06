@@ -7,6 +7,15 @@ import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import Preloader from "../Preloader/Preloader";
+import {
+  ShortMoviesDuration,
+  MobileWidth,
+  TabletWidth,
+  DesktopWidth,
+  MobileCardsAmount,
+  TabletCardsAmount,
+  DesktopCardsAmount
+} from '../../utils/constants';
 
 function Movies({
   isAuth,
@@ -30,7 +39,7 @@ function Movies({
   // переменная для работы чекбокса короткометражек
   const [isShortMovies, setIsShortMovies] = React.useState(false);
   // сколько карточек рендерить и сколько прибавлять по нажатию кнопки
-  const [cardsAmount, setCardsAmount] = React.useState({ total: 12, delta: 3 });
+  const [cardsAmount, setCardsAmount] = React.useState(DesktopCardsAmount);
   // видимость кнопки "еще". false - видимая, true - невидимая. Ну вот так вот вышло.
   const [buttonVisibility, setButtonVisibility] = React.useState(false);
 
@@ -42,12 +51,12 @@ function Movies({
 
   // проверка ширины страницы для добавления нужного количества карточек
   const checkAmount = () => {
-    if (windowSize.width >= 1280) {
-      setCardsAmount({ total: 12, delta: 3 });
-    } else if (windowSize.width >= 768) {
-      setCardsAmount({ total: 8, delta: 2 });
-    } else if (windowSize.width >= 320) {
-      setCardsAmount({ total: 5, delta: 2 });
+    if (windowSize.width >= DesktopWidth) {
+      setCardsAmount(DesktopCardsAmount);
+    } else if (windowSize.width >= TabletWidth) {
+      setCardsAmount(TabletCardsAmount);
+    } else if (windowSize.width >= MobileWidth) {
+      setCardsAmount(MobileCardsAmount);
     }
   };
 
@@ -65,7 +74,7 @@ function Movies({
 
   // Работа с чекбоксом
   const filterDuration = (movies) =>
-    movies.filter((movie) => movie.duration <= 40);
+    movies.filter((movie) => movie.duration <= ShortMoviesDuration);
 
   // функция для переключения стейта чекбоксом
   const handleShortMovies = () => {

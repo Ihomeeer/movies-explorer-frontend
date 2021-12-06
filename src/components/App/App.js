@@ -11,6 +11,12 @@ import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
+import {
+  ShortMoviesDuration,
+  ConflictErrorCode,
+  UnauthorizedErrorCode,
+  BadRequestErrorCode
+ } from '../../utils/constants';
 
 function App() {
 
@@ -93,7 +99,7 @@ function App() {
     })
     .catch((err) => {
       setIsRegisterInputsDisabled(false);
-      if (err === '409') {
+      if (err === ConflictErrorCode) {
         setIsRegisterError('Пользователь с такими данными уже существует');
       } else {
         setIsRegisterError('При регистрации профиля произошла ошибка');
@@ -136,7 +142,7 @@ function App() {
     })
     .catch((err) => {
       setIsLoginInputsDisabled(false);
-      if (err === '401' || '400') {
+      if (err === UnauthorizedErrorCode || BadRequestErrorCode) {
         setIsLoginError('Введены некорректные данные пользователя');
       } else {
         setIsLoginError('При авторизации произошла ошибка');
@@ -164,7 +170,7 @@ function App() {
     })
     .catch((err) => {
       setIsProfileInputsDisabled(false);
-      if (err === '409' || '409') {
+      if (err === ConflictErrorCode || ConflictErrorCode) {
         setIsProfileMessage('Пользователь с такими данными уже существует');
       } else {
         setIsProfileMessage('При обновлении профиля произошла ошибка');
@@ -177,7 +183,7 @@ function App() {
   // Фильтрует сохраненные фильмы по длительности
   const filterDuration = (movies) =>
   movies.filter(
-    (movie) => movie.duration <= 40
+    (movie) => movie.duration <= ShortMoviesDuration
   );
 
   // Отфильтровывание фильмов, сохраненных пользователем

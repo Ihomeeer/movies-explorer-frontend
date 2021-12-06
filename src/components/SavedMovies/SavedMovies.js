@@ -4,6 +4,7 @@ import SearchForm from "../SearchForm/SearchForm";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
+import { ShortMoviesDuration } from '../../utils/constants';
 
 function SavedMovies({
   isAuth,
@@ -31,7 +32,7 @@ function SavedMovies({
   // Фильтрует сохраненные фильмы по длительности
   const filterDuration = (movies) =>
     movies.filter(
-      (movie) => movie.duration <= 40
+      (movie) => movie.duration <= ShortMoviesDuration
     );
 
   // Фильтрует сохраненные фильмы по значению инпута из SearchForm
@@ -82,11 +83,9 @@ function SavedMovies({
       const initialSavedMovies = JSON.parse(localStorage.getItem("userSavedMovies"));
       setShownSavedMoviesArray(initialSavedMovies);
     } else {
-      console.log('перерисовка для результатов')
       if (JSON.parse(localStorage.getItem("searchedSavedMovies"))) {
-        const lastSearchedSavedMovies = JSON.parse(localStorage.getItem("searchedSavedMovies"))
-        console.log(lastSearchedSavedMovies)
-        const lastSearchedSavedShorts = JSON.parse(localStorage.getItem("searchedSavedShorts"))
+        const lastSearchedSavedMovies = JSON.parse(localStorage.getItem("searchedSavedMovies"));
+        const lastSearchedSavedShorts = JSON.parse(localStorage.getItem("searchedSavedShorts"));
         if (lastSearchedSavedMovies.length > 0) {
           setSearchedSavedMoviesArray(lastSearchedSavedMovies);
           setUserSavedShortsArray(lastSearchedSavedShorts);

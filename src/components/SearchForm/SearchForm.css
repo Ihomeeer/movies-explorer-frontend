@@ -24,8 +24,12 @@
   font-weight: 500;
   font-size: 28px;
   line-height: 34px;
-  color: #A0A0A0;
+  color: #1d1d1d;
   outline: none;
+}
+
+.search-form__input::placeholder {
+  color: rgba(116, 116, 116, 0.281);
 }
 
 .search-form__search-button {
