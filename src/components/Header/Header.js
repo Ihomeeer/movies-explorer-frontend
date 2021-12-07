@@ -3,22 +3,18 @@ import './Header.css';
 import NavTab  from '../NavTab/NavTab';
 
 function Header({
-  isLoggedIn,
+  isAuth,
   isMainPage
 }) {
 
   return (
-    <header className={`section ${isMainPage ? 'header header-dark' : 'header header-white'}`}>
+    <header className={`section ${isMainPage === "true" ? 'header header-dark' : 'header header-white'}`}>
       <NavTab
-        isLoggedIn = {isLoggedIn}
+        isAuth = {isAuth}
+        isMainPage= {isMainPage}
       />
     </header>
   )
 }
 
 export default Header;
-
-
-
-
-

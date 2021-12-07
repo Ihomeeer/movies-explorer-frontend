@@ -38,7 +38,7 @@
 }
 
 .movie__duration {
-  width: 47px;
+  width: 57px;
   min-height: 13px;
   margin: 0;
   font-family: 'Inter', Arial, Helvetica, sans-serif;
@@ -55,13 +55,15 @@
   padding: 0;
   margin: auto 14px auto auto;
   border-radius: 36px;
-  background-image: url(../../images/MoviesCard/like.svg);
   background-repeat: no-repeat;
   background-size: initial;
   background-position: center;
-  background-color: #F9F9F9;
-  /* Добавил границу, потому что без нее кнопку ВООБЩЕ не видно */
   border: 1px solid rgba(43, 37, 33, 0.137);
+}
+
+.movie__like-button_inactive {
+  background-image: url(../../images/MoviesCard/like.svg);
+  background-color: #F9F9F9;
 }
 
 .movie__like-button_active {
@@ -70,6 +72,7 @@
 }
 
 .movie__like-button_saved {
+
   background-image: url(../../images/SavedMovies/close-icon.svg);
   background-color: #F9F9F9;
 }
@@ -77,6 +80,7 @@
 .movie__poster {
   width: 364px;
   height: 203px;
+  margin: 0 auto;
 }
 
 @media screen and (max-width: 1279px) {

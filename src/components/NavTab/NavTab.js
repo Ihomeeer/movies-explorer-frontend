@@ -5,23 +5,25 @@ import './NavTab.css';
 import Navigation from '../Navigation/Navigation';
 
 function NavTab ({
-  isLoggedIn
+  isAuth,
+  isMainPage
 }) {
 
+  // стейт-переменная для октрытия меню
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-    const openMenu = () => {
-      setIsMenuOpen(true);
-    }
+  const openMenu = () => {
+    setIsMenuOpen(true);
+  }
 
   return (
     <section className="nav-tab">
-        {isLoggedIn ? (
+        {isAuth ? (
           <>
           <div className="nav-tab__links">
-            <a href="/#aboutProject">
+            <Link to="/#aboutProject">
               <img className="logo nav-tab__logo" src={navTabLogoPath} alt="лого проекта" />
-            </a>
+            </Link>
             <div className="nav-tab__films-wrapper">
             <Route exact path="/" >
               <Link className="link nav-tab__link nav-tab__link_white nav-tab__link_type_all-films" to="/movies">Фильмы</Link>
@@ -44,7 +46,7 @@ function NavTab ({
               <p className="nav-tab__profile-text">Аккаунт</p>
               <div className="nav-tab__profile-icon"></div>
             </Link>
-            <button type="button" className="nav-tab__menu-button" onClick={openMenu}></button>
+            <button type="button" className={`nav-tab__menu-button ${isMainPage ? "nav-tab__menu-button-white" : "nav-tab__menu-button-black"}`} onClick={openMenu}></button>
           </div>
           <Navigation
            setIsMenuOpen = {setIsMenuOpen}

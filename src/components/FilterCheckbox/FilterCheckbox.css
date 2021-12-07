@@ -1,7 +1,8 @@
 .filter {
   width: 100%;
   min-height: 20px;
-  margin: 30px auto 48px;
+  padding: 0 70px;
+  margin: 0 auto;
 }
 
 .filter__switch {
@@ -24,6 +25,7 @@
   transition: .5s;
   outline: none;
   background-color: #EBEBEB;
+  cursor: pointer;
 }
 
 .filter__checkbox:checked {
@@ -62,17 +64,12 @@
 
 @media screen and (max-width: 1279px) {
   .filter {
-    margin-top: 30px;
-    margin-bottom: 47px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 
 @media screen and (max-width: 767px) {
-  .filter {
-    margin-top: 45px;
-    margin-bottom: 0px;
-  }
-
   .filter__switch {
     width: min-content;
     margin-left: auto;

@@ -1,30 +1,57 @@
-import React from 'react';
-import MoviesCard from '../MoviesCard/MoviesCard';
-import './MoviesCardList.css';
+import React from "react";
+import MoviesCard from "../MoviesCard/MoviesCard";
+import "./MoviesCardList.css";
 
-function MoviesCardList ({
-  isSavedMovies
+function MoviesCardList({
+  isSavedMovies,
+  onSaveMovie,
+  onDeleteMovie,
+  shownMoviesArray,
+  shownSavedMoviesArray,
+  handleBtnClick,
+  total,
+  buttonVisibility,
 }) {
 
   return (
     <section className="section movies">
-      <ul className="movies__list">
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      </ul>
-        <button type="button" className={`movies__append-button  ${isSavedMovies ? 'movies__append-button_none' : ' '}`}>Ещё</button>
+      {isSavedMovies ? (
+        <ul className="movies__list">
+          {shownSavedMoviesArray.map((movie) => (
+            <MoviesCard
+            key={movie._id}
+            card={movie}
+            isSavedMovies={isSavedMovies}
+            onDeleteMovie={onDeleteMovie}
+            />
+          ))}
+        </ul>
+      ) : (
+        <>
+          <ul className="movies__list">
+            {shownMoviesArray.slice(0, total).map((movie) => (
+              <MoviesCard
+                key={movie.id}
+                card={movie}
+                isSavedMovies={isSavedMovies}
+                onSaveMovie={onSaveMovie}
+                onDeleteMovie={onDeleteMovie}
+              />
+            ))}
+          </ul>
+          <button
+            type="button"
+            className={`movies__append-button  ${
+              buttonVisibility ? "movies__append-button_none" : ""
+            }`}
+            onClick={handleBtnClick}
+          >
+            Ещё
+          </button>
+        </>
+      )}
     </section>
-  )
-};
+  );
+}
 
 export default MoviesCardList;
