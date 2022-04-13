@@ -22,7 +22,7 @@
 https://ihomeer-movies.nomoredomains.monster/
 
 ### Публичный IP
-178.154.197.61
+51.250.97.167
 
 
 ## Доработка:
