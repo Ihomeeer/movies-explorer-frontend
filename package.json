@@ -1,5 +1,6 @@
 {
   "name": "movies-explorer-frontend",
+  "homepage": "./",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -20,7 +21,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && scp -r ./build/* ihomeer@178.154.197.61:/home/ihomeer/frontend"
+    "deploy": "npm run build && scp -r ./build/* ihomeer@130.193.54.69:/home/ihomeer/diploma/front"
   },
   "browserslist": {
     "production": [
