@@ -1,0 +1,31 @@
+.header {
+  /* width: 100%; */
+  padding: 0 70px;
+  height: 74px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-dark {
+  background-color: #073042;
+}
+
+.header-white {
+  background-color: white;
+}
+
+@media screen and (max-width: 1279px) {
+  .header {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .header {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}

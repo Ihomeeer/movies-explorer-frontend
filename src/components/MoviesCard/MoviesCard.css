@@ -1,0 +1,118 @@
+.movie__card {
+  width: 364px;
+  height: 271px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #FDFDFD;
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08);
+}
+
+.movie__info-panel {
+  min-height: 68px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.movie__info-wrapper {
+  width: 280px;
+  min-height: 40px;
+  margin: 14px auto 14px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.movie__title {
+  width: 100%;
+  min-height: 18px;
+  margin: 0;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 18px;
+  color: #000000;
+}
+
+.movie__duration {
+  width: 57px;
+  min-height: 13px;
+  margin: 0;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 13px;
+  color: #A0A0A0;
+}
+
+.movie__like-button {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  margin: auto 14px auto auto;
+  border-radius: 36px;
+  background-repeat: no-repeat;
+  background-size: initial;
+  background-position: center;
+  border: 1px solid rgba(43, 37, 33, 0.137);
+}
+
+.movie__like-button_inactive {
+  background-image: url(../../images/MoviesCard/like.svg);
+  background-color: #F9F9F9;
+}
+
+.movie__like-button_active {
+  background-image: url(../../images/MoviesCard/like_white.svg);
+  background-color: #2BE080;
+}
+
+.movie__like-button_saved {
+
+  background-image: url(../../images/SavedMovies/close-icon.svg);
+  background-color: #F9F9F9;
+}
+
+.movie__poster {
+  width: 364px;
+  height: 203px;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 1279px) {
+  .movie__card {
+    width: 339px;
+    height: 258px;
+  }
+
+  .movie__info-wrapper {
+    width: 250px;
+    margin-right: 31px;
+  }
+
+  .movie__poster {
+    width: 339px;
+    height: 190px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .movie__card {
+    width: 300px;
+    height: 236px;
+  }
+
+  .movie__info-wrapper {
+    width: 210px;
+    margin-right: 32px;
+  }
+
+  .movie__poster {
+    width: 300px;
+    height: 168px;
+  }
+}
